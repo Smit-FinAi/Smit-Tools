@@ -4,7 +4,9 @@
    cached on first use so every tool keeps working with no
    internet connection at all.
    ============================================================ */
-const VERSION = 'pdf-factory-v1.0.0';
+/* Bump this string on EVERY deploy. The fetch handler is cache-first, so
+   without a new version returning visitors keep getting the old files. */
+const VERSION = 'pdf-factory-v1.0.1';
 const SHELL = VERSION + '-shell';
 const RUNTIME = VERSION + '-runtime';
 
