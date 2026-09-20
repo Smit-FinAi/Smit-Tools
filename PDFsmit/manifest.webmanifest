@@ -1,0 +1,24 @@
+{
+  "name": "The PDF Factory by Smit Parekh",
+  "short_name": "PDF Factory",
+  "description": "40 professional PDF tools that run 100% offline in your browser. Nothing is ever uploaded.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f4f6fb",
+  "theme_color": "#e2231a",
+  "lang": "en",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Merge PDF", "url": "./index.html#tool-merge" },
+    { "name": "Split PDF", "url": "./index.html#tool-split" },
+    { "name": "Compress PDF", "url": "./index.html#tool-compress" },
+    { "name": "JPG to PDF", "url": "./index.html#tool-jpg2pdf" }
+  ]
+}
