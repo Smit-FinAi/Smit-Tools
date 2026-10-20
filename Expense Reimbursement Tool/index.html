@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Expense Reimbursement Voucher Generator – Smit Parekh</title>
+<meta name="description" content="Expense Reimbursement Voucher Generator for Smit Parekh – Freelance Faculty / Trainer. Created by Smit Parekh.">
+<meta name="theme-color" content="#0b2a5b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Voucher Generator">
+<link rel="manifest" id="pwaManifest">
+<link rel="icon" id="favIcon" type="image/png">
+<link rel="apple-touch-icon" id="appleIcon">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --surface-2:#f7f9fc; --border:#d9dfea; --border-strong:#b9c3d6;
+  --text:#1a2233; --muted:#5b667d; --accent:#0b2a5b; --accent-2:#1d4fa3; --accent-soft:#e6edf9;
+  --danger:#b3261e; --danger-soft:#fdeceb; --ok:#1b7f3b; --warn:#8a5a00; --warn-soft:#fff4dc;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 4px 14px rgba(16,24,40,.06);
+  --radius:8px;
+}
+[data-theme="dark"]{
+  --bg:#0e131c; --surface:#161d2a; --surface-2:#1b2434; --border:#2a3550; --border-strong:#3a4870;
+  --text:#e6ebf5; --muted:#9aa7c2; --accent:#6ea0ff; --accent-2:#8fb6ff; --accent-soft:#1c2a4a;
+  --danger:#ff8a80; --danger-soft:#3a1c1a; --ok:#6fd58d; --warn:#ffcf70; --warn-soft:#3a2f14;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Roboto',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  background:var(--bg); color:var(--text); font-size:14px; line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+}
+
+/* ---------- Top bar ---------- */
+.topbar{
+  background:linear-gradient(0deg,#0b2a5b,#0b2a5b); color:#fff; padding:14px 22px;
+  display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  position:sticky; top:0; z-index:50; box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+[data-theme="dark"] .topbar{background:#0a1a38;border-bottom:1px solid var(--border)}
+.topbar h1{margin:0;font-size:20px;font-weight:500;letter-spacing:.2px}
+.topbar .sub{font-size:13px;font-weight:300;opacity:.92;margin-top:2px}
+.topbar .credit{font-size:12px;opacity:.85;margin-top:2px}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* ---------- Layout ---------- */
+.app{display:grid;grid-template-columns:minmax(360px,470px) 1fr;gap:18px;padding:18px 22px;max-width:1700px;margin:0 auto}
+.panel{display:flex;flex-direction:column;gap:14px;min-width:0}
+.preview-wrap{min-width:0;position:sticky;top:78px;align-self:start}
+@media (max-width:1050px){
+  .app{grid-template-columns:1fr;padding:12px}
+  .preview-wrap{position:static}
+}
+
+/* ---------- Cards ---------- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.card>.card-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);
+  font-weight:500;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)
+}
+.card>.card-b{padding:14px 16px}
+.howto ol{margin:0;padding-left:20px;color:var(--muted)}
+.howto li{margin:3px 0}
+.privacy{font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;margin-top:8px}
+
+/* ---------- Forms ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.grid1{display:grid;grid-template-columns:1fr;gap:10px}
+.span2{grid-column:span 2}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}.span2{grid-column:span 1}}
+label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:3px}
+label .req{color:var(--danger)}
+input,select,textarea{
+  width:100%;font-family:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--border-strong);
+  border-radius:6px;background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s
+}
+textarea{resize:vertical;min-height:52px}
+input:focus,select:focus,textarea:focus{border-color:var(--accent-2);box-shadow:0 0 0 3px rgba(29,79,163,.18)}
+[data-theme="dark"] input:focus,[data-theme="dark"] select:focus,[data-theme="dark"] textarea:focus{box-shadow:0 0 0 3px rgba(110,160,255,.25)}
+.invalid{border-color:var(--danger)!important}
+.err{color:var(--danger);font-size:11.5px;margin-top:3px;min-height:0;display:none}
+.err.show{display:block}
+.hint{font-size:11.5px;color:var(--muted);margin-top:3px}
+.optional-wrap.hidden{display:none}
+.inline-row{display:flex;gap:8px;align-items:flex-end}
+.inline-row>*{flex:1}
+.inline-row>.btn{flex:0 0 auto}
+
+/* ---------- Buttons ---------- */
+.btn{
+  font-family:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:6px;cursor:pointer;
+  border:1px solid var(--border-strong);background:var(--surface);color:var(--text);
+  transition:background .15s,border-color .15s,transform .05s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap
+}
+.btn:hover{background:var(--accent-soft);border-color:var(--accent-2)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+[data-theme="dark"] .btn.primary{color:#0b1220}
+.btn.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn.danger{color:var(--danger);border-color:var(--danger)}
+.btn.danger:hover{background:var(--danger-soft)}
+.btn.sm{padding:4px 9px;font-size:12px}
+.btn.ghost-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+.btn.ghost-light:hover{background:rgba(255,255,255,.14);border-color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px}
+#installBtn{display:none}
+
+/* ---------- Expense list (control panel) ---------- */
+.exp-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.exp-table th{
+  text-align:left;padding:6px 6px;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);
+  border-bottom:1px solid var(--border)
+}
+.exp-table td{padding:6px 6px;border-bottom:1px solid var(--border);vertical-align:top}
+.exp-table td.num,.exp-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+.exp-empty{padding:16px;text-align:center;color:var(--muted);font-size:13px}
+.exp-actions{display:flex;gap:4px;white-space:nowrap}
+.exp-scroll{overflow-x:auto}
+
+/* ---------- Totals ---------- */
+.totals{display:grid;grid-template-columns:1fr auto;gap:4px 14px;font-size:14px}
+.totals .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+.totals .net{font-weight:700;font-size:15px;color:var(--accent);border-top:1px solid var(--border);padding-top:6px;margin-top:2px}
+.words-box{margin-top:8px;padding:8px 10px;background:var(--accent-soft);border-radius:6px;font-size:12.5px;color:var(--text)}
+
+/* ---------- Modal ---------- */
+.modal-bg{position:fixed;inset:0;background:rgba(10,15,30,.55);display:none;align-items:center;justify-content:center;z-index:200;padding:14px}
+.modal-bg.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:10px;width:100%;max-width:520px;max-height:92vh;overflow:auto;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.modal-h{padding:13px 18px;font-weight:500;border-bottom:1px solid var(--border);color:var(--accent)}
+.modal-b{padding:16px 18px}
+.modal-f{padding:12px 18px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:var(--surface-2)}
+
+/* ---------- Toasts ---------- */
+#toasts{position:fixed;right:16px;bottom:16px;display:flex;flex-direction:column;gap:8px;z-index:300;max-width:calc(100vw - 32px)}
+.toast{
+  background:#152238;color:#fff;padding:10px 14px;border-radius:8px;font-size:13px;box-shadow:0 6px 20px rgba(0,0,0,.3);
+  border-left:4px solid #6ea0ff;animation:tin .2s ease-out
+}
+.toast.ok{border-left-color:#5fd08a}.toast.err{border-left-color:#ff8a80}.toast.warn{border-left-color:#ffcf70}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Preview area ---------- */
+.warn-banner{
+  background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn);border-radius:6px;
+  padding:8px 12px;font-size:13px;margin-bottom:10px;display:none
+}
+.warn-banner.show{display:block}
+.preview-scroller{
+  background:#7d8595;border-radius:var(--radius);padding:16px;overflow:auto;border:1px solid var(--border);
+  max-height:calc(100vh - 170px);
+}
+[data-theme="dark"] .preview-scroller{background:#0a0e15}
+@media (max-width:1050px){.preview-scroller{max-height:none}}
+.a4-stage{transform-origin:top left}
+.a4-holder{margin:0 auto}
+
+/* ---------- The A4 voucher (always light for print fidelity) ---------- */
+#voucher{
+  width:794px;height:1123px;background:#fff;color:#111;position:relative;overflow:hidden;
+  font-family:'Roboto',Arial,sans-serif;font-size:11.5px;line-height:1.4;padding:34px 40px 30px;
+  box-shadow:0 4px 24px rgba(0,0,0,.35)
+}
+#voucher *{box-sizing:border-box}
+.v-head{text-align:center;border-bottom:2px solid #0b2a5b;padding-bottom:8px}
+.v-head .t1{font-size:20px;font-weight:700;letter-spacing:1.2px;color:#0b2a5b}
+.v-head .t2{font-size:12px;color:#444;margin-top:2px;letter-spacing:.6px}
+.v-meta{display:flex;justify-content:space-between;margin-top:9px;font-size:11.5px}
+.v-meta b{font-weight:700}
+.v-sec{margin-top:11px}
+.v-sec-t{
+  font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#0b2a5b;
+  border-bottom:1px solid #9aa6bd;padding-bottom:2px;margin-bottom:5px
+}
+.v-kv{width:100%;border-collapse:collapse}
+.v-kv td{padding:2.5px 0;vertical-align:top;font-size:11.5px}
+.v-kv td.k{width:150px;color:#444;font-weight:500}
+.v-kv td.c{width:12px}
+.v-kv td.val{font-weight:400}
+.v-two{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.v-tbl{width:100%;border-collapse:collapse;margin-top:2px}
+.v-tbl th{
+  background:#eef2f9;border:1px solid #8c98b0;padding:4px 5px;font-size:10.5px;text-align:left;font-weight:700;color:#0b2a5b
+}
+.v-tbl td{border:1px solid #b5bdcd;padding:3.5px 5px;font-size:11px;vertical-align:top}
+.v-tbl .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.v-tbl .ctr{text-align:center}
+.v-tbl tfoot td{font-weight:700;background:#f7f9fc;border-color:#8c98b0}
+.v-sum{margin-left:auto;width:330px;border-collapse:collapse;margin-top:8px}
+.v-sum td{padding:3px 6px;font-size:11.5px;border-bottom:1px solid #d3d9e6}
+.v-sum td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.v-sum tr.net td{font-weight:700;font-size:12.5px;border-top:1.5px solid #0b2a5b;border-bottom:1.5px solid #0b2a5b;background:#eef2f9;color:#0b2a5b}
+.v-words{margin-top:8px;border:1px solid #8c98b0;padding:6px 9px;font-size:11.5px}
+.v-words b{color:#0b2a5b}
+.v-decl{margin-top:10px;font-size:10.8px;line-height:1.5;text-align:justify;color:#222}
+.v-sign{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:0}
+.v-sign .box{border:1px solid #9aa6bd;padding:8px 10px;min-height:118px;font-size:11px}
+.v-sign .box .h{font-size:10.5px;font-weight:700;color:#0b2a5b;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #c4cbd9;padding-bottom:3px;margin-bottom:6px}
+.v-sign .line{border-bottom:1px solid #555;height:34px;margin-bottom:3px}
+.v-sign .row{display:flex;gap:4px;margin-top:5px}
+.v-sign .row .k{color:#444;min-width:62px}
+.v-sign .row .fill{flex:1;border-bottom:1px dotted #666;min-height:13px}
+.v-foot{
+  position:absolute;left:40px;right:40px;bottom:14px;border-top:1px solid #b5bdcd;padding-top:5px;
+  font-size:9.5px;color:#666;display:flex;justify-content:space-between
+}
+.v-bottom-block{position:absolute;left:40px;right:40px;bottom:40px}
+
+/* ---------- Footer ---------- */
+.app-footer{
+  text-align:center;padding:22px 16px 30px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:10px
+}
+.app-footer a{color:var(--accent-2);text-decoration:none;font-weight:500}
+.app-footer a:hover{text-decoration:underline}
+
+/* ---------- Print ---------- */
+@page{size:A4 portrait;margin:0}
+@media print{
+  html,body{background:#fff!important;margin:0!important;padding:0!important}
+  body>*:not(#printRoot){display:none!important}
+  #printRoot{display:block!important}
+  #printRoot #voucher{
+    width:210mm!important;height:297mm!important;box-shadow:none!important;transform:none!important;margin:0!important;
+    page-break-after:avoid;page-break-inside:avoid
+  }
+}
+#printRoot{display:none}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div>
+    <h1>Expense Reimbursement Voucher Generator</h1>
+    <div class="sub">For Smit Parekh – Freelance Faculty / Trainer</div>
+    <div class="credit">Created by Smit Parekh</div>
+  </div>
+  <div class="top-actions">
+    <button class="btn ghost-light" id="installBtn" type="button">⬇ Install App</button>
+    <button class="btn ghost-light" id="themeBtn" type="button" aria-label="Toggle day / night mode">☾ Night</button>
+  </div>
+</header>
+
+<main class="app">
+
+  <!-- ============ CONTROL PANEL ============ -->
+  <section class="panel" aria-label="Voucher controls">
+
+    <div class="card howto">
+      <div class="card-h">How to use</div>
+      <div class="card-b">
+        <ol>
+          <li>Enter client and voucher details.</li>
+          <li>Add cash expenses.</li>
+          <li>Review the A4 preview.</li>
+          <li>Export PDF or Excel.</li>
+          <li>Submit the generated voucher with supporting bills/receipts.</li>
+        </ol>
+        <div class="privacy">🔒 Your voucher data is processed locally in this browser.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">
+        <span>Actions</span>
+      </div>
+      <div class="card-b">
+        <div class="btn-row">
+          <button class="btn primary" id="btnPdf" type="button">Export PDF</button>
+          <button class="btn primary" id="btnXlsx" type="button">Export Excel</button>
+          <button class="btn" id="btnPrint" type="button">Print / Save as PDF</button>
+        </div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn" id="btnNew" type="button">New Voucher</button>
+          <button class="btn" id="btnSave" type="button">Save Draft</button>
+          <button class="btn" id="btnLoad" type="button">Load Draft</button>
+          <button class="btn" id="btnClear" type="button">Clear Form</button>
+          <button class="btn danger" id="btnReset" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">
+        <span>Claimant (Your Details)</span>
+        <button class="btn sm" id="btnOptional" type="button" aria-expanded="false">Show Optional Fields</button>
+      </div>
+      <div class="card-b">
+        <div class="grid2">
+          <div>
+            <label for="cName">Name <span class="req">*</span></label>
+            <input id="cName" type="text" autocomplete="name">
+          </div>
+          <div>
+            <label for="cOcc">Occupation</label>
+            <input id="cOcc" type="text">
+          </div>
+        </div>
+        <div id="optWrap" class="optional-wrap hidden" style="margin-top:10px">
+          <div class="grid2">
+            <div class="span2"><label for="cAddr">Address</label><textarea id="cAddr" rows="2"></textarea></div>
+            <div><label for="cMobile">Mobile</label><input id="cMobile" type="tel" inputmode="tel"></div>
+            <div><label for="cEmail">Email</label><input id="cEmail" type="email"></div>
+            <div><label for="cPan">PAN</label><input id="cPan" type="text" maxlength="10" style="text-transform:uppercase"></div>
+            <div><label for="cGstin">GSTIN</label><input id="cGstin" type="text" maxlength="15" style="text-transform:uppercase"></div>
+            <div class="span2"><label for="cBank">Bank / UPI Details</label><textarea id="cBank" rows="2"></textarea></div>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:8px">Profile details are remembered in this browser automatically.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">Voucher Information</div>
+      <div class="card-b">
+        <div class="grid2">
+          <div class="span2">
+            <label for="vNo">Voucher No.</label>
+            <div class="inline-row">
+              <input id="vNo" type="text">
+              <button class="btn" id="btnGenNo" type="button" title="Generate next voucher number">Generate</button>
+            </div>
+          </div>
+          <div>
+            <label for="vDate">Voucher Date <span class="req">*</span></label>
+            <input id="vDate" type="date">
+            <div class="err" id="eVDate"></div>
+          </div>
+          <div>
+            <label for="vExpDate">Expense Date</label>
+            <input id="vExpDate" type="date">
+            <div class="hint">Default date for new rows</div>
+          </div>
+          <div class="span2">
+            <label for="vClient">Client / Organisation Name <span class="req">*</span></label>
+            <input id="vClient" type="text">
+            <div class="err" id="eClient"></div>
+          </div>
+          <div class="span2">
+            <label for="vClientAddr">Client Address</label>
+            <textarea id="vClientAddr" rows="2"></textarea>
+          </div>
+          <div class="span2">
+            <label for="vProgramme">Session / Event / Programme Name</label>
+            <input id="vProgramme" type="text">
+          </div>
+          <div class="span2">
+            <label for="vPurpose">Purpose of Expense</label>
+            <textarea id="vPurpose" rows="2"></textarea>
+          </div>
+          <div>
+            <label for="vMode">Payment Mode</label>
+            <select id="vMode">
+              <option>Cash</option><option>UPI</option><option>Card</option><option>Bank Transfer</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="vRef">Reference / Claim No.</label>
+            <input id="vRef" type="text">
+          </div>
+          <div class="span2">
+            <label for="vPlace">Place</label>
+            <input id="vPlace" type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h">
+        <span>Expenses</span>
+        <button class="btn primary sm" id="btnAddExp" type="button">+ Add Expense</button>
+      </div>
+      <div class="card-b">
+        <div class="err" id="eExpenses"></div>
+        <div class="exp-scroll">
+          <table class="exp-table" id="expTable">
+            <thead>
+              <tr><th>#</th><th>Date</th><th>Category</th><th>Particulars</th><th class="num">₹ Amount</th><th></th></tr>
+            </thead>
+            <tbody id="expBody"></tbody>
+          </table>
+        </div>
+        <div class="exp-empty" id="expEmpty">No expenses added yet. Click “+ Add Expense”.</div>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+
+        <div class="grid2" style="margin-bottom:10px">
+          <div>
+            <label for="vAdvance">Advance Received (₹)</label>
+            <input id="vAdvance" type="text" inputmode="decimal" placeholder="0.00">
+            <div class="err" id="eAdvance"></div>
+          </div>
+          <div style="display:flex;align-items:flex-end">
+            <label style="display:flex;gap:8px;align-items:center;margin:0;padding-bottom:9px;font-size:13px;color:var(--text)">
+              <input type="checkbox" id="vRound" style="width:auto"> Round off to nearest ₹1
+            </label>
+          </div>
+        </div>
+
+        <div class="totals" id="totalsBox"></div>
+        <div class="words-box" id="wordsBox"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PREVIEW ============ -->
+  <section class="preview-wrap" aria-label="Live A4 voucher preview">
+    <div class="warn-banner" id="overflowWarn">
+      ⚠ This voucher exceeds the recommended single-page A4 layout. Reduce the number of rows or shorten descriptions, or split the claim into two vouchers.
+    </div>
+    <div class="preview-scroller" id="previewScroller">
+      <div class="a4-holder" id="a4Holder">
+        <div class="a4-stage" id="a4Stage">
+          <div id="voucher"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="app-footer">
+  Created by Smit Parekh &nbsp;|&nbsp;
+  YouTube: <a href="https://www.youtube.com/@TheParekhShow" target="_blank" rel="noopener">www.youtube.com/@TheParekhShow</a>
+</footer>
+
+<!-- Print root (populated at print time) -->
+<div id="printRoot"></div>
+
+<!-- Expense modal -->
+<div class="modal-bg" id="expModal" role="dialog" aria-modal="true" aria-labelledby="expModalTitle">
+  <div class="modal">
+    <div class="modal-h" id="expModalTitle">Add Expense</div>
+    <div class="modal-b">
+      <div class="grid2">
+        <div>
+          <label for="mDate">Expense Date</label>
+          <input id="mDate" type="date">
+        </div>
+        <div>
+          <label for="mCat">Expense Category</label>
+          <select id="mCat"></select>
+        </div>
+        <div class="span2">
+          <label for="mDesc">Description / Particulars</label>
+          <input id="mDesc" type="text" placeholder="e.g. Train fare Mumbai → Pune">
+        </div>
+        <div>
+          <label for="mBill">Bill / Receipt No.</label>
+          <input id="mBill" type="text">
+        </div>
+        <div>
+          <label for="mAmt">Amount (₹) <span class="req">*</span></label>
+          <input id="mAmt" type="text" inputmode="decimal" placeholder="0.00">
+          <div class="err" id="eMAmt"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn" id="mCancel" type="button">Cancel</button>
+      <button class="btn primary" id="mSave" type="button">Save Expense</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm modal -->
+<div class="modal-bg" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+  <div class="modal">
+    <div class="modal-h" id="confirmTitle">Confirm</div>
+    <div class="modal-b" id="confirmMsg"></div>
+    <div class="modal-f">
+      <button class="btn" id="confirmNo" type="button">Cancel</button>
+      <button class="btn danger" id="confirmYes" type="button">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<!-- CDN libraries (loaded lazily on demand for offline resilience) -->
+<script>
+/* ==========================================================
+   PWA SETUP  (manifest + service worker generated at runtime
+   so the app stays a single deliverable HTML file)
+   ========================================================== */
+(function pwaSetup(){
+  // ---- Icon (drawn on canvas, no external file) ----
+  function makeIcon(size){
+    const c=document.createElement('canvas'); c.width=c.height=size;
+    const x=c.getContext('2d');
+    x.fillStyle='#0b2a5b'; x.fillRect(0,0,size,size);
+    x.fillStyle='#ffffff';
+    const p=size*0.22;
+    x.fillRect(p,p,size-2*p,size-2*p);
+    x.fillStyle='#0b2a5b';
+    x.font='bold '+Math.round(size*0.36)+'px Arial,sans-serif';
+    x.textAlign='center'; x.textBaseline='middle';
+    x.fillText('₹',size/2,size*0.5);
+    x.fillRect(p+size*0.06,p+size*0.06,size*0.34,size*0.03);
+    x.fillRect(p+size*0.06,size-p-size*0.09,size*0.50,size*0.03);
+    return c.toDataURL('image/png');
+  }
+  const icon192=makeIcon(192), icon512=makeIcon(512);
+  document.getElementById('favIcon').href=icon192;
+  document.getElementById('appleIcon').href=makeIcon(180);
+
+  const startUrl = (location.protocol==='http:'||location.protocol==='https:') ? location.href.split('#')[0] : '.';
+  const manifest={
+    name:'Expense Reimbursement Voucher Generator – Smit Parekh',
+    short_name:'Voucher Gen',
+    description:'Expense Reimbursement Voucher Generator. Created by Smit Parekh.',
+    start_url:startUrl, scope:startUrl.replace(/[^\/]*$/,''),
+    display:'standalone', orientation:'any',
+    background_color:'#f3f5f9', theme_color:'#0b2a5b',
+    icons:[
+      {src:icon192,sizes:'192x192',type:'image/png',purpose:'any'},
+      {src:icon512,sizes:'512x512',type:'image/png',purpose:'any'},
+      {src:icon512,sizes:'512x512',type:'image/png',purpose:'maskable'}
+    ]
+  };
+  try{
+    const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+    document.getElementById('pwaManifest').href=URL.createObjectURL(blob);
+  }catch(e){}
+
+  // ---- Service worker (works when hosted on https / localhost) ----
+  if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+    const swCode=`
+      const CACHE='erv-smit-parekh-v1';
+      self.addEventListener('install',e=>{self.skipWaiting();});
+      self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE).map(n=>caches.delete(n)))).then(()=>self.clients.claim()));});
+      self.addEventListener('fetch',e=>{
+        if(e.request.method!=='GET')return;
+        e.respondWith(
+          fetch(e.request).then(r=>{
+            if(r&&(r.status===200||r.type==='opaque')){const cp=r.clone();caches.open(CACHE).then(c=>c.put(e.request,cp)).catch(()=>{});}
+            return r;
+          }).catch(()=>caches.match(e.request).then(m=>m||caches.match(self.registration.scope)))
+        );
+      });`;
+    try{
+      const swUrl=URL.createObjectURL(new Blob([swCode],{type:'text/javascript'}));
+      navigator.serviceWorker.register(swUrl).catch(()=>{});
+    }catch(e){}
+  }
+
+  // ---- Install prompt ----
+  let deferred=null; const btn=document.getElementById('installBtn');
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;btn.style.display='inline-flex';});
+  btn.addEventListener('click',async()=>{
+    if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;btn.style.display='none';}
+  });
+  window.addEventListener('appinstalled',()=>{btn.style.display='none';window.__toast&&window.__toast('App installed successfully','ok');});
+
+  // iOS hint (Safari has no install event)
+  const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.MSStream;
+  const standalone=window.navigator.standalone||window.matchMedia('(display-mode: standalone)').matches;
+  if(isIOS&&!standalone){
+    btn.style.display='inline-flex'; btn.textContent='⬇ Install (iOS)';
+    btn.onclick=()=>window.__toast&&window.__toast('On iPhone/iPad: tap Share ▸ “Add to Home Screen”.','warn');
+  }
+})();
+</script>
+
+<script>
+/* ==========================================================
+   MAIN APPLICATION
+   ========================================================== */
+(function(){
+'use strict';
+
+const $ = id => document.getElementById(id);
+const CATEGORIES=['Travel','Local Conveyance','Auto/Taxi','Fuel','Parking','Toll','Food/Refreshment','Printing/Stationery','Accommodation','Courier','Other'];
+const LS_PROFILE='erv_profile_v1', LS_DRAFT='erv_draft_v1', LS_SEQ='erv_seq_v1', LS_THEME='erv_theme_v1';
+
+/* ---------- State ---------- */
+let expenses=[]; let editingId=null; let idCounter=1;
+
+/* ---------- Utilities ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function todayISO(){const d=new Date();const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function fmtDate(iso){if(!iso)return '';const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);return m?`${m[3]}/${m[2]}/${m[1]}`:iso;}
+function parseAmt(v){
+  if(v==null)return NaN; const s=String(v).replace(/[₹,\s]/g,'');
+  if(s==='')return 0; if(!/^\d*\.?\d+$|^\d+\.?$/.test(s))return NaN;
+  return Math.round(parseFloat(s)*100)/100;
+}
+function fmtINR(n){
+  n=Math.round((+n||0)*100)/100;
+  const neg=n<0; n=Math.abs(n);
+  const [i,d]=n.toFixed(2).split('.');
+  let last3=i.slice(-3), rest=i.slice(0,-3);
+  if(rest)last3=','+last3;
+  const r=rest.replace(/\B(?=(\d{2})+(?!\d))/g,',')+last3;
+  return (neg?'-':'')+r+'.'+d;
+}
+function fmtRs(n){return '₹ '+fmtINR(n);}
+
+/* ---------- Amount in words (Indian system) ---------- */
+const ONES=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
+const TENS=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+function twoDigits(n){return n<20?ONES[n]:TENS[Math.floor(n/10)]+(n%10?' '+ONES[n%10]:'');}
+function threeDigits(n){
+  let s=''; const h=Math.floor(n/100), r=n%100;
+  if(h)s+=ONES[h]+' Hundred'; if(r)s+=(s?' ':'')+twoDigits(r); return s;
+}
+function intToIndianWords(n){
+  if(n===0)return 'Zero';
+  const parts=[]; 
+  const crore=Math.floor(n/10000000); n%=10000000;
+  const lakh=Math.floor(n/100000); n%=100000;
+  const thou=Math.floor(n/1000); n%=1000;
+  if(crore){ parts.push((crore>=100?intToIndianWords(crore):twoDigits(crore))+' Crore'); }
+  if(lakh)parts.push(twoDigits(lakh)+' Lakh');
+  if(thou)parts.push(twoDigits(thou)+' Thousand');
+  if(n)parts.push(threeDigits(n));
+  return parts.join(' ');
+}
+function amountInWords(amount){
+  amount=Math.round((+amount||0)*100)/100;
+  if(amount<0)amount=Math.abs(amount);
+  let rupees=Math.floor(amount+1e-9), paise=Math.round((amount-rupees)*100);
+  if(paise===100){rupees+=1;paise=0;}
+  let out='Rupees '+intToIndianWords(rupees);
+  if(paise>0)out+=' and '+twoDigits(paise)+' Paise';
+  return out+' Only';
+}
+
+/* ---------- Toast ---------- */
+function toast(msg,type){
+  const t=document.createElement('div'); t.className='toast '+(type||''); t.textContent=msg;
+  $('toasts').appendChild(t); setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .3s';setTimeout(()=>t.remove(),300);},3200);
+}
+window.__toast=toast;
+
+/* ---------- Confirm ---------- */
+function confirmBox(title,msg,yesLabel){
+  return new Promise(res=>{
+    $('confirmTitle').textContent=title; $('confirmMsg').textContent=msg; $('confirmYes').textContent=yesLabel||'Confirm';
+    $('confirmModal').classList.add('show'); $('confirmYes').focus();
+    const done=v=>{$('confirmModal').classList.remove('show');$('confirmYes').onclick=$('confirmNo').onclick=null;res(v);};
+    $('confirmYes').onclick=()=>done(true); $('confirmNo').onclick=()=>done(false);
+  });
+}
+
+/* ---------- Theme ---------- */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  $('themeBtn').textContent=t==='dark'?'☀ Day':'☾ Night';
+  const m=document.querySelector('meta[name="theme-color"]'); if(m)m.content=t==='dark'?'#0a1a38':'#0b2a5b';
+  try{localStorage.setItem(LS_THEME,t);}catch(e){}
+}
+(function initTheme(){
+  let t='light';
+  try{t=localStorage.getItem(LS_THEME)||(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch(e){}
+  applyTheme(t);
+  $('themeBtn').addEventListener('click',()=>applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'));
+})();
+
+/* ---------- Voucher number ---------- */
+function getSeq(){try{return parseInt(localStorage.getItem(LS_SEQ),10)||1;}catch(e){return 1;}}
+function setSeq(n){try{localStorage.setItem(LS_SEQ,String(n));}catch(e){}}
+function makeVoucherNo(seq){return 'ERV-'+new Date().getFullYear()+'-'+String(seq).padStart(4,'0');}
+function generateVoucherNo(){ $('vNo').value=makeVoucherNo(getSeq()); update(); }
+function bumpSeqIfUsed(){
+  // increments stored sequence when current number matches the auto pattern
+  const m=/^ERV-\d{4}-(\d+)$/.exec($('vNo').value.trim());
+  if(m){const n=parseInt(m[1],10); if(n>=getSeq())setSeq(n+1);}
+}
+
+/* ---------- Field map ---------- */
+const PROFILE_FIELDS=['cName','cOcc','cAddr','cMobile','cEmail','cPan','cGstin','cBank'];
+const VOUCHER_FIELDS=['vNo','vDate','vExpDate','vClient','vClientAddr','vProgramme','vPurpose','vMode','vRef','vPlace','vAdvance'];
+
+function saveProfile(){
+  const p={}; PROFILE_FIELDS.forEach(f=>p[f]=$(f).value);
+  try{localStorage.setItem(LS_PROFILE,JSON.stringify(p));}catch(e){}
+}
+function loadProfile(){
+  let p=null; try{p=JSON.parse(localStorage.getItem(LS_PROFILE)||'null');}catch(e){}
+  $('cName').value=(p&&p.cName)||'Smit Parekh';
+  $('cOcc').value=(p&&p.cOcc)||'Freelance Faculty / Trainer';
+  ['cAddr','cMobile','cEmail','cPan','cGstin','cBank'].forEach(f=>$(f).value=(p&&p[f])||'');
+}
+
+/* ---------- Collect data ---------- */
+function calc(){
+  const total=expenses.reduce((s,e)=>s+(e.amount||0),0);
+  let adv=parseAmt($('vAdvance').value); if(isNaN(adv))adv=0;
+  let net=Math.round((total-adv)*100)/100;
+  let roundOff=0;
+  if($('vRound').checked){const r=Math.round(net); roundOff=Math.round((r-net)*100)/100; net=r;}
+  return {total:Math.round(total*100)/100,adv,net,roundOff};
+}
+function periodText(){
+  const ds=expenses.map(e=>e.date).filter(Boolean).sort();
+  if(!ds.length){return $('vExpDate').value?fmtDate($('vExpDate').value):'';}
+  return ds[0]===ds[ds.length-1]?fmtDate(ds[0]):fmtDate(ds[0])+' to '+fmtDate(ds[ds.length-1]);
+}
+
+/* ---------- Render: control-panel expense list ---------- */
+function renderExpList(){
+  const body=$('expBody'); body.innerHTML='';
+  expenses.forEach((e,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${i+1}</td><td>${esc(fmtDate(e.date))}</td><td>${esc(e.category)}</td>
+      <td>${esc(e.desc)}${e.bill?'<div class="hint">Bill: '+esc(e.bill)+'</div>':''}</td>
+      <td class="num">${fmtINR(e.amount)}</td>
+      <td><div class="exp-actions">
+        <button class="btn sm" type="button" data-edit="${e.id}" aria-label="Edit expense ${i+1}">Edit</button>
+        <button class="btn sm danger" type="button" data-del="${e.id}" aria-label="Delete expense ${i+1}">Delete</button>
+      </div></td>`;
+    body.appendChild(tr);
+  });
+  $('expEmpty').style.display=expenses.length?'none':'block';
+  $('expTable').style.display=expenses.length?'table':'none';
+}
+$('expBody').addEventListener('click',ev=>{
+  const b=ev.target.closest('button'); if(!b)return;
+  if(b.dataset.edit)openExpModal(+b.dataset.edit);
+  if(b.dataset.del){
+    const id=+b.dataset.del;
+    expenses=expenses.filter(e=>e.id!==id); toast('Expense deleted','ok'); update();
+  }
+});
+
+/* ---------- Render: totals ---------- */
+function renderTotals(){
+  const c=calc();
+  let h=`<div>Total Expenses</div><div class="v">${fmtRs(c.total)}</div>`;
+  if(c.adv>0)h+=`<div>Less: Advance Received</div><div class="v">(${fmtRs(c.adv)})</div>`;
+  if($('vRound').checked&&c.roundOff!==0)h+=`<div>Round-off</div><div class="v">${c.roundOff>0?'+':'-'} ${fmtRs(Math.abs(c.roundOff))}</div>`;
+  h+=`<div class="net">Net Reimbursement Claim</div><div class="v net">${fmtRs(c.net)}</div>`;
+  $('totalsBox').innerHTML=h;
+  $('wordsBox').innerHTML='<b>In words:</b> '+esc(amountInWords(c.net));
+}
+
+/* ---------- Render: voucher ---------- */
+function kvRow(k,v){return v?`<tr><td class="k">${esc(k)}</td><td class="c">:</td><td class="val">${esc(v)}</td></tr>`:'';}
+
+function renderVoucher(){
+  const c=calc();
+  const name=$('cName').value.trim(), occ=$('cOcc').value.trim();
+  const rows=expenses.map((e,i)=>`<tr>
+    <td class="ctr">${i+1}</td><td>${esc(fmtDate(e.date))}</td><td>${esc(e.category)}</td>
+    <td>${esc(e.desc)}</td><td>${esc(e.bill)}</td><td class="num">${fmtINR(e.amount)}</td></tr>`).join('');
+
+  const claimantExtras=[
+    ['Address',$('cAddr').value.trim()],['Mobile',$('cMobile').value.trim()],['Email',$('cEmail').value.trim()],
+    ['PAN',$('cPan').value.trim().toUpperCase()],['GSTIN',$('cGstin').value.trim().toUpperCase()],['Bank / UPI',$('cBank').value.trim()]
+  ].filter(x=>x[1]);
+
+  const summary=`
+    <table class="v-sum">
+      <tr><td>Total Expenses</td><td class="n">${fmtRs(c.total)}</td></tr>
+      ${c.adv>0?`<tr><td>Less: Advance Received</td><td class="n">(${fmtRs(c.adv)})</td></tr>`:''}
+      ${$('vRound').checked&&c.roundOff!==0?`<tr><td>Round-off</td><td class="n">${c.roundOff>0?'+':'-'} ${fmtRs(Math.abs(c.roundOff))}</td></tr>`:''}
+      <tr class="net"><td>Net Reimbursement Amount</td><td class="n">${fmtRs(c.net)}</td></tr>
+    </table>
+    <div class="v-words"><b>Amount in Words:</b> ${esc(amountInWords(c.net))}</div>`;
+
+  $('voucher').innerHTML=`
+    <div class="v-head">
+      <div class="t1">EXPENSE REIMBURSEMENT VOUCHER</div>
+      <div class="t2">Cash Expense Claim</div>
+    </div>
+    <div class="v-meta">
+      <div><b>Voucher No.:</b> ${esc($('vNo').value.trim()||'—')}</div>
+      <div><b>Voucher Date:</b> ${esc(fmtDate($('vDate').value)||'—')}</div>
+    </div>
+
+    <div class="v-sec">
+      <div class="v-sec-t">Claimant Details</div>
+      <table class="v-kv">
+        ${kvRow('Claimant Name',name)}
+        ${kvRow('Designation / Role',occ)}
+        ${kvRow('Organisation / Client',$('vClient').value.trim())}
+        ${kvRow('Client Address',$('vClientAddr').value.trim())}
+        ${kvRow('Programme / Event',$('vProgramme').value.trim())}
+        ${kvRow('Purpose of Expense',$('vPurpose').value.trim())}
+        ${kvRow('Expense Period',periodText())}
+        ${kvRow('Payment Mode',$('vMode').value)}
+        ${kvRow('Reference / Claim No.',$('vRef').value.trim())}
+        ${kvRow('Place',$('vPlace').value.trim())}
+        ${claimantExtras.map(x=>kvRow(x[0],x[1])).join('')}
+      </table>
+    </div>
+
+    <div class="v-sec">
+      <div class="v-sec-t">Expense Details</div>
+      <table class="v-tbl">
+        <thead><tr>
+          <th style="width:34px" class="ctr">Sr.</th><th style="width:72px">Date</th><th style="width:115px">Category</th>
+          <th>Description / Particulars</th><th style="width:92px">Bill / Receipt No.</th><th style="width:88px;text-align:right">Amount (₹)</th>
+        </tr></thead>
+        <tbody>${rows||'<tr><td colspan="6" class="ctr" style="padding:14px;color:#777">No expenses entered</td></tr>'}</tbody>
+        <tfoot><tr><td colspan="5" style="text-align:right">Total</td><td class="num">${fmtINR(c.total)}</td></tr></tfoot>
+      </table>
+    </div>
+
+    <div class="v-sec" id="vSummarySec">${summary}</div>
+
+    <div class="v-bottom-block" id="vBottom">
+      <div class="v-decl"><b>Declaration:</b> I certify that the above expenses were incurred by me for official/professional purposes in connection with the programme/session mentioned above and that the amounts claimed are true and supported by available bills/receipts wherever applicable.</div>
+      <div class="v-sec">
+        <div class="v-sign">
+          <div class="box">
+            <div class="h">Claimant</div>
+            <div class="line"></div>
+            <div style="font-size:10.5px;color:#444">Claimant Signature</div>
+            <div class="row"><span class="k">Name</span><span>: ${esc(name||'')}</span></div>
+            <div class="row"><span class="k">Date</span><span class="fill"></span></div>
+          </div>
+          <div class="box">
+            <div class="h">Client / Organisation Verification</div>
+            <div class="row" style="margin-top:0"><span class="k">Verified By</span><span class="fill"></span></div>
+            <div class="row"><span class="k">Designation</span><span class="fill"></span></div>
+            <div class="line" style="margin-top:8px;height:22px"></div>
+            <div style="font-size:10.5px;color:#444">Signature</div>
+            <div class="row"><span class="k">Date</span><span class="fill"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="v-foot">
+      <span>Computer-generated reimbursement voucher.</span>
+      <span>${esc(name||'')}${$('vNo').value.trim()?' · '+esc($('vNo').value.trim()):''}</span>
+    </div>`;
+
+  checkOverflow();
+}
+
+/* ---------- Overflow detection ---------- */
+function checkOverflow(){
+  const v=$('voucher'), sum=$('vSummarySec'), bottom=$('vBottom');
+  if(!sum||!bottom){return;}
+  const vTop=v.getBoundingClientRect().top, scale=currentScale||1;
+  const sumBottom=(sum.getBoundingClientRect().bottom-vTop)/scale;
+  const bottomTop=(bottom.getBoundingClientRect().top-vTop)/scale;
+  const over=sumBottom>bottomTop-6;
+  $('overflowWarn').classList.toggle('show',over);
+  overflowing=over;
+}
+let overflowing=false;
+
+/* ---------- Preview scaling ---------- */
+let currentScale=1;
+function fitPreview(){
+  const sc=$('previewScroller'); const avail=sc.clientWidth-32;
+  const s=Math.min(1,Math.max(0.3,avail/794));
+  currentScale=s;
+  const stage=$('a4Stage'), holder=$('a4Holder');
+  stage.style.transform=`scale(${s})`;
+  holder.style.width=(794*s)+'px'; holder.style.height=(1123*s)+'px';
+  stage.style.width='794px'; stage.style.height='1123px';
+  checkOverflow();
+}
+window.addEventListener('resize',fitPreview);
+
+/* ---------- Master update ---------- */
+function update(){
+  renderExpList(); renderTotals(); renderVoucher(); fitPreview();
+  autoSaveDraft();
+}
+
+/* ---------- Validation ---------- */
+function setErr(id,inputId,msg){
+  const e=$(id); if(!e)return;
+  e.textContent=msg||''; e.classList.toggle('show',!!msg);
+  if(inputId){$(inputId).classList.toggle('invalid',!!msg);}
+}
+function validate(showToast){
+  let ok=true;
+  if(!$('vDate').value){setErr('eVDate','vDate','Voucher date is required.');ok=false;}else setErr('eVDate','vDate','');
+  if(!$('vClient').value.trim()){setErr('eClient','vClient','Client / Organisation name is required.');ok=false;}else setErr('eClient','vClient','');
+  if(!expenses.length){setErr('eExpenses',null,'Add at least one expense row.');ok=false;}
+  else if(expenses.some(e=>!(e.amount>0))){setErr('eExpenses',null,'All expense amounts must be greater than zero.');ok=false;}
+  else setErr('eExpenses',null,'');
+  const a=parseAmt($('vAdvance').value);
+  if(isNaN(a)||a<0){setErr('eAdvance','vAdvance','Enter a valid non-negative number.');ok=false;}else setErr('eAdvance','vAdvance','');
+  if(!$('cName').value.trim()){ $('cName').classList.add('invalid'); ok=false;} else $('cName').classList.remove('invalid');
+  if(!ok&&showToast)toast('Please fix the highlighted fields.','err');
+  return ok;
+}
+
+/* ---------- Expense modal ---------- */
+function openExpModal(id){
+  editingId=id||null;
+  $('mCat').innerHTML=CATEGORIES.map(c=>`<option>${esc(c)}</option>`).join('');
+  setErr('eMAmt','mAmt','');
+  if(editingId){
+    const e=expenses.find(x=>x.id===editingId); if(!e)return;
+    $('expModalTitle').textContent='Edit Expense';
+    $('mDate').value=e.date; $('mCat').value=e.category; $('mDesc').value=e.desc; $('mBill').value=e.bill; $('mAmt').value=e.amount;
+  }else{
+    $('expModalTitle').textContent='Add Expense';
+    $('mDate').value=$('vExpDate').value||$('vDate').value||todayISO(); $('mCat').value='Travel'; $('mDesc').value=''; $('mBill').value=''; $('mAmt').value='';
+  }
+  $('expModal').classList.add('show'); setTimeout(()=>$('mAmt').focus(),50);
+}
+function closeExpModal(){$('expModal').classList.remove('show');editingId=null;}
+function saveExpModal(){
+  const amt=parseAmt($('mAmt').value);
+  if(isNaN(amt)||amt<=0){setErr('eMAmt','mAmt','Enter a valid amount greater than zero.');return;}
+  const rec={date:$('mDate').value,category:$('mCat').value,desc:$('mDesc').value.trim(),bill:$('mBill').value.trim(),amount:amt};
+  if(editingId){const i=expenses.findIndex(x=>x.id===editingId); if(i>-1)expenses[i]=Object.assign({id:editingId},rec);toast('Expense updated','ok');}
+  else{expenses.push(Object.assign({id:idCounter++},rec));toast('Expense added','ok');}
+  closeExpModal(); update();
+}
+$('btnAddExp').onclick=()=>openExpModal();
+$('mCancel').onclick=closeExpModal;
+$('mSave').onclick=saveExpModal;
+$('expModal').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.tagName!=='TEXTAREA'){e.preventDefault();saveExpModal();}if(e.key==='Escape')closeExpModal();});
+$('expModal').addEventListener('mousedown',e=>{if(e.target===$('expModal'))closeExpModal();});
+$('mAmt').addEventListener('input',()=>{const v=parseAmt($('mAmt').value);setErr('eMAmt','mAmt',isNaN(v)?'Numbers only (e.g. 1250.50).':'');});
+$('vAdvance').addEventListener('input',()=>{const v=parseAmt($('vAdvance').value);setErr('eAdvance','vAdvance',(isNaN(v)||v<0)?'Enter a valid non-negative number.':'');});
+
+/* ---------- Draft handling ---------- */
+function snapshot(){
+  const o={expenses,idCounter,fields:{}};
+  VOUCHER_FIELDS.forEach(f=>o.fields[f]=$(f).value); o.round=$('vRound').checked;
+  return o;
+}
+function autoSaveDraft(){ saveProfile(); }
+function saveDraft(){
+  try{localStorage.setItem(LS_DRAFT,JSON.stringify(snapshot()));toast('Draft saved in this browser','ok');}
+  catch(e){toast('Could not save draft (storage unavailable)','err');}
+}
+function loadDraft(){
+  let d=null; try{d=JSON.parse(localStorage.getItem(LS_DRAFT)||'null');}catch(e){}
+  if(!d){toast('No saved draft found','warn');return;}
+  VOUCHER_FIELDS.forEach(f=>{if(d.fields&&d.fields[f]!=null)$(f).value=d.fields[f];});
+  expenses=Array.isArray(d.expenses)?d.expenses:[]; idCounter=d.idCounter||(expenses.reduce((m,e)=>Math.max(m,e.id||0),0)+1);
+  $('vRound').checked=!!d.round; update(); toast('Draft loaded','ok');
+}
+function clearVoucherFields(keepMode){
+  ['vClient','vClientAddr','vProgramme','vPurpose','vRef','vPlace','vAdvance','vExpDate'].forEach(f=>$(f).value='');
+  $('vMode').value='Cash'; $('vRound').checked=false; expenses=[]; idCounter=1;
+  $('vDate').value=todayISO();
+  ['eVDate','eClient','eExpenses','eAdvance'].forEach(id=>setErr(id,null,''));
+  ['vDate','vClient','vAdvance'].forEach(id=>$(id).classList.remove('invalid'));
+}
+
+$('btnSave').onclick=saveDraft;
+$('btnLoad').onclick=loadDraft;
+$('btnClear').onclick=async()=>{
+  if(await confirmBox('Clear Form','Clear all voucher and expense entries? Your profile details will be kept.','Clear')){
+    clearVoucherFields(); $('vNo').value=''; update(); toast('Form cleared','ok');
+  }
+};
+$('btnNew').onclick=async()=>{
+  if(expenses.length||$('vClient').value.trim()){
+    if(!(await confirmBox('New Voucher','Start a new voucher? Current transaction details will be cleared (profile is retained). Save a draft first if needed.','Start New')))return;
+    bumpSeqIfUsed();
+  }
+  clearVoucherFields(); generateVoucherNo(); toast('New voucher started','ok');
+};
+$('btnReset').onclick=async()=>{
+  if(await confirmBox('Reset Everything','This clears ALL entries, your saved profile, draft and voucher counter in this browser. Continue?','Reset All')){
+    try{[LS_PROFILE,LS_DRAFT,LS_SEQ].forEach(k=>localStorage.removeItem(k));}catch(e){}
+    loadProfile(); clearVoucherFields(); generateVoucherNo(); toast('Application reset','ok');
+  }
+};
+$('btnGenNo').onclick=()=>{generateVoucherNo();toast('Voucher number generated','ok');};
+$('btnOptional').onclick=()=>{
+  const w=$('optWrap'); const hidden=w.classList.toggle('hidden');
+  $('btnOptional').textContent=hidden?'Show Optional Fields':'Hide Optional Fields';
+  $('btnOptional').setAttribute('aria-expanded',String(!hidden));
+};
+
+/* ---------- Live update wiring ---------- */
+PROFILE_FIELDS.concat(VOUCHER_FIELDS).concat(['vRound']).forEach(id=>{
+  const el=$(id); el.addEventListener('input',update); el.addEventListener('change',update);
+});
+['cPan','cGstin'].forEach(id=>$(id).addEventListener('input',e=>{const p=e.target.selectionStart;e.target.value=e.target.value.toUpperCase();e.target.setSelectionRange(p,p);}));
+$('vDate').addEventListener('input',()=>setErr('eVDate','vDate',$('vDate').value?'':'Voucher date is required.'));
+$('vClient').addEventListener('input',()=>setErr('eClient','vClient',$('vClient').value.trim()?'':'Client / Organisation name is required.'));
+
+/* ---------- Filenames ---------- */
+function safe(s){return String(s||'').trim().replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');}
+function stamp(){const d=new Date();const p=n=>String(n).padStart(2,'0');return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());}
+function fileBase(prefix){
+  const no=safe($('vNo').value)||stamp(); const cl=safe($('vClient').value);
+  return prefix+'_'+no+(cl?'_'+cl:'');
+}
+
+/* ---------- Lazy library loader ---------- */
+const loaded={};
+function loadScript(url){
+  if(loaded[url])return loaded[url];
+  loaded[url]=new Promise((res,rej)=>{
+    const s=document.createElement('script'); s.src=url; s.onload=res; s.onerror=()=>{delete loaded[url];rej(new Error('Failed to load '+url));};
+    document.head.appendChild(s);
+  });
+  return loaded[url];
+}
+const LIBS={
+  h2c:'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+  jspdf:'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+  xlsx:'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'
+};
+
+/* ---------- PDF export ---------- */
+async function exportPDF(){
+  if(!validate(true))return;
+  if(overflowing)toast('Note: voucher exceeds one page; content may be clipped.','warn');
+  const btn=$('btnPdf'); btn.disabled=true; const old=btn.textContent; btn.textContent='Generating…';
+  try{
+    await Promise.all([loadScript(LIBS.h2c),loadScript(LIBS.jspdf)]);
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    // Render a clean, unscaled clone offscreen for accurate capture
+    const clone=$('voucher').cloneNode(true);
+    const host=document.createElement('div');
+    host.style.cssText='position:fixed;left:-10000px;top:0;width:794px;height:1123px;background:#fff;z-index:-1';
+    clone.style.transform='none'; clone.style.boxShadow='none'; host.appendChild(clone); document.body.appendChild(host);
+    const canvas=await window.html2canvas(clone,{scale:3,backgroundColor:'#ffffff',useCORS:true,width:794,height:1123,windowWidth:794,windowHeight:1123,logging:false});
+    document.body.removeChild(host);
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4',compress:true});
+    pdf.addImage(canvas.toDataURL('image/jpeg',0.95),'JPEG',0,0,210,297,undefined,'FAST');
+    pdf.setProperties({title:'Expense Reimbursement Voucher '+($('vNo').value||''),author:$('cName').value||'Smit Parekh',creator:'Created by Smit Parekh'});
+    pdf.save(fileBase('Expense_Reimbursement_Voucher')+'.pdf');
+    bumpSeqIfUsed(); toast('PDF exported successfully','ok');
+  }catch(err){
+    console.error(err); toast('PDF export failed. Check internet connection or use “Print / Save as PDF”.','err');
+  }finally{btn.disabled=false;btn.textContent=old;}
+}
+$('btnPdf').onclick=exportPDF;
+
+/* ---------- Print ---------- */
+$('btnPrint').onclick=()=>{
+  if(!validate(true))return;
+  if(overflowing)toast('Warning: voucher may exceed one A4 page.','warn');
+  const root=$('printRoot'); root.innerHTML='';
+  const clone=$('voucher').cloneNode(true); clone.removeAttribute('id'); clone.id='voucher';
+  root.appendChild(clone);
+  // Avoid duplicate ids while printing
+  $('a4Stage').querySelector('#voucher').id='voucherLive';
+  const after=()=>{ const live=document.getElementById('voucherLive'); if(live)live.id='voucher'; root.innerHTML=''; window.removeEventListener('afterprint',after); };
+  window.addEventListener('afterprint',after);
+  setTimeout(()=>window.print(),80);
+};
+
+/* ---------- Excel export ---------- */
+async function exportExcel(){
+  if(!validate(true))return;
+  const btn=$('btnXlsx'); btn.disabled=true; const old=btn.textContent; btn.textContent='Generating…';
+  try{
+    await loadScript(LIBS.xlsx);
+    const X=window.XLSX; const c=calc();
+    const aoa=[]; const merges=[]; const boldCells=[]; const money=[]; 
+    const push=(row)=>{aoa.push(row);return aoa.length-1;};
+
+    let r=push(['EXPENSE REIMBURSEMENT VOUCHER']); merges.push({s:{r,c:0},e:{r,c:5}}); boldCells.push({r,c:0,title:true});
+    r=push(['Cash Expense Claim']); merges.push({s:{r,c:0},e:{r,c:5}});
+    push([]);
+
+    r=push(['VOUCHER INFORMATION']); boldCells.push({r,c:0,section:true});
+    [['Voucher No.',$('vNo').value.trim()],['Voucher Date',fmtDate($('vDate').value)],['Expense Period',periodText()],
+     ['Payment Mode',$('vMode').value],['Reference / Claim No.',$('vRef').value.trim()],['Place',$('vPlace').value.trim()],
+     ['Programme / Event',$('vProgramme').value.trim()],['Purpose of Expense',$('vPurpose').value.trim()]]
+    .forEach(p=>{const i=push([p[0],p[1]]);boldCells.push({r:i,c:0});});
+    push([]);
+
+    r=push(['CLAIMANT INFORMATION']); boldCells.push({r,c:0,section:true});
+    [['Name',$('cName').value.trim()],['Occupation',$('cOcc').value.trim()],['Address',$('cAddr').value.trim()],
+     ['Mobile',$('cMobile').value.trim()],['Email',$('cEmail').value.trim()],['PAN',$('cPan').value.trim()],
+     ['GSTIN',$('cGstin').value.trim()],['Bank / UPI',$('cBank').value.trim()]]
+    .filter(p=>p[1]).forEach(p=>{const i=push([p[0],p[1]]);boldCells.push({r:i,c:0});});
+    push([]);
+
+    r=push(['CLIENT INFORMATION']); boldCells.push({r,c:0,section:true});
+    [['Client / Organisation',$('vClient').value.trim()],['Client Address',$('vClientAddr').value.trim()]]
+    .filter(p=>p[1]).forEach(p=>{const i=push([p[0],p[1]]);boldCells.push({r:i,c:0});});
+    push([]);
+
+    r=push(['EXPENSE DETAILS']); boldCells.push({r,c:0,section:true});
+    const hr=push(['Sr. No.','Expense Date','Category','Description / Particulars','Bill / Receipt No.','Amount (₹)']);
+    for(let cc=0;cc<6;cc++)boldCells.push({r:hr,c:cc,header:true});
+    expenses.forEach((e,i)=>{const ri=push([i+1,fmtDate(e.date),e.category,e.desc,e.bill,e.amount]);money.push({r:ri,c:5});});
+    push([]);
+    let t=push(['','','','','Total Expenses',c.total]); money.push({r:t,c:5}); boldCells.push({r:t,c:4},{r:t,c:5});
+    if(c.adv>0){t=push(['','','','','Less: Advance Received',c.adv]); money.push({r:t,c:5}); boldCells.push({r:t,c:4});}
+    if($('vRound').checked&&c.roundOff!==0){t=push(['','','','','Round-off',c.roundOff]); money.push({r:t,c:5}); boldCells.push({r:t,c:4});}
+    t=push(['','','','','Net Reimbursement Claim',c.net]); money.push({r:t,c:5}); boldCells.push({r:t,c:4,net:true},{r:t,c:5,net:true});
+    push([]);
+    t=push(['Amount in Words',amountInWords(c.net)]); boldCells.push({r:t,c:0}); merges.push({s:{r:t,c:1},e:{r:t,c:5}});
+    push([]);
+    t=push(['Created by Smit Parekh  |  YouTube: www.youtube.com/@TheParekhShow']); merges.push({s:{r:t,c:0},e:{r:t,c:5}});
+
+    const ws=X.utils.aoa_to_sheet(aoa);
+    ws['!cols']=[{wch:24},{wch:14},{wch:22},{wch:44},{wch:22},{wch:16}];
+    ws['!merges']=merges;
+    const addr=(r,c)=>X.utils.encode_cell({r,c});
+    const thin={style:'thin',color:{rgb:'8C98B0'}};
+    boldCells.forEach(b=>{
+      const a=addr(b.r,b.c); if(!ws[a])ws[a]={t:'s',v:''};
+      ws[a].s={font:{bold:true,sz:b.title?16:(b.section?12:11),color:{rgb:b.header?'FFFFFF':'0B2A5B'}},
+        alignment:{horizontal:b.title?'center':(b.c===5&&!b.header?'right':(b.header&&b.c===5?'right':'left')),vertical:'center'}};
+      if(b.header){ws[a].s.fill={patternType:'solid',fgColor:{rgb:'0B2A5B'}};ws[a].s.border={top:thin,bottom:thin,left:thin,right:thin};}
+      if(b.net){ws[a].s.fill={patternType:'solid',fgColor:{rgb:'E6EDF9'}};}
+    });
+    money.forEach(m=>{const a=addr(m.r,m.c); if(ws[a]){ws[a].t='n';ws[a].z='"₹" #,##0.00';ws[a].s=Object.assign({},ws[a].s||{},{alignment:{horizontal:'right'},font:Object.assign({},(ws[a].s||{}).font||{})});}});
+    const sub=addr(1,0); if(ws[sub])ws[sub].s={alignment:{horizontal:'center'},font:{italic:true,color:{rgb:'555555'}}};
+    ws['!rows']=aoa.map(()=>({hpt:18}));
+    const wb=X.utils.book_new(); X.utils.book_append_sheet(wb,ws,'Voucher');
+    wb.Props={Title:'Expense Reimbursement '+($('vNo').value||''),Author:$('cName').value||'Smit Parekh',Company:'Created by Smit Parekh'};
+    X.writeFile(wb,fileBase('Expense_Reimbursement')+'.xlsx');
+    bumpSeqIfUsed(); toast('Excel exported successfully','ok');
+  }catch(err){
+    console.error(err); toast('Excel export failed. Please check your internet connection.','err');
+  }finally{btn.disabled=false;btn.textContent=old;}
+}
+$('btnXlsx').onclick=exportExcel;
+
+/* ---------- Init ---------- */
+(function init(){
+  loadProfile();
+  $('vDate').value=todayISO();
+  $('vNo').value=makeVoucherNo(getSeq());
+  // Auto-restore last unsaved-work draft only if user explicitly saved one? -> keep manual, but offer hint
+  update();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{renderVoucher();fitPreview();});
+  window.addEventListener('beforeunload',saveProfile);
+})();
+
+})();
+</script>
+</body>
+</html>
