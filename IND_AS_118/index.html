@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smit FinStat PRO - Ind AS 118 Financial Statement Generator</title>
+  <meta name="description" content="Professional Ind AS 118 Financial Statement Generator for Indian Chartered Accountants. 100% Client-Side Confidential Processing.">
+  <meta name="theme-color" content="#1e3a8a">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       APP HEADER
+       ========================================================================= -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-section">
+        <div class="brand-logo">SF</div>
+        <div class="brand-text">
+          <h1>Smit FinStat PRO <span class="brand-badge">Ind AS 118</span></h1>
+          <div class="brand-sub">Professional Financial Statement Generator for Indian Chartered Accountants</div>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div class="active-entity-pill">
+          <span class="entity-dot" id="header-entity-dot"></span>
+          <span id="header-entity-name">Apex Auto Components Limited</span>
+        </div>
+
+        <button class="btn btn-emerald btn-sm" onclick="FinStatApp.loadEmbeddedSample('manufacturing')">
+          🏭 Sample Mfg
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="FinStatApp.loadEmbeddedSample('nbfc')">
+          🏦 Sample NBFC
+        </button>
+        <button class="btn btn-dark btn-sm" onclick="FinStatApp.triggerExcelExport()">
+          📊 Excel
+        </button>
+        <button class="btn btn-dark btn-sm" onclick="FinStatApp.triggerPDFExport()">
+          📄 PDF
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="FinStatApp.triggerPrint()">
+          🖨️ Print
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       WORKFLOW NAVIGATION TABS
+       ========================================================================= -->
+  <nav class="workflow-nav-bar">
+    <div class="nav-tabs-container">
+      <button class="nav-tab-btn active" data-tab="setup">
+        ⚙️ 1. Setup & Profile
+      </button>
+      <button class="nav-tab-btn" data-tab="import">
+        📥 2. Import & Data
+      </button>
+      <button class="nav-tab-btn" data-tab="mapping">
+        📑 3. Intelligent Classification <span class="tab-badge" id="tab-badge-mapping">0</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="audit">
+        🛡️ 4. CA Audit & Reconciliation
+      </button>
+      <button class="nav-tab-btn" data-tab="preview">
+        📋 5. Financial Statements (Ind AS 118)
+      </button>
+      <button class="nav-tab-btn" data-tab="export">
+        🚀 6. Export & Reports
+      </button>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="main-wrapper">
+
+    <!-- -----------------------------------------------------------------------
+         TAB 1: SETUP & PROFILE
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane active" id="pane-setup">
+      <div class="grid-2">
+        <!-- Entity Profile Card -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🏢 Reporting Entity Profile</h2>
+            <span class="badge badge-info">General Info</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="setup-company-name">Company Name</label>
+              <input type="text" id="setup-company-name" class="form-control" placeholder="e.g. Apex Auto Components Limited">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="setup-cin">Corporate Identification Number (CIN)</label>
+              <input type="text" id="setup-cin" class="form-control" placeholder="e.g. L28920MH2008PLC184321">
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="setup-cy-label">Current Year Period (CY)</label>
+                <input type="text" id="setup-cy-label" class="form-control" value="31st March 2026">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="setup-py-label">Previous Year Period (PY)</label>
+                <input type="text" id="setup-py-label" class="form-control" value="31st March 2025">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="setup-scale">Reporting Scale / Rounding</label>
+              <select id="setup-scale" class="form-control form-select">
+                <option value="ABSOLUTE" selected>Absolute Figures (₹ 1)</option>
+                <option value="THOUSANDS">In Thousands (₹ '000)</option>
+                <option value="LAKHS">In Lakhs (₹ Lakhs)</option>
+                <option value="CRORES">In Crores (₹ Crores)</option>
+              </select>
+              <div class="form-hint">Complies with Schedule III Part I rounding rules based on turnover.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ind AS 118 Framework Configuration -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">⚖️ Ind AS 118 Reporting Framework</h2>
+            <span class="badge badge-success">Authoritative MCA Rules</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="setup-mba">Specified Main Business Activity (MBA)</label>
+              <select id="setup-mba" class="form-control form-select">
+                <option value="STANDARD" selected>Standard Commercial & Industrial (Manufacturing / Trading / Services)</option>
+                <option value="FINANCING">Financial Services / Lending Entity (NBFC / Credit)</option>
+                <option value="INVESTING">Investment Holding / Real Estate Holding Company</option>
+              </select>
+              <div class="form-hint" style="margin-top:6px; line-height:1.4;">
+                <strong>Ind AS 118 Architectural Rule:</strong>
+                <ul style="margin-left:1.2rem; margin-top:4px;">
+                  <li><strong>Standard:</strong> Segregates Operating, Investing and Financing categories strictly.</li>
+                  <li><strong>Lending / NBFC:</strong> Classifies customer interest income and borrowing costs funding loans in the <strong>Operating Category</strong>.</li>
+                  <li><strong>Investing:</strong> Classifies dividend, interest, rental and fair value gains in the <strong>Operating Category</strong>.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="background-color:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:0.85rem; margin-top:1rem; font-size:0.8rem; color:#1e3a8a;">
+              <strong>🛡️ 100% Client-Side Privacy Guarantee:</strong>
+              <p style="margin-top:4px;">All trial balance parsing, financial aggregation, and report generation occur strictly inside your browser sandbox. Confidential financial data is never transmitted to any external server.</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span>Effective Date: <strong>1st April 2026</strong> (MCA Notified)</span>
+            <button class="btn btn-primary btn-sm" onclick="FinStatApp.switchTab('import')">Proceed to Import →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 2: IMPORT & DATA
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane" id="pane-import">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">📥 Import Trial Balance Data</h2>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-mode-single" onclick="FinStatApp.setImportMode('single')">Single 2-Year File</button>
+            <button class="btn btn-secondary btn-sm" id="btn-mode-dual" onclick="FinStatApp.setImportMode('dual')">Separate CY & PY Files</button>
+            <button class="btn btn-secondary btn-sm" id="btn-mode-paste" onclick="FinStatApp.setImportMode('paste')">📋 Paste Direct Text</button>
+          </div>
+        </div>
+        <div class="card-body">
+          
+          <!-- Mode 1: Single File Dropzone -->
+          <div id="import-mode-single-container">
+            <div class="upload-dropzone" id="tb-dropzone">
+              <div class="dropzone-icon">📁</div>
+              <div class="dropzone-text">Drag and drop your Trial Balance spreadsheet here</div>
+              <div class="dropzone-subtext">Supports Microsoft Excel (.xlsx, .xls) and Comma-Separated Values (.csv)</div>
+              <button class="btn btn-primary" type="button" onclick="event.stopPropagation(); document.getElementById('tb-file-input').click();">
+                Browse File from Computer
+              </button>
+              <input type="file" id="tb-file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+            </div>
+          </div>
+
+          <!-- Mode 2: Dual File Dropzones (Separate CY and PY) -->
+          <div id="import-mode-dual-container" style="display:none;">
+            <div class="grid-2">
+              <div class="upload-dropzone" id="tb-cy-dropzone" style="padding:1.5rem 1rem;">
+                <div class="dropzone-icon" style="font-size:1.8rem;">📅</div>
+                <div class="dropzone-text" style="font-size:0.9rem;">1. Current Year (CY) Trial Balance</div>
+                <div class="dropzone-subtext" style="font-size:0.75rem;" id="cy-file-status">Drag file or click to browse</div>
+                <button class="btn btn-primary btn-sm" type="button" onclick="event.stopPropagation(); document.getElementById('tb-cy-file-input').click();">
+                  Select CY File
+                </button>
+                <input type="file" id="tb-cy-file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+              </div>
+
+              <div class="upload-dropzone" id="tb-py-dropzone" style="padding:1.5rem 1rem;">
+                <div class="dropzone-icon" style="font-size:1.8rem;">⏮️</div>
+                <div class="dropzone-text" style="font-size:0.9rem;">2. Previous Year (PY) Trial Balance</div>
+                <div class="dropzone-subtext" style="font-size:0.75rem;" id="py-file-status">Drag file or click to browse</div>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="event.stopPropagation(); document.getElementById('tb-py-file-input').click();">
+                  Select PY File
+                </button>
+                <input type="file" id="tb-py-file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+              </div>
+            </div>
+            <div style="margin-top:1rem; text-align:center;">
+              <button class="btn btn-emerald" id="btn-merge-dual" onclick="FinStatApp.processDualFiles()" disabled>
+                🔄 Merge & Auto-Map CY + PY Files
+              </button>
+            </div>
+          </div>
+
+          <!-- Mode 3: Direct Clipboard Paste -->
+          <div id="import-mode-paste-container" style="display:none;">
+            <div class="form-group">
+              <label class="form-label" for="tb-paste-input">Paste Tab-Separated or Comma-Separated Data from Excel / Tally:</label>
+              <textarea id="tb-paste-input" class="form-control" rows="8" placeholder="Paste data here... e.g.&#10;Account Code&#9;Ledger Name&#9;Debit CY&#9;Credit CY&#9;Debit PY&#9;Credit PY&#10;1001&#9;Plant & Machinery&#9;5000000&#9;0&#9;4500000&#9;0"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="FinStatApp.handlePastedText()">
+              🚀 Parse & Map Pasted Data
+            </button>
+          </div>
+
+          <!-- Sheet Selector (if multi-sheet Excel uploaded) -->
+          <div id="multi-sheet-selector-box" style="display:none; margin-top:1.25rem; background:#f1f5f9; padding:0.75rem 1rem; border-radius:8px;">
+            <label class="form-label" for="select-sheet-name">Select Worksheet to Import:</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <select id="select-sheet-name" class="form-control form-select" style="max-width:300px;"></select>
+              <button class="btn btn-primary btn-sm" onclick="FinStatApp.changeSelectedWorksheet()">Switch Sheet</button>
+            </div>
+          </div>
+
+          <!-- Preloaded Sample Data Downloads & Direct Buttons -->
+          <div style="margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border-light);">
+            <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:0.75rem; color:var(--text-main);">
+              🧪 Instant Test Drive with Validated Sample Trial Balances
+            </h3>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">
+              You can test the tool immediately with authentic Indian entity datasets or download them to inspect their column structure:
+            </p>
+
+            <div class="grid-2">
+              <div style="border:1px solid var(--border-light); border-radius:8px; padding:1rem; background-color:#ffffff;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div>
+                    <strong>🏭 Apex Auto Components Limited</strong>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Manufacturing & Export Entity (FY 2025-26 & FY 2024-25)</div>
+                    <div style="font-size:0.75rem; color:#059669; margin-top:2px;">Balanced TB with 96 Ledgers, ROU Assets, OCI & Schedule III Notes</div>
+                  </div>
+                </div>
+                <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <button class="btn btn-emerald btn-sm" onclick="FinStatApp.loadEmbeddedSample('manufacturing')">⚡ 1-Click Load</button>
+                  <a class="btn btn-secondary btn-sm" href="sample-data/sample_tb_manufacturing_2yr.xlsx" download>📥 Download .xlsx</a>
+                  <a class="btn btn-secondary btn-sm" href="sample-data/sample_tb_manufacturing_2yr.csv" download>📥 Download .csv</a>
+                </div>
+              </div>
+
+              <div style="border:1px solid var(--border-light); border-radius:8px; padding:1rem; background-color:#ffffff;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                  <div>
+                    <strong>🏦 Bharat Financial Services Limited</strong>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">NBFC & Lending Entity (FY 2025-26 & FY 2024-25)</div>
+                    <div style="font-size:0.75rem; color:#2563eb; margin-top:2px;">Demonstrates Ind AS 118 Main Business Activity exception (Interest in Operating)</div>
+                  </div>
+                </div>
+                <div style="margin-top:0.75rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+                  <button class="btn btn-primary btn-sm" onclick="FinStatApp.loadEmbeddedSample('nbfc')">⚡ 1-Click Load</button>
+                  <a class="btn btn-secondary btn-sm" href="sample-data/sample_tb_nbfc_lending_2yr.xlsx" download>📥 Download .xlsx</a>
+                  <a class="btn btn-secondary btn-sm" href="sample-data/sample_tb_nbfc_lending_2yr.csv" download>📥 Download .csv</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 3: INTELLIGENT CLASSIFICATION
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane" id="pane-mapping">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">📑 Intelligent Ledger Classification & Review</h2>
+            <div class="card-subtitle" id="mapping-filtered-count">Showing 0 ledgers</div>
+          </div>
+          <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+            <input type="text" id="mapping-search" class="form-control" placeholder="🔍 Search ledger name or code..." style="width:200px; padding:0.35rem 0.6rem; font-size:0.8rem;">
+            
+            <select id="mapping-category-filter" class="form-control form-select" style="width:210px; padding:0.35rem 0.6rem; font-size:0.8rem;">
+              <option value="ALL">All Categories & Statements</option>
+              <optgroup label="Statement of Profit & Loss">
+                <option value="OPERATING">P&L: Operating Category</option>
+                <option value="INVESTING">P&L: Investing Category</option>
+                <option value="FINANCING">P&L: Financing Category</option>
+                <option value="INCOME_TAXES">P&L: Income Taxes</option>
+                <option value="DISCONTINUED">P&L: Discontinued Operations</option>
+                <option value="OCI">Other Comprehensive Income (OCI)</option>
+              </optgroup>
+              <optgroup label="Balance Sheet (Assets)">
+                <option value="NON_CURRENT_ASSETS">BS: Non-Current Assets</option>
+                <option value="CURRENT_ASSETS">BS: Current Assets</option>
+              </optgroup>
+              <optgroup label="Balance Sheet (Equity & Liabilities)">
+                <option value="EQUITY">BS: Equity</option>
+                <option value="NON_CURRENT_LIABILITIES">BS: Non-Current Liabilities</option>
+                <option value="CURRENT_LIABILITIES">BS: Current Liabilities</option>
+              </optgroup>
+            </select>
+
+            <select id="mapping-confidence-filter" class="form-control form-select" style="width:140px; padding:0.35rem 0.6rem; font-size:0.8rem;">
+              <option value="ALL">All Confidence</option>
+              <option value="HIGH">High (≥80%)</option>
+              <option value="MED">Medium (50-79%)</option>
+              <option value="LOW">Low (&lt;50%)</option>
+            </select>
+
+            <label style="font-size:0.8rem; display:flex; align-items:center; gap:4px; cursor:pointer;">
+              <input type="checkbox" id="mapping-override-filter"> Overrides only
+            </label>
+
+            <button class="btn btn-secondary btn-sm" onclick="FinStatApp.resetFilters()">Reset Filters</button>
+          </div>
+        </div>
+
+        <!-- Bulk Action Bar -->
+        <div style="background:#f8fafc; padding:0.5rem 1.25rem; border-bottom:1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; font-size:0.8rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span><strong id="selected-ledgers-count">0</strong> selected</span>
+            <button class="btn btn-secondary btn-sm" onclick="FinStatApp.toggleSelectAll(true)">Select All</button>
+            <button class="btn btn-secondary btn-sm" onclick="FinStatApp.toggleSelectAll(false)">Deselect All</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span>Bulk Assign Selected To:</span>
+            <select id="bulk-assign-lineitem" class="form-control form-select" style="font-size:0.75rem; width:250px; padding:0.25rem 0.5rem;"></select>
+            <button class="btn btn-primary btn-sm" onclick="FinStatApp.applyBulkClassification()">Apply</button>
+            <button class="btn btn-outline btn-sm" style="color:#0f172a; border-color:#cbd5e1;" onclick="FinStatApp.reclassifyAllLedgers(true)">🔄 Reset Auto-Classify</button>
+          </div>
+        </div>
+
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive" style="max-height:550px; overflow-y:auto;">
+            <table class="financial-table">
+              <thead style="position:sticky; top:0; z-index:10;">
+                <tr>
+                  <th style="width:40px; text-align:center;"><input type="checkbox" id="select-all-checkbox" onchange="FinStatApp.toggleSelectAll(this.checked)"></th>
+                  <th style="width:90px;">Code</th>
+                  <th>Ledger Name</th>
+                  <th class="text-right" style="width:130px;">CY Balance (₹)</th>
+                  <th class="text-right" style="width:130px;">PY Balance (₹)</th>
+                  <th style="width:340px;">Ind AS 118 Line Item & Schedule</th>
+                  <th class="text-center" style="width:110px;">Confidence</th>
+                  <th class="text-center" style="width:70px;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="mapping-table-body">
+                <!-- Injected dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>💡 Tip: Click any line item dropdown to manually override. Changes automatically log to the CA Audit Trail.</span>
+          <button class="btn btn-primary btn-sm" onclick="FinStatApp.switchTab('audit')">Proceed to CA Audit →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 4: CA AUDIT & RECONCILIATION
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane" id="pane-audit">
+      <!-- Status Cards -->
+      <div class="grid-4" style="margin-bottom:1.5rem;">
+        <div class="stat-card">
+          <div class="stat-title">CY Trial Balance</div>
+          <div class="stat-value tabular-nums" id="badge-tb-status">Checking...</div>
+          <div class="stat-desc" id="badge-tb-sub">Debits equal Credits check</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">Balance Sheet Equation</div>
+          <div class="stat-value tabular-nums" id="badge-bs-status">Checking...</div>
+          <div class="stat-desc" id="badge-bs-sub">Total Assets = Equity + Liabilities</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">Ind AS 118 Subtotals</div>
+          <div class="stat-value" style="color:#059669;">Verified</div>
+          <div class="stat-desc">Operating, Investing, Financing</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-title">Data Confidentiality</div>
+          <div class="stat-value" style="color:#2563eb;">100% Local</div>
+          <div class="stat-desc">Zero cloud leaks / In-Browser</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Automated Validation Tests -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🛡️ Mathematical & Standard Checks</h2>
+            <span class="badge badge-success">CA Audit Engine</span>
+          </div>
+          <div class="card-body" id="audit-checks-container">
+            <!-- Injected by app.js -->
+          </div>
+        </div>
+
+        <!-- Anomaly Flags & Audit Trail -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">⚠️ Anomaly Warnings & Sanity Flags</h2>
+            <span class="badge badge-warning">CA Attention Required</span>
+          </div>
+          <div class="card-body">
+            <div id="audit-warnings-container" style="max-height:220px; overflow-y:auto; margin-bottom:1.5rem;">
+              <!-- Injected by app.js -->
+            </div>
+
+            <h3 style="font-size:0.85rem; font-weight:700; color:var(--text-main); margin-bottom:0.5rem;">
+              📜 Audit Trail of User Adjustments
+            </h3>
+            <div id="audit-trail-container" style="max-height:180px; overflow-y:auto; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:0.5rem;">
+              <!-- Injected by app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 5: FINANCIAL STATEMENTS PREVIEW (IND AS 118)
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane" id="pane-preview">
+      <!-- Toolbar -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:800; color:var(--text-main);">
+            Compliant Financial Statements under Ind AS 118
+          </h2>
+          <div style="font-size:0.8rem; color:var(--text-muted);">
+            Replacing Ind AS 1 presentation requirements. Categorised into Operating, Investing and Financing with mandatory subtotals.
+          </div>
+        </div>
+
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn btn-dark btn-sm" onclick="FinStatApp.triggerExcelExport()">📊 Export to Excel</button>
+          <button class="btn btn-dark btn-sm" onclick="FinStatApp.triggerPDFExport()">📄 Download PDF</button>
+          <button class="btn btn-outline btn-sm" style="background:#1e293b; color:white;" onclick="FinStatApp.triggerPrint()">🖨️ Print Report</button>
+        </div>
+      </div>
+
+      <!-- Statement of Profit and Loss -->
+      <div class="card">
+        <div class="card-header" style="background-color:#0f172a; color:#ffffff;">
+          <div>
+            <h2 class="card-title" style="color:#ffffff;">STATEMENT OF PROFIT AND LOSS</h2>
+            <div class="card-subtitle" style="color:#94a3b8;">
+              Under Ind AS 118 (Presentation and Disclosure in Financial Statements)
+            </div>
+          </div>
+          <span class="badge badge-info">P&L Engine</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive">
+            <table class="financial-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Particulars</th>
+                  <th class="text-center" style="width:10%;">Note No.</th>
+                  <th class="text-right" style="width:20%;">Current Year (CY)</th>
+                  <th class="text-right" style="width:20%;">Previous Year (PY)</th>
+                </tr>
+              </thead>
+              <tbody id="pl-table-body">
+                <!-- Injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statement of Financial Position (Balance Sheet) -->
+      <div class="card">
+        <div class="card-header" style="background-color:#0f172a; color:#ffffff;">
+          <div>
+            <h2 class="card-title" style="color:#ffffff;">STATEMENT OF FINANCIAL POSITION (BALANCE SHEET)</h2>
+            <div class="card-subtitle" style="color:#94a3b8;">
+              Classified into Non-Current / Current Assets, Equity, and Non-Current / Current Liabilities
+            </div>
+          </div>
+          <span class="badge badge-info">Balance Sheet Engine</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="table-responsive">
+            <table class="financial-table">
+              <thead>
+                <tr>
+                  <th style="width:50%;">Particulars</th>
+                  <th class="text-center" style="width:10%;">Note No.</th>
+                  <th class="text-right" style="width:20%;">As at Current Year (CY)</th>
+                  <th class="text-right" style="width:20%;">As at Previous Year (PY)</th>
+                </tr>
+              </thead>
+              <tbody id="bs-table-body">
+                <!-- Injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supporting Schedules & Notes (Drill-Down) -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">📂 Supporting Schedules & Constituent Ledger Breakdown</h2>
+            <div class="card-subtitle">Click on any schedule to expand constituent ledgers</div>
+          </div>
+          <span class="badge badge-neutral">Notes 1 to 45</span>
+        </div>
+        <div class="card-body" id="schedules-accordion-container">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------------------
+         TAB 6: EXPORT & REPORTS
+         ----------------------------------------------------------------------- -->
+    <div class="tab-pane" id="pane-export">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">🚀 Download Financial Reports</h2>
+            <span class="badge badge-success">Production Ready</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.25rem;">
+              Generate and download complete, professionally formatted multi-sheet workbooks and client-ready financial statements in your required format:
+            </p>
+
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <button class="btn btn-emerald btn-lg" onclick="FinStatApp.triggerExcelExport()" style="justify-content:flex-start; padding:0.85rem 1.25rem;">
+                <span style="font-size:1.25rem;">📊</span>
+                <div style="text-align:left;">
+                  <div>Download Multi-Sheet Excel Workbook (.xlsx)</div>
+                  <div style="font-size:0.7rem; font-weight:normal; opacity:0.9;">Includes P&L, Balance Sheet, Schedules, Mapped TB & Audit Trail</div>
+                </div>
+              </button>
+
+              <button class="btn btn-primary btn-lg" onclick="FinStatApp.triggerPDFExport()" style="justify-content:flex-start; padding:0.85rem 1.25rem;">
+                <span style="font-size:1.25rem;">📄</span>
+                <div style="text-align:left;">
+                  <div>Download Formatted PDF Report (.pdf)</div>
+                  <div style="font-size:0.7rem; font-weight:normal; opacity:0.9;">High-fidelity multi-page document with Director and Auditor Signatures</div>
+                </div>
+              </button>
+
+              <button class="btn btn-dark btn-lg" onclick="FinStatApp.triggerCSVExport()" style="justify-content:flex-start; padding:0.85rem 1.25rem;">
+                <span style="font-size:1.25rem;">📑</span>
+                <div style="text-align:left;">
+                  <div>Export Mapped Trial Balance (.csv)</div>
+                  <div style="font-size:0.7rem; font-weight:normal; opacity:0.9;">Clean CSV with all CY/PY debit/credit balances and Ind AS 118 tags</div>
+                </div>
+              </button>
+
+              <button class="btn btn-secondary btn-lg" onclick="FinStatApp.triggerPrint()" style="justify-content:flex-start; padding:0.85rem 1.25rem;">
+                <span style="font-size:1.25rem;">🖨️</span>
+                <div style="text-align:left;">
+                  <div>Printable HTML / Direct Browser Print</div>
+                  <div style="font-size:0.7rem; font-weight:normal; opacity:0.7;">Formatted layout optimized for A4 physical printing or PDF printer</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">ℹ️ Report Summary & Certification Block</h2>
+            <span class="badge badge-info">Auditor Memo</span>
+          </div>
+          <div class="card-body">
+            <div id="export-summary-box" style="margin-bottom:1.5rem; background:#f8fafc; padding:1rem; border-radius:8px; border:1px solid #e2e8f0; font-size:0.85rem;">
+              <!-- Summary populated by app.js -->
+            </div>
+
+            <div style="border:1px dashed #cbd5e1; border-radius:8px; padding:1rem; font-size:0.75rem; color:#475569;">
+              <strong>CA Engagement & Sign-off Block:</strong>
+              <div style="margin-top:0.75rem; display:flex; justify-content:space-between;">
+                <div>
+                  <p><strong>For the Board of Directors:</strong></p>
+                  <p style="margin-top:20px;">________________________</p>
+                  <p>Managing Director (DIN: 01234567)</p>
+                </div>
+                <div>
+                  <p><strong>Statutory Auditors:</strong></p>
+                  <p style="margin-top:20px;">________________________</p>
+                  <p>Chartered Accountants</p>
+                  <p>UDIN: 26118XXXXXXXXXXXX</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+  <!-- Column Mapping Modal -->
+  <div class="modal-overlay" id="modal-column-mapping">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">🧭 Smart Column Mapping</h3>
+        <button class="btn-close" onclick="FinStatApp.closeModal('modal-column-mapping')">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">
+          Verify that the columns in your uploaded spreadsheet correspond to the required Trial Balance fields:
+        </p>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="map-col-code">Ledger / Account Code Column</label>
+            <select id="map-col-code" class="form-control form-select"></select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="map-col-name">Ledger Name / Description Column <span style="color:red;">*</span></label>
+            <select id="map-col-name" class="form-control form-select"></select>
+          </div>
+        </div>
+
+        <div style="background:#f1f5f9; padding:0.75rem; border-radius:6px; margin:0.5rem 0 1rem 0;">
+          <h4 style="font-size:0.8rem; font-weight:700; color:#1e3a8a; margin-bottom:0.5rem;">Current Year (CY) Figures</h4>
+          <div class="grid-3">
+            <div class="form-group">
+              <label class="form-label" for="map-col-dr-cy">CY Debit Column</label>
+              <select id="map-col-dr-cy" class="form-control form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="map-col-cr-cy">CY Credit Column</label>
+              <select id="map-col-cr-cy" class="form-control form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="map-col-net-cy">CY Net Balance (if single col)</label>
+              <select id="map-col-net-cy" class="form-control form-select"></select>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#f1f5f9; padding:0.75rem; border-radius:6px; margin:0.5rem 0 1rem 0;">
+          <h4 style="font-size:0.8rem; font-weight:700; color:#1e3a8a; margin-bottom:0.5rem;">Previous Year (PY) Figures (Comparative)</h4>
+          <div class="grid-3">
+            <div class="form-group">
+              <label class="form-label" for="map-col-dr-py">PY Debit Column</label>
+              <select id="map-col-dr-py" class="form-control form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="map-col-cr-py">PY Credit Column</label>
+              <select id="map-col-cr-py" class="form-control form-select"></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="map-col-net-py">PY Net Balance (if single col)</label>
+              <select id="map-col-net-py" class="form-control form-select"></select>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:0.8rem; font-weight:700; margin-top:1rem; margin-bottom:0.5rem;">Spreadsheet Preview (First 5 Data Rows)</h4>
+        <div id="mapping-preview-table" class="table-responsive" style="max-height:180px; overflow-y:auto;">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="FinStatApp.closeModal('modal-column-mapping')">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="FinStatApp.confirmColumnMapping()">Apply Mapping & Classify →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ledger Note Modal -->
+  <div class="modal-overlay" id="modal-ledger-note">
+    <div class="modal-dialog" style="max-width:500px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📝 CA Audit Note / Memo</h3>
+        <button class="btn-close" onclick="FinStatApp.closeModal('modal-ledger-note')">×</button>
+      </div>
+      <div class="modal-body">
+        <p id="note-ledger-title" style="font-size:0.85rem; font-weight:700; margin-bottom:0.75rem; color:#1e3a8a;"></p>
+        <div class="form-group">
+          <label class="form-label" for="note-ledger-input">Audit Observation / Reclassification Justification</label>
+          <textarea id="note-ledger-input" class="form-control" rows="4" placeholder="Enter reason for override or CA working paper note..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="FinStatApp.closeModal('modal-ledger-note')">Cancel</button>
+        <button class="btn btn-emerald btn-sm" onclick="FinStatApp.saveLedgerNote()">Save Note</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- =========================================================================
+       LOCAL JAVASCRIPT LIBRARIES & MODULES (100% OFFLINE)
+       ========================================================================= -->
+  <script src="js/xlsx.full.min.js"></script>
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="js/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- Core Financial Engine & Logic -->
+  <script src="js/indas118-rules.js"></script>
+  <script src="js/importer.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/exporter.js"></script>
+  <script src="js/sample-data-embedded.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
