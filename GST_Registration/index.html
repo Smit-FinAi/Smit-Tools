@@ -1,0 +1,3999 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GST Registration Document Assistant – CA Client Portal V4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="gst_registration_portal_files/css2_IavM.css" rel="stylesheet">
+<style>
+/* ===== DESIGN SYSTEM & TOKENS ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy-950: #061122;
+  --navy-900: #0a192f;
+  --navy-850: #0f2347;
+  --navy-800: #172a54;
+  --navy-700: #1e3a8a;
+  --teal-800: #0f766e;
+  --teal-700: #0d9488;
+  --teal-600: #14b8a6;
+  --teal-500: #2dd4bf;
+  --teal-100: #ccfbf1;
+  --teal-50:  #f0fdfa;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-100: #f1f5f9;
+  --slate-50:  #f8fafc;
+  --white: #ffffff;
+  --rose-600: #e11d48;
+  --rose-500: #f43f5e;
+  --rose-100: #ffe4e6;
+  --rose-50:  #fff1f2;
+  --amber-600: #d97706;
+  --amber-500: #f59e0b;
+  --amber-100: #fef3c7;
+  --amber-50:  #fffbeb;
+  --emerald-600: #059669;
+  --emerald-500: #10b981;
+  --emerald-100: #d1fae5;
+  --emerald-50:  #ecfdf5;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.04);
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --font-sans: 'Plus Jakarta Sans', 'Noto Sans Gujarati', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f1f5f9;
+  color: var(--slate-800);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header & Navbar */
+.app-header {
+  background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-850) 65%, #143265 100%);
+  color: var(--white);
+  padding: 0.85rem 1.75rem;
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid rgba(20, 184, 166, 0.4);
+}
+
+.header-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.firm-logo-wrap {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(20, 184, 166, 0.5);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.firm-logo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.firm-title-block h1 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.portal-badge {
+  background: rgba(20, 184, 166, 0.25);
+  color: var(--teal-500);
+  font-size: 0.65rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 184, 166, 0.45);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.firm-title-block p {
+  font-size: 0.76rem;
+  color: var(--slate-300);
+  margin-top: 0.1rem;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Language Switcher */
+.lang-picker {
+  display: flex;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--slate-300);
+  padding: 0.35rem 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lang-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  background: var(--teal-700);
+  color: #ffffff;
+}
+
+.btn-header-action {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+
+.btn-header-action:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Streamlined Client Navigation (Only 3 Tabs) */
+.nav-tab-bar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--slate-200);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 67px;
+  z-index: 90;
+}
+
+.nav-tab-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 1.25rem;
+}
+.nav-tab-inner::-webkit-scrollbar { display: none; }
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  color: var(--slate-600);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  text-decoration: none;
+  user-select: none;
+}
+
+.tab-link:hover {
+  color: var(--navy-800);
+  background-color: var(--slate-50);
+}
+
+.tab-link.active {
+  color: var(--teal-800);
+  border-bottom-color: var(--teal-700);
+  background-color: var(--teal-50);
+}
+
+.tab-badge {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  background: var(--slate-200);
+  color: var(--slate-700);
+  font-weight: 700;
+}
+.tab-link.active .tab-badge {
+  background: var(--teal-700);
+  color: #ffffff;
+}
+
+/* Main Container */
+.main-wrapper {
+  max-width: 1380px;
+  width: 100%;
+  margin: 1.5rem auto;
+  padding: 0 1.5rem 3rem 1.5rem;
+  flex: 1;
+}
+
+/* Disclaimer Banner */
+.disclaimer-banner {
+  background: linear-gradient(to right, #eff6ff, #f0fdfa);
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid var(--teal-700);
+  border-radius: var(--radius);
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  font-size: 0.8rem;
+  color: var(--slate-700);
+  box-shadow: var(--shadow-xs);
+}
+
+.disclaimer-icon {
+  color: var(--teal-700);
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.disclaimer-text strong {
+  color: var(--navy-900);
+}
+
+/* Section Switching */
+.portal-section {
+  display: none;
+}
+.portal-section.active {
+  display: block;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card & Typography */
+.card {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy-950);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 0.82rem;
+  color: var(--slate-500);
+  margin-top: 0.2rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  line-height: 1;
+}
+
+.btn-primary {
+  background: var(--navy-850);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: var(--navy-950);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-teal {
+  background: var(--teal-700);
+  color: #ffffff;
+}
+.btn-teal:hover {
+  background: var(--teal-800);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: #ffffff;
+}
+.btn-whatsapp:hover {
+  background: #1eb956;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+  background: #ffffff;
+  color: var(--slate-700);
+  border-color: var(--slate-300);
+}
+.btn-outline:hover {
+  background: var(--slate-50);
+  border-color: var(--slate-400);
+  color: var(--navy-900);
+}
+
+.btn-danger {
+  background: #ffffff;
+  color: var(--rose-600);
+  border-color: var(--rose-100);
+}
+.btn-danger:hover {
+  background: var(--rose-50);
+  border-color: var(--rose-500);
+}
+
+.btn-sm {
+  padding: 0.38rem 0.75rem;
+  font-size: 0.78rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-lg {
+  padding: 0.95rem 1.85rem;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+}
+
+/* Wizard Layout */
+.wizard-container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.wizard-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.wizard-stepper::before {
+  content: '';
+  position: absolute;
+  top: 19px;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: var(--slate-200);
+  z-index: 1;
+}
+
+.step-indicator {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  min-width: 65px;
+}
+
+.step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--slate-300);
+  color: var(--slate-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
+.step-indicator.active .step-circle {
+  border-color: var(--teal-700);
+  background: var(--teal-700);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px var(--teal-100);
+}
+
+.step-indicator.completed .step-circle {
+  border-color: var(--emerald-500);
+  background: var(--emerald-500);
+  color: #ffffff;
+}
+
+.step-title-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  white-space: nowrap;
+}
+.step-indicator.active .step-title-text {
+  color: var(--teal-800);
+  font-weight: 700;
+}
+
+.question-box {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-md);
+}
+
+.question-badge {
+  display: inline-block;
+  background: var(--slate-100);
+  color: var(--navy-800);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.question-heading {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--navy-950);
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+}
+
+.question-explanation {
+  font-size: 0.84rem;
+  color: var(--slate-500);
+  margin-bottom: 1.75rem;
+}
+
+/* Option Cards for Question Choices */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.option-card {
+  border: 2px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 1.15rem;
+  cursor: pointer;
+  transition: var(--transition);
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.option-card:hover {
+  border-color: var(--teal-600);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.option-card.selected {
+  border-color: var(--teal-700);
+  background-color: var(--teal-50);
+  box-shadow: 0 0 0 1px var(--teal-700);
+}
+
+.option-icon {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.option-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 0.25rem;
+}
+
+.option-card.selected .option-title {
+  color: var(--teal-800);
+}
+
+.option-subtext {
+  font-size: 0.76rem;
+  color: var(--slate-500);
+  line-height: 1.35;
+}
+
+.option-card input[type="radio"],
+.option-card input[type="checkbox"] {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  accent-color: var(--teal-700);
+  width: 17px;
+  height: 17px;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  border: 1.5px solid var(--slate-300);
+  border-radius: var(--radius);
+  outline: none;
+  background: #ffffff;
+  color: var(--slate-900);
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--teal-700);
+  box-shadow: 0 0 0 3px var(--teal-100);
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.wizard-nav-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--slate-200);
+  gap: 0.75rem;
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  background: #ffffff;
+  border: 1px solid var(--slate-300);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--slate-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+
+.filter-pill:hover {
+  background: var(--slate-50);
+  border-color: var(--slate-400);
+}
+
+.filter-pill.active {
+  background: var(--navy-850);
+  color: #ffffff;
+  border-color: var(--navy-850);
+}
+
+.search-input-wrap {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-input-wrap input {
+  padding-left: 2.2rem;
+  font-size: 0.82rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--slate-400);
+  font-size: 0.9rem;
+}
+
+/* Document Item Card */
+.doc-card {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.doc-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--slate-300);
+}
+
+.doc-card.is-uploaded {
+  border-left: 5px solid var(--emerald-500);
+}
+
+.doc-card.is-pending {
+  border-left: 5px solid var(--amber-500);
+}
+
+.doc-card.is-mandatory-pending {
+  border-left: 5px solid var(--rose-500);
+}
+
+.doc-header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.doc-info-block {
+  flex: 1;
+  min-width: 260px;
+}
+
+.doc-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.badge-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.badge-mandatory { background: var(--rose-100); color: var(--rose-600); }
+.badge-conditional { background: var(--amber-100); color: var(--amber-600); }
+.badge-optional { background: var(--indigo-50); color: var(--indigo-600); }
+
+.status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.status-badge.uploaded {
+  background: var(--emerald-100);
+  color: var(--emerald-600);
+}
+.status-badge.pending {
+  background: var(--amber-100);
+  color: var(--amber-600);
+}
+
+.doc-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy-950);
+  margin-bottom: 0.35rem;
+}
+
+.doc-rationale {
+  font-size: 0.8rem;
+  color: var(--slate-600);
+  line-height: 1.45;
+  background: #f8fafc;
+  border-left: 3px solid var(--slate-300);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-top: 0.5rem;
+}
+
+.doc-rationale strong {
+  color: var(--navy-800);
+}
+
+.doc-compliance-tip {
+  font-size: 0.78rem;
+  color: var(--teal-800);
+  background: var(--teal-50);
+  border: 1px solid var(--teal-100);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+/* Upload Dropzone inside Document Card (Unlimited File Size) */
+.doc-upload-section {
+  padding: 1.15rem 1.25rem;
+  background: #fcfdfe;
+  border-top: 1px solid var(--slate-100);
+}
+
+.upload-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.file-dropzone {
+  border: 2px dashed var(--slate-300);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  text-align: center;
+  background: #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+  flex: 1;
+  min-width: 250px;
+}
+
+.file-dropzone:hover, .file-dropzone.dragover {
+  border-color: var(--teal-600);
+  background: var(--teal-50);
+}
+
+.file-dropzone input[type="file"] {
+  display: none;
+}
+
+.dropzone-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--slate-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.dropzone-sub {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+  margin-top: 0.2rem;
+}
+
+/* Uploaded Files Pill List */
+.uploaded-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.file-item-pill {
+  background: #ffffff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.file-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.file-icon-badge {
+  font-size: 1.1rem;
+  color: var(--teal-700);
+}
+
+.file-name-text {
+  font-weight: 600;
+  color: var(--slate-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.file-size-text {
+  font-size: 0.72rem;
+  color: var(--slate-400);
+}
+
+.file-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.file-btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--slate-500);
+  padding: 0.25rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.file-btn-icon:hover {
+  color: var(--navy-800);
+  background: var(--slate-100);
+}
+.file-btn-icon.del:hover {
+  color: var(--rose-600);
+  background: var(--rose-50);
+}
+
+/* Remarks Field in Doc Card */
+.doc-remarks-wrap {
+  margin-top: 0.75rem;
+}
+
+.doc-remarks-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  background: #ffffff;
+  color: var(--slate-700);
+  transition: var(--transition);
+}
+
+.doc-remarks-input:focus {
+  border-color: var(--teal-600);
+  box-shadow: 0 0 0 2px var(--teal-100);
+  outline: none;
+}
+
+/* Version 4 Submission Screen: ONLY 2 BIG CHOICES */
+.submit-action-card-v4 {
+  background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-850) 60%, #163668 100%);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.submit-action-card-v4 h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+}
+
+.submit-action-card-v4 p {
+  font-size: 0.9rem;
+  color: var(--slate-300);
+  max-width: 680px;
+  margin: 0 auto 1.75rem auto;
+  line-height: 1.5;
+}
+
+.two-options-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.submission-choice-box {
+  background: #ffffff;
+  color: var(--slate-800);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 2px solid transparent;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.submission-choice-box:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+.submission-choice-box.gmail {
+  border-color: #ea4335;
+}
+
+.submission-choice-box.whatsapp {
+  border-color: #25d366;
+}
+
+.choice-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.choice-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+  color: var(--navy-950);
+}
+
+.choice-desc {
+  font-size: 0.8rem;
+  color: var(--slate-500);
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+/* Upload Progress Banner */
+.upload-progress-box {
+  background: var(--teal-50);
+  border: 1.5px solid var(--teal-600);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: none;
+}
+
+.upload-progress-box.active {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Summary Audit Table */
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 1rem;
+}
+
+.audit-table th {
+  background: var(--slate-100);
+  color: var(--slate-700);
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--slate-200);
+}
+
+.audit-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--slate-200);
+  vertical-align: top;
+}
+
+.audit-table tr:hover {
+  background: var(--slate-50);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 25, 44, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-dialog {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  transform: translateY(20px);
+  transition: transform 0.2s ease;
+}
+
+.modal-backdrop.open .modal-dialog {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 1.15rem 1.5rem;
+  background: var(--navy-900);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--slate-300);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close-btn:hover { color: #ffffff; }
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.preview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  background: var(--slate-100);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.preview-container img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.preview-container iframe {
+  width: 100%;
+  height: 65vh;
+  border: none;
+}
+
+.template-box {
+  background: var(--slate-50);
+  border: 1px solid var(--slate-300);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--slate-800);
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+/* Footer */
+.app-footer {
+  background: #ffffff;
+  border-top: 1px solid var(--slate-200);
+  padding: 1.5rem;
+  font-size: 0.78rem;
+  color: var(--slate-500);
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .header-controls { width: 100%; justify-content: space-between; }
+  .nav-tab-inner { padding: 0 0.5rem; }
+  .tab-link { padding: 0.75rem 0.95rem; font-size: 0.82rem; }
+  .options-grid { grid-template-columns: 1fr; }
+  .two-options-container { grid-template-columns: 1fr; }
+  .file-dropzone { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand-section">
+      <div class="firm-logo-wrap" id="firm-logo-container"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal-500);"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg></div>
+      <div class="firm-title-block">
+        <h1>
+          <span id="header-office-name">M.G.ASSOCIATES, Chartered Accountants</span>
+          <span class="portal-badge" id="header-portal-badge">Client Assistant V4</span>
+        </h1>
+        <p id="header-portal-sub">GST Registration Document Assistant • Client Portal</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Trilingual Language Switcher -->
+      <div class="lang-picker">
+        <button type="button" class="lang-btn active" id="lang-btn-en" onclick="setLanguage('en')">English</button>
+        <button type="button" class="lang-btn" id="lang-btn-gu" onclick="setLanguage('gu')">ગુજરાતી</button>
+        <button type="button" class="lang-btn" id="lang-btn-hi" onclick="setLanguage('hi')">हिन्दी</button>
+      </div>
+
+      <!-- CA Office Admin Link -->
+      <button type="button" class="btn-header-action" onclick="openAdminModal()" title="CA Office Setup &amp; Share Link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span id="lbl-admin-btn">CA Office Access</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- SECONDARY CLIENT TABS BAR: EXACTLY 3 TABS (No Extra Columns/Tabs) -->
+<nav class="nav-tab-bar">
+  <div class="nav-tab-inner">
+    <div class="tab-link" id="nav-wizard" onclick="switchSection('wizard')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+      <span id="nav-tab-wizard">1. Basic Questions</span>
+      <span class="tab-badge" id="tab-badge-wizard-step">Q6</span>
+    </div>
+    <div class="tab-link" id="nav-checklist" onclick="switchSection('checklist')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      <span id="nav-tab-checklist">2. Required Documents Checklist</span>
+      <span class="tab-badge" id="tab-badge-checklist-count">2/5</span>
+    </div>
+    <div class="tab-link active" id="nav-review" onclick="switchSection('review')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <span id="nav-tab-review">3. Review &amp; Submit to CA</span>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN APP BODY -->
+<main class="main-wrapper">
+
+  <!-- DISCLAIMER NOTICE BANNER -->
+  <div class="disclaimer-banner">
+    <div class="disclaimer-icon">ℹ️</div>
+    <div class="disclaimer-text">
+      <strong id="disclaimer-title">CA Office Client Guidance Tool:</strong>
+      <span id="disclaimer-text-content">This portal is exclusively designed to help you identify, understand, and assemble the correct documents required for your GST registration. Our Chartered Accountant office will prepare and submit FORM GST REG-01 on your behalf. Document requirements are subject to statutory verification under the CGST Act, 2017. All your data stays private and is stored offline in your web browser.</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: QUESTIONNAIRE WIZARD (Starts automatically for every client) -->
+  <section id="sec-wizard" class="portal-section">
+    <div class="wizard-container">
+      
+      <!-- Stepper Indicator -->
+      <div class="wizard-stepper" id="wizard-stepper-bar"><div class="step-indicator completed" onclick="goToWizardStep(0)"><div class="step-circle">✓</div><div class="step-title-text">Client Identity</div></div><div class="step-indicator completed" onclick="goToWizardStep(1)"><div class="step-circle">✓</div><div class="step-title-text">Q1. Constitution</div></div><div class="step-indicator completed" onclick="goToWizardStep(2)"><div class="step-circle">✓</div><div class="step-title-text">Q2. State / UT</div></div><div class="step-indicator completed" onclick="goToWizardStep(3)"><div class="step-circle">✓</div><div class="step-title-text">Q3. Reason</div></div><div class="step-indicator completed" onclick="goToWizardStep(4)"><div class="step-circle">✓</div><div class="step-title-text">Q4. Premises</div></div><div class="step-indicator completed" onclick="goToWizardStep(5)"><div class="step-circle">✓</div><div class="step-title-text">Q5. Promoters</div></div><div class="step-indicator active" onclick="goToWizardStep(6)"><div class="step-circle">6</div><div class="step-title-text">Q6. Extra Premises</div></div></div>
+
+      <!-- Active Question Box -->
+      <div class="question-box" id="wizard-question-box"><span class="question-badge">Question 6 of 6</span><h2 class="question-heading">Do you have any Additional Places of Business in this state?</h2><p class="question-explanation">Such as an additional warehouse, godown, factory, or branch office located within the same state.</p><div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));"><div class="option-card selected" onclick="selectHasAPOB('No')"><input type="radio" name="wiz_apob" checked="checked"><div class="option-icon">🏢</div><div class="option-title">No (Principal Office Only)</div><div class="option-subtext">Single location business</div></div><div class="option-card " onclick="selectHasAPOB('Yes')"><input type="radio" name="wiz_apob"><div class="option-icon">🏬</div><div class="option-title">Yes (Have Warehouse / Branch)</div><div class="option-subtext">Additional premises proof needed</div></div></div><div class="wizard-nav-btns"><button type="button" class="btn btn-outline" onclick="goToWizardStep(5)">← Back</button><button type="button" class="btn btn-primary" onclick="finishWizard()">✓ View My Personalised Checklist →</button></div></div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2: CHECKLIST & UPLOADS -->
+  <section id="sec-checklist" class="portal-section">
+    <div class="card">
+      <div class="card-header-flex">
+        <div>
+          <h2 class="section-title" id="chk-sec-title">📂 Document Upload &amp; Checklist</h2>
+          <p class="section-subtitle" id="chk-sec-sub">Upload your documents directly against each requirement. Add notes/remarks where needed.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="openTemplateModal('consent')">
+            📄 <span id="lbl-sample-noc">Sample NOC Format</span>
+          </button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="openTemplateModal('resolution')">
+            📄 <span id="lbl-sample-br">Sample Board Resolution</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <div class="filter-pills" id="checklist-filter-pills">
+          <button type="button" class="filter-pill active" onclick="setDocFilter('all')"><span id="lbl-flt-all">All</span> (<span id="filter-count-all">5</span>)</button>
+          <button type="button" class="filter-pill" onclick="setDocFilter('mandatory')">🚨 <span id="lbl-flt-mand">Mandatory</span> (<span id="filter-count-mandatory">4</span>)</button>
+          <button type="button" class="filter-pill" onclick="setDocFilter('conditional')">⚡ <span id="lbl-flt-cond">Conditional</span> (<span id="filter-count-conditional">0</span>)</button>
+          <button type="button" class="filter-pill" onclick="setDocFilter('optional')">💡 <span id="lbl-flt-opt">Optional</span> (<span id="filter-count-optional">1</span>)</button>
+          <button type="button" class="filter-pill" onclick="setDocFilter('uploaded')">✅ <span id="lbl-flt-up">Uploaded</span> (<span id="filter-count-uploaded">2</span>)</button>
+          <button type="button" class="filter-pill" onclick="setDocFilter('pending')">⏳ <span id="lbl-flt-pend">Pending</span> (<span id="filter-count-pending">3</span>)</button>
+        </div>
+
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="form-control" id="checklist-search-box" placeholder="Search required documents..." oninput="handleDocSearch(this.value)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Document Items Container -->
+    <div id="checklist-items-container"><div class="doc-card is-uploaded"><div class="doc-header"><div class="doc-info-block"><div class="doc-badges"><span class="badge-tag badge-mandatory">Mandatory</span><span class="status-badge uploaded">✅ Uploaded (1)</span></div><h3 class="doc-title">Proprietor's PAN Card</h3><div class="doc-rationale"><strong>Why GST Officer requires this:</strong> Permanent Account Number (PAN) of the proprietor under Section 25(6). Legal name on GSTIN matches this PAN.</div><div class="doc-compliance-tip"><strong>💡 CA Compliance Tip:</strong> Ensure name and date of birth match Aadhaar card exactly to avoid validation failure.</div></div></div><div class="doc-upload-section"><div class="upload-action-row"><div class="file-dropzone" onclick="triggerFileInput('DOC_CONST_PAN')"><input type="file" id="file_input_DOC_CONST_PAN" multiple="" accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, 'DOC_CONST_PAN')"><div class="dropzone-label">📁 Click to Browse or Drag &amp; Drop File(s) Here</div><div class="dropzone-sub">Supported formats: PDF, JPG, PNG (Unlimited file size)</div></div></div><div class="uploaded-files-list"><div class="file-item-pill"><div class="file-meta-left"><span class="file-icon-badge">🖼️</span><div><div class="file-name-text" title="Aadhaar2.jpeg">Aadhaar2.jpeg</div><div class="file-size-text">186.8 KB • 19/11/2026</div></div></div><div class="file-item-actions"><button type="button" class="file-btn-icon" onclick="previewFile(1)" title="Preview">👁️</button><button type="button" class="file-btn-icon del" onclick="deleteFileRecord(1)" title="Delete">×</button></div></div></div><div class="doc-remarks-wrap"><input type="text" class="doc-remarks-input" placeholder="Add remarks for CA (e.g., Bill is in father's name, NOC attached)..." oninput="saveDocRemark('DOC_CONST_PAN', this.value)"></div></div></div><div class="doc-card is-uploaded"><div class="doc-header"><div class="doc-info-block"><div class="doc-badges"><span class="badge-tag badge-mandatory">Mandatory</span><span class="status-badge uploaded">✅ Uploaded (1)</span></div><h3 class="doc-title">Proprietor's Passport Photograph</h3><div class="doc-rationale"><strong>Why GST Officer requires this:</strong> Required for photo identity verification in Form GST REG-01.</div><div class="doc-compliance-tip"><strong>💡 CA Compliance Tip:</strong> Recent clear photograph with light/white background, without cap or sunglasses.</div></div></div><div class="doc-upload-section"><div class="upload-action-row"><div class="file-dropzone" onclick="triggerFileInput('DOC_PROMOTER_PHOTO')"><input type="file" id="file_input_DOC_PROMOTER_PHOTO" multiple="" accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, 'DOC_PROMOTER_PHOTO')"><div class="dropzone-label">📁 Click to Browse or Drag &amp; Drop File(s) Here</div><div class="dropzone-sub">Supported formats: PDF, JPG, PNG (Unlimited file size)</div></div></div><div class="uploaded-files-list"><div class="file-item-pill"><div class="file-meta-left"><span class="file-icon-badge">🖼️</span><div><div class="file-name-text" title="Photo.jpeg">Photo.jpeg</div><div class="file-size-text">15.5 KB • 19/11/2026</div></div></div><div class="file-item-actions"><button type="button" class="file-btn-icon" onclick="previewFile(2)" title="Preview">👁️</button><button type="button" class="file-btn-icon del" onclick="deleteFileRecord(2)" title="Delete">×</button></div></div></div><div class="doc-remarks-wrap"><input type="text" class="doc-remarks-input" placeholder="Add remarks for CA (e.g., Bill is in father's name, NOC attached)..." oninput="saveDocRemark('DOC_PROMOTER_PHOTO', this.value)"></div></div></div><div class="doc-card is-mandatory-pending"><div class="doc-header"><div class="doc-info-block"><div class="doc-badges"><span class="badge-tag badge-mandatory">Mandatory</span><span class="status-badge pending">⏳ Pending</span></div><h3 class="doc-title">Proprietor's Aadhaar Card</h3><div class="doc-rationale"><strong>Why GST Officer requires this:</strong> Required for Aadhaar Authentication under Rule 8(4A) for faster approval without site inspection.</div><div class="doc-compliance-tip"><strong>💡 CA Compliance Tip:</strong> Aadhaar linked mobile number must be active to receive OTP.</div></div></div><div class="doc-upload-section"><div class="upload-action-row"><div class="file-dropzone" onclick="triggerFileInput('DOC_PROMOTER_AADHAAR')"><input type="file" id="file_input_DOC_PROMOTER_AADHAAR" multiple="" accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, 'DOC_PROMOTER_AADHAAR')"><div class="dropzone-label">📁 Click to Browse or Drag &amp; Drop File(s) Here</div><div class="dropzone-sub">Supported formats: PDF, JPG, PNG (Unlimited file size)</div></div></div><div class="doc-remarks-wrap"><input type="text" class="doc-remarks-input" placeholder="Add remarks for CA (e.g., Bill is in father's name, NOC attached)..." oninput="saveDocRemark('DOC_PROMOTER_AADHAAR', this.value)"></div></div></div><div class="doc-card is-mandatory-pending"><div class="doc-header"><div class="doc-info-block"><div class="doc-badges"><span class="badge-tag badge-mandatory">Mandatory</span><span class="status-badge pending">⏳ Pending</span></div><h3 class="doc-title">Latest Electricity Bill or Property Tax Receipt (Owned)</h3><div class="doc-rationale"><strong>Why GST Officer requires this:</strong> Statutory proof of ownership under Rule 8(1)(b).</div><div class="doc-compliance-tip"><strong>💡 CA Compliance Tip:</strong> CRITICAL: Must be less than 60 days old. Address on bill must match portal character-for-character.</div></div></div><div class="doc-upload-section"><div class="upload-action-row"><div class="file-dropzone" onclick="triggerFileInput('DOC_PREMISES_OWNERSHIP')"><input type="file" id="file_input_DOC_PREMISES_OWNERSHIP" multiple="" accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, 'DOC_PREMISES_OWNERSHIP')"><div class="dropzone-label">📁 Click to Browse or Drag &amp; Drop File(s) Here</div><div class="dropzone-sub">Supported formats: PDF, JPG, PNG (Unlimited file size)</div></div></div><div class="doc-remarks-wrap"><input type="text" class="doc-remarks-input" placeholder="Add remarks for CA (e.g., Bill is in father's name, NOC attached)..." oninput="saveDocRemark('DOC_PREMISES_OWNERSHIP', this.value)"></div></div></div><div class="doc-card is-pending"><div class="doc-header"><div class="doc-info-block"><div class="doc-badges"><span class="badge-tag badge-optional">Optional</span><span class="status-badge pending">⏳ Pending</span></div><h3 class="doc-title">Bank Account Proof (Cancelled Cheque / Passbook / Statement)</h3><div class="doc-rationale"><strong>Why GST Officer requires this:</strong> Proof of active business bank account under Rule 10A.</div><div class="doc-compliance-tip"><strong>💡 CA Compliance Tip:</strong> Cheque must have pre-printed name &amp; IFSC. Note: Under Rule 10A, bank details can also be submitted within 30 days of registration.</div></div></div><div class="doc-upload-section"><div class="upload-action-row"><div class="file-dropzone" onclick="triggerFileInput('DOC_BANK_PROOF')"><input type="file" id="file_input_DOC_BANK_PROOF" multiple="" accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, 'DOC_BANK_PROOF')"><div class="dropzone-label">📁 Click to Browse or Drag &amp; Drop File(s) Here</div><div class="dropzone-sub">Supported formats: PDF, JPG, PNG (Unlimited file size)</div></div></div><div class="doc-remarks-wrap"><input type="text" class="doc-remarks-input" placeholder="Add remarks for CA (e.g., Bill is in father's name, NOC attached)..." oninput="saveDocRemark('DOC_BANK_PROOF', this.value)"></div></div></div></div>
+  </section>
+
+  <!-- SECTION 3: FINAL REVIEW & SUBMISSION (SIMPLIFIED: ONLY GMAIL & WHATSAPP) -->
+  <section id="sec-review" class="portal-section active">
+    
+    <!-- Upload Status Progress Banner -->
+    <div class="upload-progress-box active" id="upload-progress-banner">
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <span style="font-size:1.5rem;">⏳</span>
+        <div>
+          <strong id="prog-title" style="color:var(--teal-800);">✅ Submission Completed Successfully!</strong>
+          <div id="prog-sub" style="font-size:0.8rem; color:var(--slate-600);">Your CA office has been notified. Thank you!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Big Action Submission Card: EXACTLY TWO CHOICES -->
+    <div class="submit-action-card-v4">
+      <h3 id="rev-card-title">Submit Documents Directly to CA Office</h3>
+      <p id="rev-card-sub">Choose your preferred submission method below. All your uploaded documents will be processed directly with full client authorization.</p>
+
+      <div class="two-options-container">
+        <!-- Option 1: GMAIL -->
+        <div class="submission-choice-box gmail">
+          <div>
+            <div class="choice-icon">✉️</div>
+            <div class="choice-title" id="lbl-choice-gmail-title">Send via Gmail</div>
+            <div class="choice-desc" id="lbl-choice-gmail-desc">Directly submit all uploaded documents and inquiry details to CA office via Gmail.</div>
+          </div>
+          <button type="button" class="btn btn-lg btn-primary" onclick="initiateSubmissionFlow('gmail')" style="width:100%; background:#ea4335;">
+            ✉️ <span id="lbl-btn-gmail-send">Send via Gmail</span>
+          </button>
+        </div>
+
+        <!-- Option 2: WHATSAPP -->
+        <div class="submission-choice-box whatsapp">
+          <div>
+            <div class="choice-icon">💬</div>
+            <div class="choice-title" id="lbl-choice-wa-title">Send via WhatsApp</div>
+            <div class="choice-desc" id="lbl-choice-wa-desc">Directly submit all uploaded documents and inquiry details to CA office via WhatsApp.</div>
+          </div>
+          <button type="button" class="btn btn-lg btn-whatsapp" onclick="initiateSubmissionFlow('whatsapp')" style="width:100%;">
+            💬 <span id="lbl-btn-wa-send">Send via WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client Audit & Review Card -->
+    <div class="card">
+      <div class="card-header-flex">
+        <div>
+          <h3 class="section-title" id="rev-audit-title">Submission Audit &amp; Summary Review</h3>
+          <p class="section-subtitle" id="rev-audit-sub">Full review of your answers and uploaded document inventory.</p>
+        </div>
+      </div>
+
+      <!-- Questionnaire Answers Summary Grid -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-bottom:1.5rem; background:var(--slate-50); padding:1.25rem; border-radius:var(--radius); border:1px solid var(--slate-200);">
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-client">Client / Trade Name</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-client-name">XYZ ENTERPRISE (XYZ)</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-const">Business Constitution</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-constitution">Proprietorship</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-state">State &amp; Jurisdiction</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-state">Gujarat (24)</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-reason">Reason for Registration</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-reason">Voluntary</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-prem">Premises Ownership</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-premises">Owned</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; text-transform:uppercase; color:var(--slate-500); font-weight:700;" id="lbl-rev-prom">Partners / Directors / Signatories</div>
+          <div style="font-weight:700; color:var(--navy-900);" id="review-promoters">1 Person(s)</div>
+        </div>
+      </div>
+
+      <!-- Complete Documents Inventory Table (Only Required Documents, No Extra Column) -->
+      <h4 style="font-size:0.95rem; font-weight:700; color:var(--navy-900); margin-bottom:0.75rem;" id="lbl-rev-inv-title">Document Inventory</h4>
+      <div style="overflow-x:auto;">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th id="th-req">Requirement</th>
+              <th id="th-class">Classification</th>
+              <th id="th-status">Status</th>
+              <th id="th-files">Attached Files</th>
+              <th id="th-remarks">Client Remarks</th>
+            </tr>
+          </thead>
+          <tbody id="review-table-body"><tr><td><strong>Proprietor's PAN Card</strong></td><td><span class="badge-tag badge-mandatory">Mandatory</span></td><td><span class="status-badge uploaded">✅ Uploaded</span></td><td>Aadhaar2.jpeg</td><td>-</td></tr><tr><td><strong>Proprietor's Passport Photograph</strong></td><td><span class="badge-tag badge-mandatory">Mandatory</span></td><td><span class="status-badge uploaded">✅ Uploaded</span></td><td>Photo.jpeg</td><td>-</td></tr><tr><td><strong>Proprietor's Aadhaar Card</strong></td><td><span class="badge-tag badge-mandatory">Mandatory</span></td><td><span class="status-badge pending">⏳ Pending</span></td><td><span style="color:var(--rose-600); font-weight:600;">Not provided</span></td><td>-</td></tr><tr><td><strong>Latest Electricity Bill or Property Tax Receipt (Owned)</strong></td><td><span class="badge-tag badge-mandatory">Mandatory</span></td><td><span class="status-badge pending">⏳ Pending</span></td><td><span style="color:var(--rose-600); font-weight:600;">Not provided</span></td><td>-</td></tr><tr><td><strong>Bank Account Proof (Cancelled Cheque / Passbook / Statement)</strong></td><td><span class="badge-tag badge-optional">Optional</span></td><td><span class="status-badge pending">⏳ Pending</span></td><td><span style="color:var(--rose-600); font-weight:600;">Not provided</span></td><td>-</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="app-footer">
+  <div class="footer-inner">
+    <div>
+      <strong id="ftr-title">GST Registration Document Assistant • Client Portal</strong> | Version 4.0
+    </div>
+    <div id="ftr-desc">
+      Statutory compliance under Central Goods and Services Tax Act, 2017 • Confidential Offline Client Tool
+    </div>
+  </div>
+</footer>
+
+<!-- MODALS -->
+
+<!-- 1. CLIENT PERMISSION & CONFIRMATION MODAL BEFORE UPLOAD -->
+<div class="modal-backdrop" id="modal-permission">
+  <div class="modal-dialog" style="max-width:520px;">
+    <div class="modal-header">
+      <div class="modal-title" id="perm-modal-title">🛡️ Authorization &amp; Permission</div>
+      <button type="button" class="modal-close-btn" onclick="closeModal('modal-permission')">×</button>
+    </div>
+    <div class="modal-body" style="padding:1.75rem;">
+      <div style="text-align:center; font-size:2.5rem; margin-bottom:0.75rem;">🔒</div>
+      <h3 style="font-size:1.15rem; font-weight:800; color:var(--navy-950); margin-bottom:0.5rem; text-align:center;" id="perm-heading">Authorize Document Submission</h3>
+      <p style="font-size:0.85rem; color:var(--slate-600); line-height:1.5; margin-bottom:1.25rem; text-align:center;" id="perm-text">
+        Do you authorize sending your uploaded business documents and questionnaire details to your Chartered Accountant office (<strong id="perm-firm-name">M.G.ASSOCIATES, Chartered Accountants</strong>)?
+      </p>
+
+      <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius); padding:0.85rem; font-size:0.78rem; color:var(--slate-600); margin-bottom:1.5rem;" id="perm-privacy-note">
+        ✅ <strong>Data Confidentiality:</strong> Your documents will be transmitted directly and securely to your CA office for FORM GST REG-01 preparation and verification under the CGST Act, 2017.
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.75rem;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modal-permission')">
+          <span id="lbl-perm-cancel">Cancel</span>
+        </button>
+        <button type="button" class="btn btn-teal" id="btn-perm-confirm" onclick="executeAuthorizedSubmission()">
+          <span id="lbl-perm-allow">✅ Yes, Allow &amp; Send Documents</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. CA OFFICE ADMIN & SHAREABLE LINK MODAL -->
+<div class="modal-backdrop" id="modal-admin">
+  <div class="modal-dialog" style="max-width:680px;">
+    <div class="modal-header">
+      <div class="modal-title">🔐 CA Office Settings &amp; Client Share Link</div>
+      <button type="button" class="modal-close-btn" onclick="closeModal('modal-admin')">×</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Shareable Link Generator Box -->
+      <div style="background:var(--teal-50); border:1.5px solid var(--teal-600); border-radius:var(--radius); padding:1.25rem; margin-bottom:1.5rem;">
+        <h4 style="font-size:0.95rem; font-weight:800; color:var(--teal-800); margin-bottom:0.35rem;">
+          🔗 Your Sharable Client Link (Send to Inquiry Clients)
+        </h4>
+        <p style="font-size:0.78rem; color:var(--slate-600); margin-bottom:0.85rem;">
+          When an inquiring client calls you, send them this direct link on WhatsApp or SMS. It automatically locks in your CA firm name, your Gmail, and your WhatsApp so all documents come straight to you!
+        </p>
+        <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+          <input type="text" id="shareable-link-input" class="form-control" readonly="readonly" style="font-family:monospace; font-size:0.8rem; background:#ffffff;" value="null/C:/Users/jeet%20popat/OneDrive/Desktop/ADV%20IT/Group%204/GST%20Registration/gst_registration_portal.html?firm=M.G.ASSOCIATES%2C%20Chartered%20Accountants&amp;email=office.meetgajjar%40gmail.com&amp;phone=9909031196">
+          <button type="button" class="btn btn-teal btn-sm" onclick="copyShareableLink()">📋 Copy Link</button>
+        </div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <button type="button" class="btn btn-whatsapp btn-sm" onclick="shareLinkViaWhatsApp()">
+            💬 Share via WhatsApp with Greeting
+          </button>
+        </div>
+      </div>
+
+      <!-- Direct Server / Cloud Webhook Setting (for automated cloud receiving) -->
+      <div style="background:var(--slate-50); border:1px solid var(--slate-300); border-radius:var(--radius); padding:1rem; margin-bottom:1.5rem;">
+        <h4 style="font-size:0.88rem; font-weight:700; color:var(--navy-950); margin-bottom:0.35rem;">
+          🌐 Direct Cloud / Python Server Auto-Upload Endpoint (Optional)
+        </h4>
+        <p style="font-size:0.75rem; color:var(--slate-600); margin-bottom:0.5rem;">
+          If running our 1-click companion server (<code style="background:#e2e8f0; padding:1px 4px;">node server.js</code> or <code style="background:#e2e8f0; padding:1px 4px;">python server.py</code>) or a Google Apps Script Webhook, enter the URL below to automatically save files into your office folder:
+        </p>
+        <input type="text" id="set-webhook-url" class="form-control" placeholder="e.g. http://localhost:8080/api/upload or Google Apps Script Webhook URL">
+      </div>
+
+      <!-- CA Office Config Form -->
+      <h4 style="font-size:0.95rem; font-weight:700; color:var(--navy-900); margin-bottom:0.75rem;">CA Firm Profile</h4>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">CA Firm / Office Name</label>
+          <input type="text" id="set-office-name" class="form-control" placeholder="e.g. K. R. Sharma &amp; Associates" value="M.G.ASSOCIATES, Chartered Accountants">
+        </div>
+        <div class="form-group">
+          <label class="form-label">CA Gmail Address (for submissions)</label>
+          <input type="email" id="set-office-email" class="form-control" placeholder="e.g. ca.office@gmail.com" value="office.meetgajjar@gmail.com">
+        </div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="form-group">
+          <label class="form-label">Office WhatsApp / Mobile (with country code)</label>
+          <input type="text" id="set-office-phone" class="form-control" placeholder="e.g. 919876543210" value="9909031196">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Office Address &amp; Subtitle</label>
+          <input type="text" id="set-office-address" class="form-control" placeholder="e.g. Mumbai, Maharashtra" value="402, Trade Heights, M.G. Road, Fort, Mumbai - 400001">
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; border-top:1px solid var(--slate-200); padding-top:1rem;">
+        <button type="button" class="btn btn-danger btn-sm" onclick="resetClientSession()">
+          🔄 Reset to Blank Client
+        </button>
+        <button type="button" class="btn btn-teal btn-sm" onclick="saveAdminSettings()">
+          💾 Save Settings
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 3. Document Preview Modal -->
+<div class="modal-backdrop" id="modal-preview">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-preview-title">Document Preview</div>
+      <button type="button" class="modal-close-btn" onclick="closeModal('modal-preview')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="preview-container" id="modal-preview-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Sample Template Modal -->
+<div class="modal-backdrop" id="modal-template">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-template-title">Standard Sample Template</div>
+      <button type="button" class="modal-close-btn" onclick="closeModal('modal-template')">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.82rem; color:var(--slate-600); margin-bottom:1rem;" id="template-modal-desc">
+        You can copy this standard format provided by our CA office, print it on appropriate paper (or stamp paper as required), sign it, and upload the scanned copy.
+      </p>
+      <div class="template-box" id="modal-template-text"></div>
+      <div style="margin-top:1.25rem; display:flex; justify-content:flex-end; gap:0.5rem;">
+        <button type="button" class="btn btn-teal btn-sm" onclick="copyTemplateText()">
+          📋 Copy Template Text
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="closeModal('modal-template')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   PART 1: ZERO-DEPENDENCY OFFLINE PURE JAVASCRIPT ZIP BUILDER
+   ========================================================================== */
+function makeCrc32Table() {
+  let c;
+  const table = [];
+  for (let n = 0; n < 256; n++) {
+    c = n;
+    for (let k = 0; k < 8; k++) {
+      c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    }
+    table[n] = c >>> 0;
+  }
+  return table;
+}
+const CRC32_TABLE = makeCrc32Table();
+
+function calculateCrc32(uint8Array) {
+  let crc = 0 ^ (-1);
+  for (let i = 0; i < uint8Array.length; i++) {
+    crc = (crc >>> 8) ^ CRC32_TABLE[(crc ^ uint8Array[i]) & 0xFF];
+  }
+  return (crc ^ (-1)) >>> 0;
+}
+
+class BrowserSimpleZip {
+  constructor() {
+    this.files = [];
+  }
+
+  addFile(path, data) {
+    let uint8;
+    if (typeof data === 'string') {
+      uint8 = new TextEncoder().encode(data);
+    } else if (data instanceof Uint8Array) {
+      uint8 = data;
+    } else if (data instanceof ArrayBuffer) {
+      uint8 = new Uint8Array(data);
+    } else {
+      uint8 = new Uint8Array(0);
+    }
+
+    this.files.push({
+      path: path.replace(/\\/g, '/'),
+      data: uint8,
+      isDir: path.endsWith('/')
+    });
+  }
+
+  generateBlob() {
+    const encoder = new TextEncoder();
+    const localHeadersAndData = [];
+    const centralDirectoryHeaders = [];
+    let offset = 0;
+
+    const now = new Date();
+    const time = ((now.getHours() << 11) | (now.getMinutes() << 5) | (Math.floor(now.getSeconds() / 2))) & 0xFFFF;
+    const date = (((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate()) & 0xFFFF;
+
+    for (let i = 0; i < this.files.length; i++) {
+      const f = this.files[i];
+      const nameBytes = encoder.encode(f.path);
+      const fileData = f.data;
+      const crc = f.isDir ? 0 : calculateCrc32(fileData);
+      const size = fileData.length;
+      const localOffset = offset;
+
+      // Local Header: 30 bytes + name length
+      const lh = new Uint8Array(30 + nameBytes.length);
+      const lhd = new DataView(lh.buffer);
+      lhd.setUint32(0, 0x04034b50, true);
+      lhd.setUint16(4, 20, true);
+      lhd.setUint16(6, 0x0800, true); // UTF-8
+      lhd.setUint16(8, 0, true);      // Store (uncompressed)
+      lhd.setUint16(10, time, true);
+      lhd.setUint16(12, date, true);
+      lhd.setUint32(14, crc, true);
+      lhd.setUint32(18, size, true);
+      lhd.setUint32(22, size, true);
+      lhd.setUint16(26, nameBytes.length, true);
+      lhd.setUint16(28, 0, true);
+      lh.set(nameBytes, 30);
+
+      localHeadersAndData.push(lh);
+      if (size > 0) {
+        localHeadersAndData.push(fileData);
+      }
+      offset += lh.length + size;
+
+      // Central Directory Record: 46 bytes + name length
+      const cd = new Uint8Array(46 + nameBytes.length);
+      const cdd = new DataView(cd.buffer);
+      cdd.setUint32(0, 0x02014b50, true);
+      cdd.setUint16(4, 20, true);
+      cdd.setUint16(6, 20, true);
+      cdd.setUint16(8, 0x0800, true);
+      cdd.setUint16(10, 0, true);
+      cdd.setUint16(12, time, true);
+      cdd.setUint16(14, date, true);
+      cdd.setUint32(16, crc, true);
+      cdd.setUint32(20, size, true);
+      cdd.setUint32(24, size, true);
+      cdd.setUint16(28, nameBytes.length, true);
+      cdd.setUint16(30, 0, true);
+      cdd.setUint16(32, 0, true);
+      cdd.setUint16(34, 0, true);
+      cdd.setUint16(36, 0, true);
+      cdd.setUint32(38, f.isDir ? 0x10 : 0x20, true);
+      cdd.setUint32(42, localOffset, true);
+      cd.set(nameBytes, 46);
+
+      centralDirectoryHeaders.push(cd);
+    }
+
+    let cdTotalSize = 0;
+    for (let j = 0; j < centralDirectoryHeaders.length; j++) {
+      cdTotalSize += centralDirectoryHeaders[j].length;
+    }
+    const cdOffset = offset;
+
+    // End of Central Directory Record (EOCD): 22 bytes
+    const eocd = new Uint8Array(22);
+    const ed = new DataView(eocd.buffer);
+    ed.setUint32(0, 0x06054b50, true);
+    ed.setUint16(4, 0, true);
+    ed.setUint16(6, 0, true);
+    ed.setUint16(8, this.files.length, true);
+    ed.setUint16(10, this.files.length, true);
+    ed.setUint32(12, cdTotalSize, true);
+    ed.setUint32(16, cdOffset, true);
+    ed.setUint16(20, 0, true);
+
+    const blobParts = [...localHeadersAndData, ...centralDirectoryHeaders, eocd];
+    return new Blob(blobParts, { type: 'application/zip' });
+  }
+}
+
+/* ==========================================================================
+   PART 2: MASTER DATA & DEEP MULTI-LANGUAGE TRANSLATION DICTIONARY
+   ========================================================================== */
+const INDIAN_STATES = [
+  { code: '01', name: 'Jammu and Kashmir', special: true },
+  { code: '02', name: 'Himachal Pradesh', special: true },
+  { code: '03', name: 'Punjab', special: false },
+  { code: '04', name: 'Chandigarh', special: false },
+  { code: '05', name: 'Uttarakhand', special: true },
+  { code: '06', name: 'Haryana', special: false },
+  { code: '07', name: 'Delhi', special: false },
+  { code: '08', name: 'Rajasthan', special: false },
+  { code: '09', name: 'Uttar Pradesh', special: false },
+  { code: '10', name: 'Bihar', special: false },
+  { code: '11', name: 'Sikkim', special: true },
+  { code: '12', name: 'Arunachal Pradesh', special: true },
+  { code: '13', name: 'Nagaland', special: true },
+  { code: '14', name: 'Manipur', special: true },
+  { code: '15', name: 'Mizoram', special: true },
+  { code: '16', name: 'Tripura', special: true },
+  { code: '17', name: 'Meghalaya', special: true },
+  { code: '18', name: 'Assam', special: true },
+  { code: '19', name: 'West Bengal', special: false },
+  { code: '20', name: 'Jharkhand', special: false },
+  { code: '21', name: 'Odisha', special: false },
+  { code: '22', name: 'Chhattisgarh', special: false },
+  { code: '23', name: 'Madhya Pradesh', special: false },
+  { code: '24', name: 'Gujarat', special: false },
+  { code: '26', name: 'Dadra and Nagar Haveli and Daman and Diu', special: false },
+  { code: '27', name: 'Maharashtra', special: false },
+  { code: '29', name: 'Karnataka', special: false },
+  { code: '30', name: 'Goa', special: false },
+  { code: '31', name: 'Lakshadweep', special: false },
+  { code: '32', name: 'Kerala', special: false },
+  { code: '33', name: 'Tamil Nadu', special: false },
+  { code: '34', name: 'Puducherry', special: false },
+  { code: '35', name: 'Andaman and Nicobar Islands', special: false },
+  { code: '36', name: 'Telangana', special: false },
+  { code: '37', name: 'Andhra Pradesh', special: false },
+  { code: '38', name: 'Ladakh', special: true }
+];
+
+const I18N = {
+  en: {
+    portal_badge: "Client Assistant V4",
+    nav_wizard: "1. Basic Questions",
+    nav_checklist: "2. Required Documents Checklist",
+    nav_review: "3. Review & Submit to CA",
+    admin_btn: "CA Office Access",
+    disclaimer_title: "CA Office Client Guidance Tool:",
+    disclaimer_body: "This portal is exclusively designed to help you identify, understand, and assemble the correct documents required for your GST registration. Our Chartered Accountant office will prepare and submit FORM GST REG-01 on your behalf. Document requirements are subject to statutory verification under the CGST Act, 2017. All your data stays private and is stored offline in your web browser.",
+
+    // Wizard Q0 (Basics)
+    q0_step: "Client Identity",
+    q0_badge: "Step 0 of 6",
+    q0_title: "Your Contact & Proposed Business Name",
+    q0_explanation: "Please enter your basic information so our CA office can organize your file and contact you.",
+    lbl_name: "Your Full Name (Applicant / Contact Person)",
+    lbl_trade: "Proposed Business / Trade Name",
+    lbl_mobile: "Mobile Number (10 Digits)",
+    lbl_email: "Email Address",
+
+    // Wizard Q1 (Constitution)
+    q1_step: "Q1. Constitution",
+    q1_badge: "Question 1 of 6",
+    q1_title: "What is your business constitution?",
+    q1_explanation: "Select the legal form of your business. This decides what legal and identity documents are required.",
+    
+    // Wizard Q2 (State)
+    q2_step: "Q2. State / UT",
+    q2_badge: "Question 2 of 6",
+    q2_title: "In which state or union territory is your business located?",
+    q2_explanation: "Select your registered state. GST state codes and turnover thresholds (₹20L/₹40L vs ₹10L/₹20L for special category states) depend on this.",
+    lbl_state_select: "Select State / Union Territory",
+
+    // Wizard Q3 (Reason)
+    q3_step: "Q3. Reason",
+    q3_badge: "Question 3 of 6",
+    q3_title: "What is the primary reason for seeking GST registration?",
+    q3_explanation: "Select your ground for registration under the GST Act. If you are unsure, select 'Not Sure'.",
+
+    // Wizard Q4 (Premises)
+    q4_step: "Q4. Premises",
+    q4_badge: "Question 4 of 6",
+    q4_title: "What is the ownership status of your principal business premises?",
+    q4_explanation: "Premises proof is the most strictly scrutinized document in GST registration. Select the exact arrangement you have.",
+
+    // Wizard Q5 (Promoters)
+    q5_step: "Q5. Promoters",
+    q5_badge: "Question 5 of 6",
+    q5_title: "How many partners, directors, or promoters are there?",
+    q5_explanation: "Determines the number of partner/director KYC documents, photos, and authorization resolutions required.",
+    lbl_promoters_count: "Total Number of Partners / Directors / Promoters",
+
+    // Wizard Q6 (Additional Premises)
+    q6_step: "Q6. Extra Premises",
+    q6_badge: "Question 6 of 6",
+    q6_title: "Do you have any Additional Places of Business in this state?",
+    q6_explanation: "Such as an additional warehouse, godown, factory, or branch office located within the same state.",
+
+    // Buttons
+    btn_next: "Next &rarr;",
+    btn_back: "&larr; Back",
+    btn_view_checklist: "✓ View My Personalised Checklist &rarr;",
+    
+    // Version 4 Two Buttons
+    rev_title: "Submit Documents Directly to CA Office",
+    rev_sub: "Choose your preferred submission method below. All your uploaded documents will be processed directly with full client authorization.",
+    lbl_choice_gmail_title: "Send via Gmail",
+    lbl_choice_gmail_desc: "Directly submit all uploaded documents and inquiry details to CA office via Gmail.",
+    lbl_btn_gmail_send: "Send via Gmail",
+    lbl_choice_wa_title: "Send via WhatsApp",
+    lbl_choice_wa_desc: "Directly submit all uploaded documents and inquiry details to CA office via WhatsApp.",
+    lbl_btn_wa_send: "Send via WhatsApp",
+
+    // Filter Badges & Status
+    flt_all: "All",
+    flt_mandatory: "Mandatory",
+    flt_conditional: "Conditional",
+    flt_optional: "Optional",
+    flt_uploaded: "Uploaded",
+    flt_pending: "Pending",
+    badge_mandatory: "Mandatory",
+    badge_conditional: "Conditional",
+    badge_optional: "Optional",
+    status_uploaded: "✅ Uploaded",
+    status_pending: "⏳ Pending",
+
+    // Checklist UI
+    chk_title: "📂 Document Upload & Checklist",
+    chk_sub: "Upload your documents directly against each requirement. Add notes/remarks where needed.",
+    sample_noc: "Sample NOC Format",
+    sample_br: "Sample Board Resolution",
+    dropzone_label: "📁 Click to Browse or Drag & Drop File(s) Here",
+    dropzone_hint: "Supported formats: PDF, JPG, PNG (Unlimited file size)",
+    remarks_placeholder: "Add remarks for CA (e.g., Bill is in father's name, NOC attached)...",
+
+    // Permission Modal
+    perm_title: "🛡️ Authorization & Permission",
+    perm_heading: "Authorize Document Submission",
+    perm_text: "Do you authorize sending your uploaded business documents and questionnaire details to your Chartered Accountant office",
+    lbl_perm_cancel: "Cancel",
+    lbl_perm_allow: "✅ Yes, Allow & Send Documents",
+
+    audit_title: "Submission Audit & Summary Review",
+    audit_sub: "Full review of your answers and uploaded document inventory."
+  },
+
+  gu: {
+    portal_badge: "ગ્રાહક સહાયક V4",
+    nav_wizard: "૧. મૂળભૂત પ્રશ્નો",
+    nav_checklist: "૨. જરૂરી દસ્તાવેજ ચેકલિસ્ટ",
+    nav_review: "૩. સમીક્ષા અને સીએ ને મોકલો",
+    admin_btn: "સીએ ઓફિસ સેટિંગ્સ",
+    disclaimer_title: "સીએ ઓફિસ ગ્રાહક માર્ગદર્શન પોર્ટલ:",
+    disclaimer_body: "આ પોર્ટલ ફક્ત તમારા જીએસટી નોંધણી માટે કયા દસ્તાવેજોની જરૂર છે તે સમજવા અને એકત્રિત કરવા માટે છે. અમારું ચાર્ટર્ડ એકાઉન્ટન્ટ કાર્યાલય તમારા વતી ફોર્મ GST REG-01 તૈયાર કરીને સબમિટ કરશે. તમામ દસ્તાવેજો સરકારી જીએસટી કાયદા મુજબ ચકાસણીને પાત્ર છે. તમારો ડેટા સુરક્ષિત અને સંપૂર્ણપણે ઓફલાઇન રહે છે.",
+
+    // Wizard Q0
+    q0_step: "અરજદાર વિગત",
+    q0_badge: "પગલું ૦ / ૬",
+    q0_title: "તમારી સંપર્ક વિગત અને પ્રસ્તાવિત વેપારનું નામ",
+    q0_explanation: "કૃપા કરીને તમારી પ્રાથમિક વિગતો દાખલ કરો જેથી સીએ ઓફિસ તમારી ફાઇલ ઓળખી શકે.",
+    lbl_name: "તમારું પૂરું નામ (અરજદાર / સંપર્ક વ્યક્તિ)",
+    lbl_trade: "પ્રસ્તાવિત વ્યવસાય / વેપારનું નામ",
+    lbl_mobile: "મોબાઇલ નંબર (૧૦ અંક)",
+    lbl_email: "ઇમેઇલ સરનામું",
+
+    // Wizard Q1
+    q1_step: "પ્રશ્ન ૧. સ્વરૂપ",
+    q1_badge: "પ્રશ્ન ૧ / ૬",
+    q1_title: "તમારા વ્યવસાયનું બંધારણ (સ્વરૂપ) શું છે?",
+    q1_explanation: "તમારા વ્યવસાયનું કાનૂની સ્વરૂપ પસંદ કરો. આ નક્કી કરે છે કે કયા દસ્તાવેજો જરૂરી રહેશે.",
+
+    // Wizard Q2
+    q2_step: "પ્રશ્ન ૨. રાજ્ય",
+    q2_badge: "પ્રશ્ન ૨ / ૬",
+    q2_title: "તમારો વ્યવસાય કયા રાજ્ય અથવા કેન્દ્રશાસિત પ્રદેશમાં આવેલો છે?",
+    q2_explanation: "જે રાજ્યમાં તમારું મુખ્ય કાર્યાલય છે તે રાજ્ય પસંદ કરો. જીએસટી ટર્નઓવર મર્યાદા આના પર નિર્ભર છે.",
+    lbl_state_select: "રાજ્ય / કેન્દ્રશાસિત પ્રદેશ પસંદ કરો",
+
+    // Wizard Q3
+    q3_step: "પ્રશ્ન ૩. કારણ",
+    q3_badge: "પ્રશ્ન ૩ / ૬",
+    q3_title: "જીએસટી નોંધણી મેળવવાનું મુખ્ય કારણ શું છે?",
+    q3_explanation: "જીએસટી કાયદા હેઠળનું કારણ પસંદ કરો. જો ખાતરી ન હોય તો 'ખાતરી નથી' પસંદ કરો.",
+
+    // Wizard Q4
+    q4_step: "પ્રશ્ન ૪. જગ્યા માલિકી",
+    q4_badge: "પ્રશ્ન ૪ / ૬",
+    q4_title: "તમારા વ્યવસાયના સ્થળની માલિકીની સ્થિતિ શું છે?",
+    q4_explanation: "જીએસટી અધિકારી દ્વારા જગ્યાના પુરાવાની સૌથી સખત ચકાસણી કરવામાં આવે છે.",
+
+    // Wizard Q5
+    q5_step: "પ્રશ્ન ૫. ભાગીદારો",
+    q5_badge: "પ્રશ્ન ૫ / ૬",
+    q5_title: "વ્યવસાયમાં કુલ કેટલા ભાગીદારો, ડિરેક્ટર્સ અથવા પ્રમોટર્સ છે?",
+    q5_explanation: "દરેક ભાગીદાર/ડિરેક્ટર માટે કેવાયસી અને પાસપોર્ટ ફોટો જરૂરી રહેશે.",
+    lbl_promoters_count: "કુલ ભાગીદારો / ડિરેક્ટર્સની સંખ્યા",
+
+    // Wizard Q6
+    q6_step: "પ્રશ્ન ૬. વધારાનું સ્થળ",
+    q6_badge: "પ્રશ્ન ૬ / ૬",
+    q6_title: "શું આ રાજ્યમાં તમારું અન્ય કોઈ વધારાનું સ્થળ (ગોડાઉન/શાખા) છે?",
+    q6_explanation: "જેમ કે આ જ રાજ્યમાં બીજું ગોડાઉન, શાખા અથવા ફેક્ટરી આવેલી હોય.",
+
+    // Buttons
+    btn_next: "આગળ વધો &rarr;",
+    btn_back: "&larr; પાછળ જાઓ",
+    btn_view_checklist: "✓ મારી વ્યક્તિગત દસ્તાવેજ યાદી જુઓ &rarr;",
+
+    // Version 4 Two Buttons
+    rev_title: "દસ્તાવેજો સીધા સીએ ઓફિસને મોકલો",
+    rev_sub: "નીચેથી તમારી પસંદગીની પદ્ધતિ પસંદ કરો. તમારા તમામ દસ્તાવેજો તમારી મંજૂરી સાથે સીધા તમારા ચાર્ટર્ડ એકાઉન્ટન્ટને મોકલવામાં આવશે.",
+    lbl_choice_gmail_title: "જીમેલ દ્વારા મોકલો",
+    lbl_choice_gmail_desc: "બધા અપલોડ કરેલા દસ્તાવેજો અને વિગતો સીધા જીમેલ દ્વારા સીએ ઓફિસને મોકલો.",
+    lbl_btn_gmail_send: "જીમેલ દ્વારા મોકલો",
+    lbl_choice_wa_title: "વોટ્સએપ દ્વારા મોકલો",
+    lbl_choice_wa_desc: "બધા અપલોડ કરેલા દસ્તાવેજો અને વિગતો સીધા વોટ્સએપ દ્વારા સીએ ઓફિસને મોકલો.",
+    lbl_btn_wa_send: "વોટ્સએપ દ્વારા મોકલો",
+
+    // Filter Badges & Status
+    flt_all: "બધા",
+    flt_mandatory: "ફરજિયાત",
+    flt_conditional: "શરતી",
+    flt_optional: "વૈકલ્પિક",
+    flt_uploaded: "અપલોડ થયેલ",
+    flt_pending: "બાકી",
+    badge_mandatory: "ફરજિયાત",
+    badge_conditional: "શરતી",
+    badge_optional: "વૈકલ્પિક",
+    status_uploaded: "✅ અપલોડ થયેલ",
+    status_pending: "⏳ બાકી",
+
+    // Checklist UI
+    chk_title: "📂 દસ્તાવેજ અપલોડ અને ચેકલિસ્ટ",
+    chk_sub: "દરેક જરૂરિયાત સામે સીધા દસ્તાવેજ અપલોડ કરો. જરૂર જણાય ત્યાં નોંધ ઉમેરો.",
+    sample_noc: "નમૂના એનઓસી (સંમતિ પત્ર)",
+    sample_br: "નમૂના બોર્ડ ઠરાવ (Resolution)",
+    dropzone_label: "📁 ફાઇલ પસંદ કરવા અહીં ક્લિક કરો અથવા ખેંચીને મૂકો",
+    dropzone_hint: "માન્ય ફોર્મેટ: PDF, JPG, PNG (કોઈ સાઇઝ મર્યાદા નથી)",
+    remarks_placeholder: "સીએ માટે નોંધ ઉમેરો (દા.ત. લાઇટબિલ પિતાજીના નામે છે, સંમતિ પત્ર જોડેલ છે)...",
+
+    // Permission Modal
+    perm_title: "🛡️ સત્તાધિકાર અને સંમતિ",
+    perm_heading: "દસ્તાવેજ સબમિટ કરવાની સંમતિ આપો",
+    perm_text: "શું તમે તમારા અપલોડ કરેલા તમામ દસ્તાવેજો અને વિગતો તમારા ચાર્ટર્ડ એકાઉન્ટન્ટ કાર્યાલયને મોકલવાની સંમતિ આપો છો",
+    lbl_perm_cancel: "રદ કરો",
+    lbl_perm_allow: "✅ હા, સંમતિ આપો અને મોકલો",
+
+    audit_title: "સબમિશન ઓડિટ અને સમીક્ષા",
+    audit_sub: "તમારા પ્રશ્નોના જવાબો અને અપલોડ કરેલા દસ્તાવેજોની સંપૂર્ણ યાદી."
+  },
+
+  hi: {
+    portal_badge: "ग्राहक सहायक V4",
+    nav_wizard: "1. बुनियादी प्रश्न",
+    nav_checklist: "2. आवश्यक दस्तावेज़ सूची",
+    nav_review: "3. समीक्षा और सीए को भेजें",
+    admin_btn: "सीए कार्यालय सेटिंग्स",
+    disclaimer_title: "सीए कार्यालय ग्राहक मार्गदर्शन पोर्टल:",
+    disclaimer_body: "यह पोर्टल विशेष रूप से यह समझने और एकत्र करने के लिए डिज़ाइन किया गया है कि आपके जीएसटी पंजीकरण के लिए कौन से दस्तावेज़ आवश्यक हैं। हमारा चार्टर्ड एकाउंटेंट कार्यालय आपकी ओर से फॉर्म GST REG-01 तैयार और दाखिल करेगा। सभी दस्तावेज़ जीएसटी कानूनों के तहत सत्यापन के अधीन हैं। आपका डेटा सुरक्षित और पूरी तरह से ऑफलाइन रहता है।",
+
+    // Wizard Q0
+    q0_step: "ग्राहक विवरण",
+    q0_badge: "चरण 0 / 6",
+    q0_title: "आपकी संपर्क जानकारी और प्रस्तावित व्यापार नाम",
+    q0_explanation: "कृपया अपनी बुनियादी जानकारी दर्ज करें ताकि सीए कार्यालय आपकी फ़ाइल पहचान सके।",
+    lbl_name: "आपका पूरा नाम (आवेदक / संपर्क व्यक्ति)",
+    lbl_trade: "प्रस्तावित व्यवसाय / व्यापार का नाम",
+    lbl_mobile: "मोबाइल नंबर (10 अंक)",
+    lbl_email: "ईमेल पता",
+
+    // Wizard Q1
+    q1_step: "प्रश्न 1. संविधान",
+    q1_badge: "प्रश्न 1 / 6",
+    q1_title: "आपके व्यवसाय का संविधान (प्रकार) क्या है?",
+    q1_explanation: "अपने व्यवसाय का कानूनी रूप चुनें। यह तय करता है कि किन दस्तावेज़ों की आवश्यकता होगी।",
+
+    // Wizard Q2
+    q2_step: "प्रश्न 2. राज्य",
+    q2_badge: "प्रश्न 2 / 6",
+    q2_title: "आपका व्यवसाय किस राज्य या केंद्र शासित प्रदेश में स्थित है?",
+    q2_explanation: "वह राज्य चुनें जहां आपका मुख्य कार्यालय स्थित है। जीएसटी टर्नओवर सीमा इस पर निर्भर करती है।",
+    lbl_state_select: "राज्य / केंद्र शासित प्रदेश चुनें",
+
+    // Wizard Q3
+    q3_step: "प्रश्न 3. कारण",
+    q3_badge: "प्रश्न 3 / 6",
+    q3_title: "जीएसटी पंजीकरण प्राप्त करने का प्राथमिक कारण क्या है?",
+    q3_explanation: "जीएसटी कानून के तहत लागू कारण चुनें। यदि निश्चित नहीं हैं, तो 'निश्चित नहीं' चुनें।",
+
+    // Wizard Q4
+    q4_step: "प्रश्न 4. परिसर",
+    q4_badge: "प्रश्न 4 / 6",
+    q4_title: "आपके व्यावसायिक परिसर के स्वामित्व की स्थिति क्या है?",
+    q4_explanation: "जीएसटी विभाग द्वारा परिसर के दस्तावेज़ों की सबसे सख्त जांच की जाती है।",
+
+    // Wizard Q5
+    q5_step: "प्रश्न 5. प्रमोटर",
+    q5_badge: "प्रश्न 5 / 6",
+    q5_title: "व्यवसाय में कुल कितने भागीदार, निदेशक या प्रमोटर हैं?",
+    q5_explanation: "प्रत्येक भागीदार/निदेशक के लिए केवाईसी और पासपोर्ट फोटो आवश्यक होंगे।",
+    lbl_promoters_count: "कुल भागीदार / निदेशक संख्या",
+
+    // Wizard Q6
+    q6_step: "प्रश्न 6. अतिरिक्त परिसर",
+    q6_badge: "प्रश्न 6 / 6",
+    q6_title: "क्या इस राज्य में आपका कोई अतिरिक्त व्यावसायिक स्थल (गोदाम/शाखा) है?",
+    q6_explanation: "जैसे कि उसी राज्य में कोई अन्य गोदाम, शाखा या कारखाना स्थित हो।",
+
+    // Buttons
+    btn_next: "आगे बढ़ें &rarr;",
+    btn_back: "&larr; पीछे जाएं",
+    btn_view_checklist: "✓ मेरी व्यक्तिगत दस्तावेज़ सूची देखें &rarr;",
+
+    // Version 4 Two Buttons
+    rev_title: "दस्तावेज़ सीधे सीए कार्यालय को भेजें",
+    rev_sub: "नीचे अपनी पसंदीदा विधि चुनें। आपकी सहमति से सभी दस्तावेज़ सीधे आपके चार्टर्ड एकाउंटेंट को भेजे जाएंगे।",
+    lbl_choice_gmail_title: "जीमेल द्वारा भेजें",
+    lbl_choice_gmail_desc: "सभी अपलोड किए गए दस्तावेज़ और विवरण सीधे जीमेल द्वारा सीए कार्यालय को भेजें।",
+    lbl_btn_gmail_send: "जीमेल द्वारा भेजें",
+    lbl_choice_wa_title: "व्हाट्सएप द्वारा भेजें",
+    lbl_choice_wa_desc: "सभी अपलोड किए गए दस्तावेज़ और विवरण सीधे व्हाट्सएप द्वारा सीए कार्यालय को भेजें।",
+    lbl_btn_wa_send: "व्हाट्सएप द्वारा भेजें",
+
+    // Filter Badges & Status
+    flt_all: "सभी",
+    flt_mandatory: "अनिवार्य",
+    flt_conditional: "सशर्त",
+    flt_optional: "वैकल्पिक",
+    flt_uploaded: "अपलोड किया गया",
+    flt_pending: "लंबित",
+    badge_mandatory: "अनिवार्य",
+    badge_conditional: "सशर्त",
+    badge_optional: "वैकल्पिक",
+    status_uploaded: "✅ अपलोड किया गया",
+    status_pending: "⏳ लंबित",
+
+    // Checklist UI
+    chk_title: "📂 दस्तावेज़ अपलोड और चेकलिस्ट",
+    chk_sub: "प्रत्येक आवश्यकता के सामने सीधे दस्तावेज़ अपलोड करें। जहां आवश्यक हो टिप्पणी जोड़ें।",
+    sample_noc: "नमूना एनओसी (सहमति पत्र)",
+    sample_br: "नमूना बोर्ड संकल्प (Resolution)",
+    dropzone_label: "📁 फाइल चुनने के लिए यहां क्लिक करें या ड्रैग करें",
+    dropzone_hint: "समर्थित प्रारूप: PDF, JPG, PNG (कोई आकार सीमा नहीं)",
+    remarks_placeholder: "सीए के लिए टिप्पणी जोड़ें (उदा. बिजली बिल पिता के नाम है, एनओसी संलग्न है)...",
+
+    // Permission Modal
+    perm_title: "🛡️ प्राधिकरण एवं सहमति",
+    perm_heading: "दस्तावेज़ जमा करने की अनुमति दें",
+    perm_text: "क्या आप अपने सभी अपलोड किए गए दस्तावेज़ और विवरण अपने चार्टर्ड एकाउंटेंट कार्यालय को भेजने के लिए अधिकृत करते हैं",
+    lbl_perm_cancel: "रद्द करें",
+    lbl_perm_allow: "✅ हां, अनुमति दें और दस्तावेज़ भेजें",
+
+    audit_title: "सबमिशन ऑडिट और सारांश समीक्षा",
+    audit_sub: "आपके उत्तरों और अपलोड किए गए दस्तावेज़ों की पूरी सूची।"
+  }
+};
+
+const CONSTITUTIONS = [
+  { 
+    id: 'Proprietorship', 
+    icon: '👤', 
+    title: { en: 'Proprietorship', gu: 'વૈયક્તિક માલિકી (Proprietorship)', hi: 'एकल स्वामित्व (Proprietorship)' }, 
+    sub: { en: 'Single individual owner', gu: 'એક વ્યક્તિની માલિકીનો વ્યવસાય', hi: 'एक व्यक्ति के स्वामित्व वाला व्यवसाय' } 
+  },
+  { 
+    id: 'Partnership', 
+    icon: '👥', 
+    title: { en: 'Partnership Firm', gu: 'ભાગીદારી પેઢી (Partnership)', hi: 'साझेदारी फर्म (Partnership)' }, 
+    sub: { en: '2 or more partners (Registered/Unregistered)', gu: '૨ અથવા વધુ ભાગીદારો', hi: '2 या अधिक साझेदार' } 
+  },
+  { 
+    id: 'LLP', 
+    icon: '🏢', 
+    title: { en: 'LLP', gu: 'એલએલપી (LLP)', hi: 'एलएलपी (LLP)' }, 
+    sub: { en: 'Limited Liability Partnership under MCA', gu: 'એમસીએ હેઠળ મર્યાદિત જવાબદારી ભાગીદારી', hi: 'एमसीए के तहत सीमित देयता भागीदारी' } 
+  },
+  { 
+    id: 'Private Limited Company', 
+    icon: '🏛️', 
+    title: { en: 'Private Limited Company', gu: 'પ્રાઇવેટ લિમિટેડ કંપની', hi: 'प्राइवेट लिमिटेड कंपनी' }, 
+    sub: { en: 'Incorporated under Companies Act', gu: 'કંપની ધારા હેઠળ નિગમિત', hi: 'कंपनी अधिनियम के तहत निगमित' } 
+  },
+  { 
+    id: 'Public Limited Company', 
+    icon: '🏦', 
+    title: { en: 'Public Limited Company', gu: 'પબ્લિક લિમિટેડ કંપની', hi: 'पब्लिक लिमिटेड कंपनी' }, 
+    sub: { en: 'Public company with multiple shareholders', gu: 'શેરધારકો ધરાવતી જાહેર કંપની', hi: 'शेयरधारकों वाली सार्वजनिक कंपनी' } 
+  },
+  { 
+    id: 'HUF', 
+    icon: '👨‍👩‍👧‍👦', 
+    title: { en: 'HUF', gu: 'એચયુએફ (HUF)', hi: 'एचयूएफ (HUF)' }, 
+    sub: { en: 'Hindu Undivided Family (Karta)', gu: 'હિન્દુ અવિભાજિત કુટુંબ (કર્તા)', hi: 'हिंदू अविभाजित परिवार (कर्ता)' } 
+  },
+  { 
+    id: 'Trust/Society', 
+    icon: '📜', 
+    title: { en: 'Trust / Society / Club', gu: 'ટ્રસ્ટ / સોસાયટી / ક્લબ', hi: 'ट्रस्ट / सोसाइटी / क्लब' }, 
+    sub: { en: 'Registered Trust, NGO, Society or Club', gu: 'નોંધાયેલ ચેરીટેબલ સંસ્થા કે ક્લબ', hi: 'पंजीकृत धर्मार्थ संस्था या क्लब' } 
+  },
+  { 
+    id: 'Other', 
+    icon: '💼', 
+    title: { en: 'Other / Not Sure', gu: 'અન્ય / ખાતરી નથી', hi: 'अन्य / निश्चित नहीं' }, 
+    sub: { en: 'Other legal constitution (CA will advise)', gu: 'સીએ ઓફિસ યોગ્ય માર્ગદર્શન આપશે', hi: 'सीए कार्यालय उचित मार्गदर्शन देगा' } 
+  }
+];
+
+const PREMISES_TYPES = [
+  { 
+    id: 'Owned', 
+    icon: '🏠', 
+    title: { en: 'Owned', gu: 'પોતાની માલિકીનું (Owned)', hi: 'स्वयं के स्वामित्व का (Owned)' }, 
+    sub: { en: 'Premises owned by applicant or business', gu: 'અરજદાર કે વ્યવસાયની પોતાની જગ્યા', hi: 'आवेदक या व्यवसाय की अपनी जगह' } 
+  },
+  { 
+    id: 'Rented', 
+    icon: '📑', 
+    title: { en: 'Rented', gu: 'ભાડે રાખેલું (Rented)', hi: 'किराए पर लिया गया (Rented)' }, 
+    sub: { en: 'Valid rent agreement with landlord', gu: 'મકાનમાલિક સાથે સત્તાવાર ભાડા કરાર', hi: 'मकान मालिक के साथ वैध किराया समझौता' } 
+  },
+  { 
+    id: 'Leased', 
+    icon: '📜', 
+    title: { en: 'Leased', gu: 'પટ્ટે રાખેલું (Leased)', hi: 'पट्टे पर लिया गया (Leased)' }, 
+    sub: { en: 'Long-term registered lease agreement', gu: 'નોંધાયેલ લીઝ ડીડ', hi: 'पंजीकृत लीज डीड' } 
+  },
+  { 
+    id: 'Shared', 
+    icon: '🤝', 
+    title: { en: 'Shared / Coworking', gu: 'શેર્ડ / કો-વર્કિંગ સ્પેસ', hi: 'साझा / को-वर्किंग स्पेस' }, 
+    sub: { en: 'Shared desk/space or coworking agreement', gu: 'શેર્ડ ડેસ્ક કે કો-વર્કિંગ કરાર', hi: 'साझा डेस्क या को-वर्किंग अनुबंध' } 
+  },
+  { 
+    id: 'Consent', 
+    icon: '✍️', 
+    title: { en: 'Consent / NOC-based', gu: 'સંમતિ પત્ર / એનઓસી આધારિત', hi: 'सहमति पत्र / एनओसी आधारित' }, 
+    sub: { en: 'Family property without rent (Parent/Spouse)', gu: 'પરિવારની જગ્યા (માતા-પિતા/પતિ-પત્ની) ભાડા વગર', hi: 'परिवार की संपत्ति बिना किराए के (माता-पिता/जीवनसाथી)' } 
+  },
+  { 
+    id: 'Other', 
+    icon: '🏢', 
+    title: { en: 'Other / Virtual Office', gu: 'અન્ય / વર્ચ્યુઅલ ઓફિસ', hi: 'अन्य / वर्चुअल ऑफिस' }, 
+    sub: { en: 'Other arrangements or virtual desk', gu: 'અન્ય વ્યવસ્થા', hi: 'अन्य व्यवस्था' } 
+  }
+];
+
+const REGISTRATION_REASONS = [
+  { 
+    id: 'Turnover', 
+    icon: '📈', 
+    title: { en: 'Turnover Exceeding Threshold', gu: 'ટર્નઓવર મર્યાદા વટાવી ગઈ (Turnover Threshold)', hi: 'टर्नओवर सीमा पार हो गई' }, 
+    sub: { en: 'Turnover > ₹20L/₹40L (or ₹10L/₹20L in special states)', gu: 'વાર્ષિક ટર્નઓવર નિર્ધારિત મર્યાદાથી વધુ', hi: 'वार्षिक टर्नओवर निर्धारित सीमा से अधिक' } 
+  },
+  { 
+    id: 'Voluntary', 
+    icon: '✨', 
+    title: { en: 'Voluntary Registration', gu: 'સ્વૈચ્છિક નોંધણી (Voluntary)', hi: 'स्वैच्छिक पंजीकरण (Voluntary)' }, 
+    sub: { en: 'Under Section 25(3), seeking GSTIN willingly', gu: 'પોતાની મરજીથી જીએસટી નંબર લેવા માટે', hi: 'स्वेच्छा से जीएसटी नंबर प्राप्त करने हेतु' } 
+  },
+  { 
+    id: 'Interstate', 
+    icon: '🚚', 
+    title: { en: 'Interstate Taxable Supply', gu: 'રાજ્ય બહાર વેચાણ (Interstate Supply)', hi: 'राज्य के बाहर आपूर्ति (Interstate)' }, 
+    sub: { en: 'Supplying goods or services outside your state', gu: 'અન્ય રાજ્યોમાં માલ કે સેવાઓ પૂરી પાડવી', hi: 'अन्य राज्यों में माल या सेवा की आपूर्ति' } 
+  },
+  { 
+    id: 'Ecommerce', 
+    icon: '🛒', 
+    title: { en: 'E-commerce Operator / Seller', gu: 'ઇ-કોમર્સ વેચાણ (Amazon, Flipkart, etc.)', hi: 'ई-कॉमर्स विक्रेता (Amazon, Flipkart, etc.)' }, 
+    sub: { en: 'Selling goods via Amazon, Flipkart, Meesho, etc.', gu: 'ઓનલાઇન પ્લેટફોર્મ મારફત વેચાણ', hi: 'ऑनलाइन प्लेटफॉर्म के माध्यम से बिक्री' } 
+  },
+  { 
+    id: 'Other', 
+    icon: '📋', 
+    title: { en: 'Other Applicable Reason', gu: 'અન્ય લાગુ કારણ', hi: 'अन्य लागू कारण' }, 
+    sub: { en: 'RCM liability, casual taxable person, etc.', gu: 'આરસીએમ, કેઝ્યુઅલ ટેક્સ પેયર વગેરે', hi: 'आरसीएम, कैजुअल करदाता आदि' } 
+  },
+  { 
+    id: 'NotSure', 
+    icon: '❓', 
+    title: { en: 'Not Sure / Need Guidance', gu: 'ખાતરી નથી / સીએ માર્ગદર્શન જોઈએ', hi: 'निश्चित नहीं / सीए सलाह चाहिए' }, 
+    sub: { en: 'Our CA office will evaluate and advise', gu: 'અમારું સીએ કાર્યાલય તપાસીને માર્ગદર્શન આપશે', hi: 'हमारा सीए कार्यालय जांच कर सलाह देगा' } 
+  }
+];
+
+const SAMPLE_TEMPLATES = {
+  consent: `CONSENT LETTER / NO OBJECTION CERTIFICATE (NOC)
+(To be executed on plain paper or non-judicial stamp paper as per State practice)
+
+Date: [DD/MM/YYYY]
+To,
+The Proper Officer of Central / State Tax,
+Goods and Services Tax Department,
+[City / State]
+
+SUBJECT: NO OBJECTION CERTIFICATE FOR RUNNING BUSINESS AT MY PREMISES
+
+I/We, [Full Name of Property Owner], residing at [Complete Residential Address as per ID Proof], do hereby solemnly affirm and state as under:
+
+1. That I am the sole, absolute, and lawful owner of the property situated at:
+   [Full Address of Business Premises character-for-character as on Electricity Bill / Tax Receipt]
+   (hereinafter referred to as the "Said Premises").
+
+2. That I have no objection whatsoever if [Name of Applicant / Trade Name], represented by [Proprietor / Partner / Director Name], uses the Said Premises as their Principal Place of Business / Branch Place of Business for carrying on their business activities and obtaining Goods and Services Tax (GST) registration.
+
+3. That I have not charged any rent/security deposit for the above consent OR the said consent is granted out of natural love and affection / mutual arrangement.
+
+4. Attached herewith is a copy of my recent Electricity Bill / Municipal Tax Receipt and my Identity Proof (Aadhaar / PAN) for your verification.
+
+Sincerely,
+
+_________________________
+[Signature of Property Owner]
+Name: [Full Name of Owner]
+PAN: [Owner PAN]
+Mobile: [Owner Mobile Number]
+Encl: 1. Latest Electricity Bill / Property Tax Receipt
+      2. Copy of Owner's Aadhaar / PAN card`,
+
+  resolution: `CERTIFIED TRUE COPY OF THE RESOLUTION PASSED AT THE MEETING OF THE BOARD OF DIRECTORS OF [COMPANY NAME] PRIVATE LIMITED HELD ON [DATE] AT [REGISTERED OFFICE ADDRESS]
+--------------------------------------------------------------------------------------
+"RESOLVED THAT the Company do make an application for obtaining Registration under the Central Goods and Services Tax Act, 2017, State Goods and Services Tax Act, and Integrated Goods and Services Tax Act for its Principal Place of Business situated at [Complete Business Address].
+
+RESOLVED FURTHER THAT [Name of Authorized Signatory], Director / Authorized Officer of the Company (PAN: [PAN Number], DIN: [DIN if Director]), be and is hereby authorized as the "Authorized Signatory" of the Company to:
+1. Sign, execute, and submit the online application FORM GST REG-01 and all related declarations, forms, and documents before the GST Authorities.
+2. Sign, receive, and acknowledge all notices, summons, clarifications, and correspondence under the GST laws.
+3. Represent the Company in all proceedings, inspections, and matters relating to GST registration.
+
+RESOLVED FURTHER THAT the specimen signature of [Name of Authorized Signatory] is appended below:
+
+Specimen Signature of Authorized Signatory: _________________________
+
+RESOLVED FURTHER THAT a certified true copy of this resolution signed by any Director of the Company be furnished to the GST Authorities."
+
+For and on behalf of the Board of Directors,
+[COMPANY NAME] PRIVATE LIMITED
+
+
+_________________________          _________________________
+[Director 1 Name]                  [Director 2 Name]
+Director (DIN: _________)          Director (DIN: _________)`
+};
+
+/* ==========================================================================
+   PART 3: APPLICATION STATE & STORAGE
+   ========================================================================== */
+const DEFAULT_SETTINGS = {
+  officeName: "K. R. Sharma & Associates, Chartered Accountants",
+  officeEmail: "ca.gst.office@gmail.com",
+  officePhone: "919876543210",
+  officeAddress: "402, Trade Heights, M.G. Road, Fort, Mumbai - 400001",
+  webhookUrl: "", // Optional local/cloud auto-upload server endpoint
+  disclaimerText: "This portal is exclusively designed to help you identify, understand, and assemble the correct documents required for your GST registration. Our Chartered Accountant office will prepare and submit FORM GST REG-01 on your behalf. Document requirements are subject to statutory verification under the CGST Act, 2017. All your data stays private and is stored offline in your web browser.",
+  customLogoData: null
+};
+
+const AppState = {
+  currentLang: 'en',
+  activeSection: 'wizard',
+  activeStep: 0,
+  client: null,
+  docFilter: 'all',
+  searchQuery: '',
+  db: null,
+  filesCache: [],
+  pendingSubmissionType: null
+};
+
+// Initialize or load current client
+function getOrCreateClientSession() {
+  try {
+    const s = localStorage.getItem('gst_active_client_v4');
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+
+  const blank = {
+    id: 'client_' + Date.now(),
+    name: '',
+    tradeName: '',
+    mobile: '',
+    email: '',
+    answers: {
+      constitution: 'Proprietorship',
+      stateCode: '24', // Default to Gujarat (or 27 Maharashtra)
+      reason: 'Turnover',
+      premises: 'Owned',
+      promotersCount: 1,
+      hasAdditionalPremises: 'No'
+    },
+    remarks: {}
+  };
+  saveClientSession(blank);
+  return blank;
+}
+
+function saveClientSession(c) {
+  AppState.client = c;
+  localStorage.setItem('gst_active_client_v4', JSON.stringify(c));
+}
+
+function resetClientSession() {
+  if (confirm('Are you sure you want to start a completely fresh client application?')) {
+    localStorage.removeItem('gst_active_client_v4');
+    AppState.client = getOrCreateClientSession();
+    AppState.activeStep = 0;
+    saveClientSession(AppState.client);
+    loadClientFiles().then(() => {
+      closeModal('modal-admin');
+      switchSection('wizard');
+    });
+  }
+}
+
+function getSettings() {
+  try {
+    const s = localStorage.getItem('gst_office_settings');
+    const parsed = s ? JSON.parse(s) : {};
+    return Object.assign({}, DEFAULT_SETTINGS, parsed);
+  } catch(e) {
+    return Object.assign({}, DEFAULT_SETTINGS);
+  }
+}
+
+function saveSettings(data) {
+  localStorage.setItem('gst_office_settings', JSON.stringify(data));
+  applyOfficeSettings();
+}
+
+// Parse URL Parameters
+function parseUrlParameters() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const firm = params.get('firm') || params.get('ca');
+    const email = params.get('email');
+    const phone = params.get('phone');
+    const lang = params.get('lang');
+
+    const s = getSettings();
+    let changed = false;
+
+    if (firm && firm.trim()) { s.officeName = firm.trim(); changed = true; }
+    if (email && email.trim()) { s.officeEmail = email.trim(); changed = true; }
+    if (phone && phone.trim()) { s.officePhone = phone.trim(); changed = true; }
+
+    if (changed) {
+      saveSettings(s);
+    }
+
+    if (lang && ['en','gu','hi'].includes(lang)) {
+      AppState.currentLang = lang;
+    }
+  } catch(e) {
+    console.warn("URL param error:", e);
+  }
+}
+
+// Initialize IndexedDB
+function initIndexedDB() {
+  return new Promise((resolve) => {
+    const req = indexedDB.open('GSTAssistantDB_v4', 1);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('documents')) {
+        const store = db.createObjectStore('documents', { keyPath: 'id', autoIncrement: true });
+        store.createIndex('clientId', 'clientId', { unique: false });
+        store.createIndex('docCode', 'docCode', { unique: false });
+      }
+    };
+    req.onsuccess = (e) => {
+      AppState.db = e.target.result;
+      resolve(AppState.db);
+    };
+    req.onerror = () => resolve(null);
+  });
+}
+
+function dbSaveFile(fileRecord) {
+  return new Promise((resolve) => {
+    if (!AppState.db) return resolve(false);
+    const tx = AppState.db.transaction('documents', 'readwrite');
+    const store = tx.objectStore('documents');
+    store.add(fileRecord);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => resolve(false);
+  });
+}
+
+function dbGetClientFiles(clientId) {
+  return new Promise((resolve) => {
+    if (!AppState.db) return resolve([]);
+    const tx = AppState.db.transaction('documents', 'readonly');
+    const store = tx.objectStore('documents');
+    const index = store.index('clientId');
+    const req = index.getAll(clientId);
+    req.onsuccess = () => resolve(req.result || []);
+    req.onerror = () => resolve([]);
+  });
+}
+
+function dbDeleteFile(fileId) {
+  return new Promise((resolve) => {
+    if (!AppState.db) return resolve(false);
+    const tx = AppState.db.transaction('documents', 'readwrite');
+    const store = tx.objectStore('documents');
+    store.delete(fileId);
+    tx.oncomplete = () => resolve(true);
+    tx.onerror = () => resolve(false);
+  });
+}
+
+async function loadClientFiles() {
+  if (AppState.client) {
+    AppState.filesCache = await dbGetClientFiles(AppState.client.id);
+  }
+  updateCountersAndBadges();
+}
+
+function updateCountersAndBadges() {
+  const reqs = evaluateDocumentRequirements(AppState.client);
+  const files = AppState.filesCache;
+
+  let uploadedCount = 0;
+  reqs.forEach(r => {
+    if (files.some(f => f.docCode === r.code)) uploadedCount++;
+  });
+
+  const total = reqs.length;
+  document.getElementById('tab-badge-checklist-count').textContent = uploadedCount + '/' + total;
+}
+
+/* ==========================================================================
+   PART 4: SMART DOCUMENT RECOMMENDATION ENGINE (WITH FULL TRANSLATIONS)
+   ========================================================================== */
+function evaluateDocumentRequirements(client) {
+  const ans = client.answers || {};
+  const constitution = ans.constitution || 'Proprietorship';
+  const premises = ans.premises || 'Owned';
+  const count = parseInt(ans.promotersCount || 1, 10);
+  const hasAPOB = ans.hasAdditionalPremises === 'Yes';
+  const lang = AppState.currentLang || 'en';
+
+  const list = [];
+  const t = (obj) => (obj && obj[lang]) ? obj[lang] : (obj ? obj.en : '');
+
+  // 1. CONSTITUTION-SPECIFIC DOCUMENTS
+  if (constitution === 'Proprietorship') {
+    list.push({
+      code: 'DOC_CONST_PAN',
+      title: t({
+        en: "Proprietor's PAN Card",
+        gu: "માલિક (પ્રોપ્રાઇટર) નું પાન કાર્ડ",
+        hi: "मालिक (प्रोपराइटर) का पैन कार्ड"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Permanent Account Number (PAN) of the proprietor under Section 25(6). Legal name on GSTIN matches this PAN.",
+        gu: "કલમ ૨૫(૬) હેઠળ માલિકનું પાન કાર્ડ ફરજિયાત છે. જીએસટી પોર્ટલ પર આ જ નામથી નોંધણી થશે.",
+        hi: "धारा 25(6) के तहत प्रोपराइटर का पैन कार्ड अनिवार्य है। जीएसटी पोर्टल पर इसी नाम से पंजीकरण होगा।"
+      }),
+      complianceTip: t({
+        en: "Ensure name and date of birth match Aadhaar card exactly to avoid validation failure.",
+        gu: "ખાતરી કરો કે પાન કાર્ડમાં નામ અને જન્મતારીખ આધાર કાર્ડ સાથે અક્ષરશઃ મેળ ખાય છે.",
+        hi: "सुनिश्चित करें कि पैन कार्ड का नाम और जन्मतिथि आधार कार्ड से बिल्कुल मेल खाती हो।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_PROMOTER_PHOTO',
+      title: t({
+        en: "Proprietor's Passport Photograph",
+        gu: "માલિકનો પાસપોર્ટ સાઇઝ ફોટોગ્રાફ",
+        hi: "प्रोपराइटर का पासपोर्ट साइज फोटो"
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Required for photo identity verification in Form GST REG-01.",
+        gu: "ફોર્મ GST REG-01 માં ઓળખ ચકાસણી માટે જરૂરી છે.",
+        hi: "फॉर्म GST REG-01 में पहचान सत्यापन के लिए आवश्यक है।"
+      }),
+      complianceTip: t({
+        en: "Recent clear photograph with light/white background, without cap or sunglasses.",
+        gu: "તાજેતરનો સફેદ બેકગ્રાઉન્ડ વાળો સ્પષ્ટ પાસપોર્ટ ફોટો (ચશ્મા કે કેપ વગર).",
+        hi: "हाल ही का सफेद पृष्ठभूमि वाला स्पष्ट पासपोर्ट फोटो (चश्मा या टोपी के बिना)।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_PROMOTER_AADHAAR',
+      title: t({
+        en: "Proprietor's Aadhaar Card",
+        gu: "માલિકનું આધાર કાર્ડ",
+        hi: "प्रोपराइटर का आधार कार्ड"
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Required for Aadhaar Authentication under Rule 8(4A) for faster approval without site inspection.",
+        gu: "નિયમ ૮(૪A) હેઠળ ઝડપી નોંધણી અને સ્થળ તપાસ ટાળવા માટે આધાર ઓથેન્ટિકેશન જરૂરી છે.",
+        hi: "नियम 8(4A) के तहत स्थल निरीक्षण से बचने और त्वरित पंजीकरण के लिए आधार प्रमाणीकरण आवश्यक है।"
+      }),
+      complianceTip: t({
+        en: "Aadhaar linked mobile number must be active to receive OTP.",
+        gu: "ઓટીપી મેળવવા માટે આધાર સાથે લિંક કરેલ મોબાઇલ નંબર ચાલુ હોવો જરૂરી છે.",
+        hi: "ओटीपी प्राप्त करने के लिए आधार से लिंक मोबाइल नंबर सक्रिय होना चाहिए।"
+      })
+    });
+
+  } else if (constitution === 'Partnership') {
+    list.push({
+      code: 'DOC_CONST_PAN',
+      title: t({
+        en: "Partnership Firm's PAN Card",
+        gu: "ભાગીદારી પેઢીનું પાન કાર્ડ",
+        hi: "साझेदारी फर्म का पैन कार्ड"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Mandatory separate PAN issued in the name of the Partnership Firm.",
+        gu: "ભાગીદારી પેઢીના નામે અલગથી કઢાવેલ પાન કાર્ડ જરૂરી છે.",
+        hi: "साझेदारी फर्म के नाम पर अलग से जारी पैन कार्ड अनिवार्य है।"
+      }),
+      complianceTip: t({
+        en: "Firm name on PAN must match the Partnership Deed character-for-character.",
+        gu: "પાન કાર્ડમાં પેઢીનું નામ પાર્ટનરશિપ ડીડ સાથે બરાબર મેળ ખાવું જોઈએ.",
+        hi: "पैन कार्ड में फर्म का नाम पार्टनरशिप डीड से अक्षरशः मेल खाना चाहिए।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_CONST_DEED',
+      title: t({
+        en: "Partnership Deed (Registered / Notarized)",
+        gu: "પાર્ટનરશિપ ડીડ (નોંધાયેલ અથવા નોટરાઇઝ્ડ કરાર)",
+        hi: "पार्टनरशिप डीड (पंजीकृत या नोटरीकृत)"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Legal document defining partners, profit share, and business scope.",
+        gu: "ભાગીદારો, નફા-નુકસાનનો ગુણોત્તર અને અધિકારો નક્કી કરતો મુખ્ય કાનૂની દસ્તાવેજ.",
+        hi: "भागीदारों, लाभ के अनुपात और अधिकारों को परिभाषित करने वाला मुख्य कानूनी दस्तावेज़।"
+      }),
+      complianceTip: t({
+        en: "Must be on stamp paper of appropriate value and duly notarized.",
+        gu: "યોગ્ય સ્ટેમ્પ ડ્યુટી પર નોટરાઇઝ અથવા રજિસ્ટ્રાર ઓફ ફર્મ્સમાં નોંધાયેલ હોવું જોઈએ.",
+        hi: "उचित स्टांप ड्यूटी पर नोटरीकृत या रजिस्ट्रार में पंजीकृत होना चाहिए।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_AUTH_LETTER',
+      title: t({
+        en: "Authorization Letter for Authorized Partner",
+        gu: "ઓથોરાઇઝ્ડ પાર્ટનર માટે સત્તા પત્ર (Authorization Letter)",
+        hi: "अधिकृत भागीदार के लिए प्राधिकरण पत्र (Authorization Letter)"
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Signed by all partners authorizing one partner to sign GST documents.",
+        gu: "જીએસટીમાં સહી કરવા માટે તમામ ભાગીદારો દ્વારા સહી કરેલ સત્તા પત્ર.",
+        hi: "जीएसटी में हस्ताक्षर करने के लिए सभी भागीदारों द्वारा हस्ताक्षरित प्राधिकरण पत्र।"
+      }),
+      complianceTip: t({
+        en: "Must be signed by all remaining partners. Use our standard CA template.",
+        gu: "બાકીના તમામ ભાગીદારોની સહી હોવી જોઈએ. અમારો સીએ નમૂનો વાપરો.",
+        hi: "शेष सभी भागीदारों के हस्ताक्षर होने चाहिए। हमारे सीए प्रारूप का उपयोग करें।"
+      }),
+      templateType: 'resolution'
+    });
+
+    list.push({
+      code: 'DOC_PROMOTER_PHOTOS',
+      title: t({
+        en: 'Passport Photos of All Partners (' + count + ' Partners)',
+        gu: 'તમામ ભાગીદારોના પાસપોર્ટ ફોટો (' + count + ' ભાગીદારો)',
+        hi: 'सभी भागीदारों के पासपोर्ट फोटो (' + count + ' भागीदार)'
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Required for stakeholder profile entry in Form GST REG-01.",
+        gu: "તમામ ભાગીદારોની ઓળખ માટે જીએસટી પોર્ટલ પર જરૂરી છે.",
+        hi: "सभी भागीदारों के प्रोफाइल प्रविष्टि के लिए आवश्यक है।"
+      }),
+      complianceTip: t({
+        en: "Upload clear individual passport-sized photo for each partner.",
+        gu: "દરેક ભાગીદારનો અલગ સ્પષ્ટ પાસપોર્ટ ફોટો અપલોડ કરો.",
+        hi: "प्रत्येक भागीदार का अलग स्पष्ट पासपोर्ट फोटो अपलोड करें।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_PROMOTER_IDS',
+      title: t({
+        en: 'PAN & Aadhaar Cards of All Partners (' + count + ' Partners)',
+        gu: 'તમામ ભાગીદારોના પાન અને આધાર કાર્ડ (' + count + ' ભાગીદારો)',
+        hi: 'सभी भागीदारों के पैन और आधार कार्ड (' + count + ' भागीदार)'
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Statutory KYC verification of all partners under Rule 8.",
+        gu: "જીએસટી નિયમ ૮ હેઠળ તમામ ભાગીદારોની ઓળખ ચકાસણી.",
+        hi: "जीएसटी नियम 8 के तहत सभी भागीदारों का केवाईसी सत्यापन।"
+      }),
+      complianceTip: t({
+        en: "Upload front and back scanned copies showing clear details.",
+        gu: "આધાર અને પાન કાર્ડની સ્પષ્ટ વંચાય તેવી નકલ અપલોડ કરો.",
+        hi: "आधार और पैन कार्ड की स्पष्ट रूप से पढ़ने योग्य प्रति अपलोड करें।"
+      })
+    });
+
+  } else if (constitution === 'LLP' || constitution.includes('Company')) {
+    list.push({
+      code: 'DOC_CONST_COI',
+      title: t({
+        en: "Certificate of Incorporation (COI from MCA)",
+        gu: "ઇનકોર્પોરેશન સર્ટિફિકેટ (MCA COI)",
+        hi: "समामेलन प्रमाण पत्र (MCA COI)"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Official certificate issued by MCA containing CIN or LLPIN.",
+        gu: "કંપની અફેર્સ મંત્રાલય (MCA) દ્વારા ઇશ્યૂ કરાયેલ નોંધણી પ્રમાણપત્ર.",
+        hi: "कॉर्पोरेट मामलों के मंत्रालय (MCA) द्वारा जारी निगमन प्रमाण पत्र।"
+      }),
+      complianceTip: t({
+        en: "Clear scanned copy showing MCA seal and CIN/LLPIN.",
+        gu: "સ્પષ્ટ સીલ અને નંબર વંચાય તેવી નકલ અપલોડ કરો.",
+        hi: "स्पष्ट सील और नंबर दिखने वाली प्रति अपलोड करें।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_CONST_PAN',
+      title: t({
+        en: "Company / LLP PAN Card",
+        gu: "કંપની / એલએલપી નું પાન કાર્ડ",
+        hi: "कंपनी / एलएलपी का पैन कार्ड"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Corporate PAN card issued in entity name.",
+        gu: "કંપની કે એલએલપીના નામે ઇશ્યૂ થયેલું પાન કાર્ડ.",
+        hi: "संस्था के नाम पर जारी कॉर्पोरेट पैन कार्ड।"
+      }),
+      complianceTip: t({
+        en: "Ensure entity PAN is active on income tax portal.",
+        gu: "ખાતરી કરો કે ઇનકમટેક્સ પોર્ટલ પર પાન સક્રિય છે.",
+        hi: "सुनिश्चित करें कि आयकर पोर्टल पर पैन सक्रिय है।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_BOARD_RESOLUTION',
+      title: t({
+        en: "Board Resolution / Authorization for Signatory",
+        gu: "બોર્ડ ઠરાવ (Board Resolution for Signatory)",
+        hi: "बोर्ड संकल्प (Board Resolution for Signatory)"
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Resolution appointing Director/Designated Partner as GST Signatory.",
+        gu: "જીએસટીમાં કામકાજ કરવા માટે સત્તા આપતો બોર્ડ ઓફ ડિરેક્ટર્સનો ઠરાવ.",
+        hi: "जीएसटी में कार्य करने के लिए अधिकृत करने वाला निदेशक मंडल का प्रस्ताव।"
+      }),
+      complianceTip: t({
+        en: "Must be on company letterhead, signed by directors with specimen signature.",
+        gu: "કંપની લેટરહેડ પર સહી કરેલ હોવું જોઈએ. અમારો નમૂનો વાપરો.",
+        hi: "कंपनी के लेटरहेड पर निदेशकों के हस्ताक्षर और नमूना हस्ताक्षर के साथ होना चाहिए।"
+      }),
+      templateType: 'resolution'
+    });
+
+    list.push({
+      code: 'DOC_DIRECTOR_KYC',
+      title: t({
+        en: 'PAN, Aadhaar, Photos & DIN of Directors (' + count + ' Directors)',
+        gu: 'ડિરેક્ટર્સના પાન, આધાર, ફોટો અને DIN (' + count + ' ડિરેક્ટર્સ)',
+        hi: 'निदेशकों के पैन, आधार, फोटो और DIN (' + count + ' निदेशक)'
+      }),
+      category: '02_Promoters_Directors_Partners',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Director KYC for managing & whole-time directors under Rule 8.",
+        gu: "નિયમ ૮ હેઠળ ડિરેક્ટર્સનું કેવાયસી વેરિફિકેશન.",
+        hi: "नियम 8 के तहत निदेशकों का अनिवार्य केवाईसी सत्यापन।"
+      }),
+      complianceTip: t({
+        en: "DIN must be active and not disqualified on MCA portal.",
+        gu: "એમસીએ પોર્ટલ પર DIN સક્રિય હોવો જરૂરી છે.",
+        hi: "एमसीए पोर्टल पर डिन सक्रिय होना अनिवार्य है।"
+      })
+    });
+
+  } else {
+    list.push({
+      code: 'DOC_CONST_PAN',
+      title: t({
+        en: "Entity / HUF PAN Card",
+        gu: "સંસ્થા / એચયુએફ નું પાન કાર્ડ",
+        hi: "संस्था / एचयूएफ का पैन कार्ड"
+      }),
+      category: '01_Constitution_Documents',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "PAN card in the name of HUF / Trust / Entity.",
+        gu: "એચયુએફ અથવા ટ્રસ્ટના નામે કઢાવેલ પાન કાર્ડ.",
+        hi: "एचयूएफ या संस्था के नाम पर जारी पैन कार्ड।"
+      }),
+      complianceTip: t({
+        en: "Name must match trust deed or HUF declaration.",
+        gu: "ટ્રસ્ટ ડીડ અથવા ઘોષણા સાથે મેળ ખાવું જોઈએ.",
+        hi: "ट्रस्ट डीड या घोषणा पत्र से मेल खाना चाहिए।"
+      })
+    });
+  }
+
+  // 2. PREMISES DOCUMENTS
+  if (premises === 'Owned') {
+    list.push({
+      code: 'DOC_PREMISES_OWNERSHIP',
+      title: t({
+        en: "Latest Electricity Bill or Property Tax Receipt (Owned)",
+        gu: "તાજેતરનું લાઇટબિલ અથવા વેરા બિલ (માલિકીની જગ્યા)",
+        hi: "नवीनतम बिजली बिल या संपत्ति कर रसीद (स्वामित्व का परिसर)"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Statutory proof of ownership under Rule 8(1)(b).",
+        gu: "નિયમ ૮(૧)(b) હેઠળ જગ્યાના કાનૂની કબજા અને માલિકીનો સત્તાવાર પુરાવો.",
+        hi: "नियम 8(1)(b) के तहत परिसर के स्वामित्व और वैध कब्जे का वैधानिक प्रमाण।"
+      }),
+      complianceTip: t({
+        en: "CRITICAL: Must be less than 60 days old. Address on bill must match portal character-for-character.",
+        gu: "મહત્વપૂર્ણ: બિલ ૨ મહિનાથી જૂનું ન હોવું જોઈએ અને સરનામું અક્ષરશઃ મેળ ખાવું જોઈએ.",
+        hi: "अत्यंत महत्वपूर्ण: बिल 60 दिनों से पुराना नहीं होना चाहिए और पता अक्षरशः मेल खाना चाहिए।"
+      })
+    });
+
+  } else if (premises === 'Rented') {
+    list.push({
+      code: 'DOC_PREMISES_RENT_AGREEMENT',
+      title: t({
+        en: "Registered / Notarized Rent Agreement",
+        gu: "ભાડા કરાર (નોટરાઇઝ્ડ અથવા રજિસ્ટર્ડ રેન્ટ એગ્રીમેન્ટ)",
+        hi: "किराया समझौता (पंजीकृत या नोटरीकृत रेंट एग्रीमेंट)"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Tenancy agreement between landlord and applicant for business use.",
+        gu: "મકાનમાલિક સાથે ધંધાના ઉપયોગ માટે કરેલ કાયદેસરનો ભાડા કરાર.",
+        hi: "व्यावसायिक उपयोग के लिए मकान मालिक के साथ किया गया वैध किराया अनुबंध।"
+      }),
+      complianceTip: t({
+        en: "CRITICAL: Must be on valid stamp paper, unexpired, and address must match landlord's electricity bill.",
+        gu: "સ્ટેમ્પ પેપર પર નોટરી થયેલ અને મકાનમાલિકના લાઇટબિલ સાથે સરનામું મેળ ખાવું જોઈએ.",
+        hi: "स्टांप पेपर पर नोटरीकृत होना चाहिए और मकान मालिक के बिजली बिल से पता मेल खाना चाहिए।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_PREMISES_LANDLORD_UTILITY',
+      title: t({
+        en: "Landlord's Latest Electricity Bill / Tax Receipt",
+        gu: "મકાનમાલિકનું તાજેતરનું લાઇટબિલ અથવા વેરા બિલ",
+        hi: "मकान मालिक का नवीनतम बिजली बिल या टैक्स रसीद"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Proves that the landlord owns the premises as per GST circulars.",
+        gu: "મકાનમાલિક તે જગ્યાના કાયદેસરના માલિક છે તે સાબિત કરે છે.",
+        hi: "यह साबित करता है कि मकान मालिक उस संपत्ति का वास्तविक मालिक है।"
+      }),
+      complianceTip: t({
+        en: "Must be in the landlord's name and less than 60 days old.",
+        gu: "મકાનમાલિકના નામે હોવું જોઈએ અને ૨ મહિનાથી જૂનું ન હોવું જોઈએ.",
+        hi: "मकान मालिक के नाम पर होना चाहिए और 60 दिनों से पुराना नहीं होना चाहिए।"
+      })
+    });
+
+  } else if (premises === 'Consent') {
+    list.push({
+      code: 'DOC_PREMISES_CONSENT_LETTER',
+      title: t({
+        en: "Property Owner's Signed Consent Letter / NOC",
+        gu: "જગ્યા માલિકનું સંમતિ પત્ર / એનઓસી (Consent Letter / NOC)",
+        hi: "संपत्ति के मालिक का हस्ताक्षरित सहमति पत्र / एनओसी (Consent/NOC)"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Required when operating from family/parent property without paying rent.",
+        gu: "પરિવારની કે સગાની જગ્યામાં ભાડા વગર ધંધો કરવા માટે માલિકનું સંમતિ પત્ર જરૂરી છે.",
+        hi: "परिवार या रिश्तेदार की जगह पर बिना किराए के व्यवसाय करने हेतु मालिक की एनओसी आवश्यक है।"
+      }),
+      complianceTip: t({
+        en: "Must be signed by the legal owner. Use our CA office standard template.",
+        gu: "જગ્યાના માલિકની સહી હોવી જોઈએ. અમારો સીએ નમૂનો વાપરો.",
+        hi: "संपत्ति के वास्तविक मालिक के हस्ताक्षर होने चाहिए। हमारे सीए प्रारूप का उपयोग करें।"
+      }),
+      templateType: 'consent'
+    });
+
+    list.push({
+      code: 'DOC_PREMISES_OWNER_UTILITY',
+      title: t({
+        en: "Owner's Latest Electricity Bill or Tax Receipt",
+        gu: "જગ્યા માલિકનું તાજેતરનું લાઇટબિલ અથવા વેરા બિલ",
+        hi: "संपत्ति मालिक का नवीनतम बिजली बिल या टैक्स रसीद"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Proves ownership of the person signing the consent letter.",
+        gu: "સંમતિ આપનાર વ્યક્તિ જ જગ્યાના માલિક છે તેનો પુરાવો.",
+        hi: "सहमति पत्र पर हस्ताक्षर करने वाले व्यक्ति के स्वामित्व का प्रमाण।"
+      }),
+      complianceTip: t({
+        en: "Owner name on electricity bill must match the NOC signer.",
+        gu: "લાઇટબિલનું નામ અને એનઓસી આપનારનું નામ બિલકુલ એક જ હોવું જોઈએ.",
+        hi: "बिजली बिल का नाम और एनओसी देने वाले का नाम बिल्कुल मेल खाना चाहिए।"
+      })
+    });
+
+    list.push({
+      code: 'DOC_PREMISES_OWNER_ID',
+      title: t({
+        en: "Owner's Identity Proof (Aadhaar / PAN Card)",
+        gu: "જગ્યા માલિકનું ઓળખ પત્ર (આધાર અથવા પાન કાર્ડ)",
+        hi: "संपत्ति मालिक का पहचान पत्र (आधार या पैन कार्ड)"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Officer tallies owner's signature on NOC against this ID card.",
+        gu: "જીએસટી અધિકારી એનઓસી પરની સહી ચકાસવા માટે માલિકનું આઈડી ચેક કરે છે.",
+        hi: "जीएसटी अधिकारी एनओसी पर हस्ताक्षर की पुष्टि के लिए मालिक का आईडी जांचता है।"
+      }),
+      complianceTip: t({
+        en: "Clear copy with legible signature of property owner.",
+        gu: "સ્પષ્ટ સહી દેખાય તેવું આધાર કે પાન કાર્ડ અપલોડ કરો.",
+        hi: "स्पष्ट हस्ताक्षर दिखने वाला आधार या पैन कार्ड अपलोड करें।"
+      })
+    });
+
+  } else {
+    list.push({
+      code: 'DOC_PREMISES_LEASE_OR_SHARED',
+      title: t({
+        en: "Lease / Coworking Agreement & Master Utility Bill",
+        gu: "લીઝ કરાર / કો-વર્કિંગ કરાર અને મુખ્ય લાઇટબિલ",
+        hi: "लीज समझौता / को-वर्किंग अनुबंध एवं मुख्य बिजली बिल"
+      }),
+      category: '03_Principal_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Contract with building owner or coworking space provider.",
+        gu: "જગ્યાના ઉપયોગ માટેનો કાનૂની કરાર અને માલિકી પુરાવો.",
+        hi: "स्थान के उपयोग के लिए कानूनी अनुबंध और स्वामित्व प्रमाण।"
+      }),
+      complianceTip: t({
+        en: "Must specify desk or cabin number with master utility bill copy.",
+        gu: "ડેસ્ક/કેબિન નંબર અને માસ્ટર યુટિલિટી બિલ જોડેલું હોવું જોઈએ.",
+        hi: "डेस्क/केबिन नंबर और मास्टर यूटिलिटी बिल संलग्न होना चाहिए।"
+      })
+    });
+  }
+
+  // 3. BANK ACCOUNT PROOF (RULE 10A)
+  list.push({
+    code: 'DOC_BANK_PROOF',
+    title: t({
+      en: "Bank Account Proof (Cancelled Cheque / Passbook / Statement)",
+      gu: "બેંક ખાતાનો પુરાવો (કેન્સલ કરેલ ચેક / પાસબુક / સ્ટેટમેન્ટ)",
+      hi: "बैंक खाते का प्रमाण (रद्द किया गया चेक / पासबुक / स्टेटमेंट)"
+    }),
+    category: '04_Bank_Proof',
+    classification: 'Optional',
+    rationale: t({
+      en: "Proof of active business bank account under Rule 10A.",
+      gu: "નિયમ ૧૦A હેઠળ સક્રિય બેંક ખાતાનો પુરાવો.",
+      hi: "नियम 10A के तहत सक्रिय बैंक खाते का प्रमाण।"
+    }),
+    complianceTip: t({
+      en: "Cheque must have pre-printed name & IFSC. Note: Under Rule 10A, bank details can also be submitted within 30 days of registration.",
+      gu: "ચેક પર નામ અને IFSC પ્રિન્ટેડ હોવા જોઈએ. જીએસટી આવ્યા પછી પણ ૩૦ દિવસમાં બેંક આપી શકાય છે.",
+      hi: "चेक पर नाम और आईएफएससी प्रिंट होना चाहिए। जीएसटी नंबर आने के बाद 30 दिनों में भी दिया जा सकता है।"
+    })
+  });
+
+  // 4. ADDITIONAL PREMISES
+  if (hasAPOB) {
+    list.push({
+      code: 'DOC_APOB_PREMISES_PROOF',
+      title: t({
+        en: "Premises Proof for Additional Branch / Warehouse (APOB)",
+        gu: "વધારાની શાખા / ગોડાઉન માટે જગ્યાનો પુરાવો (APOB Proof)",
+        hi: "अतिरिक्त शाखा / गोदाम के लिए परिसर का प्रमाण (APOB Proof)"
+      }),
+      category: '05_Additional_Premises_Proofs',
+      classification: 'Mandatory',
+      rationale: t({
+        en: "Proof of lawful possession for each warehouse or branch under Section 25.",
+        gu: "દરેક વધારાના ગોડાઉન કે શાખા માટે કાયદેસર કબજાનો પુરાવો જરૂરી છે.",
+        hi: "प्रत्येक अतिरिक्त गोदाम या शाखा के लिए वैध कब्जे का प्रमाण आवश्यक है।"
+      }),
+      complianceTip: t({
+        en: "Attach Rent Agreement + Electricity Bill for each warehouse.",
+        gu: "દરેક ગોડાઉનનું ભાડા કરાર + લાઇટબિલ અપલોડ કરો.",
+        hi: "प्रत्येक गोदाम के लिए किराया समझौता + बिजली बिल अपलोड करें।"
+      })
+    });
+  }
+
+  return list;
+}
+
+/* ==========================================================================
+   PART 5: UI SWITCHING & LANGUAGE TRANSLATION CONTROLLER
+   ========================================================================== */
+function switchSection(sectionId) {
+  AppState.activeSection = sectionId;
+
+  document.querySelectorAll('.tab-link').forEach(el => el.classList.remove('active'));
+  const activeTab = document.getElementById('nav-' + sectionId);
+  if (activeTab) activeTab.classList.add('active');
+
+  document.querySelectorAll('.portal-section').forEach(el => el.classList.remove('active'));
+  const targetSec = document.getElementById('sec-' + sectionId);
+  if (targetSec) targetSec.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (sectionId === 'wizard') {
+    renderWizard();
+  } else if (sectionId === 'checklist') {
+    renderChecklist();
+  } else if (sectionId === 'review') {
+    renderReview();
+  }
+}
+
+function setLanguage(lang) {
+  AppState.currentLang = lang;
+  document.querySelectorAll('.lang-picker .lang-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById('lang-btn-' + lang);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  applyStaticTranslations();
+  switchSection(AppState.activeSection);
+}
+
+function applyStaticTranslations() {
+  const t = I18N[AppState.currentLang] || I18N.en;
+
+  // Header & Badges
+  document.getElementById('header-portal-badge').textContent = t.portal_badge;
+  document.getElementById('lbl-admin-btn').textContent = t.admin_btn;
+  document.getElementById('disclaimer-title').textContent = t.disclaimer_title;
+  document.getElementById('disclaimer-text-content').textContent = getSettings().disclaimerText || t.disclaimer_body;
+
+  // Nav Tabs
+  document.getElementById('nav-tab-wizard').textContent = t.nav_wizard;
+  document.getElementById('nav-tab-checklist').textContent = t.nav_checklist;
+  document.getElementById('nav-tab-review').textContent = t.nav_review;
+
+  // Checklist labels
+  document.getElementById('chk-sec-title').textContent = t.chk_title;
+  document.getElementById('chk-sec-sub').textContent = t.chk_sub;
+  document.getElementById('lbl-sample-noc').textContent = t.sample_noc;
+  document.getElementById('lbl-sample-br').textContent = t.sample_br;
+  document.getElementById('lbl-flt-all').textContent = t.flt_all;
+  document.getElementById('lbl-flt-mand').textContent = t.flt_mandatory;
+  document.getElementById('lbl-flt-cond').textContent = t.flt_conditional;
+  document.getElementById('lbl-flt-opt').textContent = t.flt_optional;
+  document.getElementById('lbl-flt-up').textContent = t.flt_uploaded;
+  document.getElementById('lbl-flt-pend').textContent = t.flt_pending;
+
+  // Review labels (Only Gmail and WhatsApp)
+  document.getElementById('rev-card-title').textContent = t.rev_title;
+  document.getElementById('rev-card-sub').textContent = t.rev_sub;
+  document.getElementById('lbl-choice-gmail-title').textContent = t.lbl_choice_gmail_title;
+  document.getElementById('lbl-choice-gmail-desc').textContent = t.lbl_choice_gmail_desc;
+  document.getElementById('lbl-btn-gmail-send').textContent = t.lbl_btn_gmail_send;
+  document.getElementById('lbl-choice-wa-title').textContent = t.lbl_choice_wa_title;
+  document.getElementById('lbl-choice-wa-desc').textContent = t.lbl_choice_wa_desc;
+  document.getElementById('lbl-btn-wa-send').textContent = t.lbl_btn_wa_send;
+
+  document.getElementById('rev-audit-title').textContent = t.audit_title;
+  document.getElementById('rev-audit-sub').textContent = t.audit_sub;
+
+  // Permission Modal
+  document.getElementById('perm-modal-title').textContent = t.perm_title;
+  document.getElementById('perm-heading').textContent = t.perm_heading;
+  document.getElementById('lbl-perm-cancel').textContent = t.lbl_perm_cancel;
+  document.getElementById('lbl-perm-allow').textContent = t.lbl_perm_allow;
+}
+
+function applyOfficeSettings() {
+  const s = getSettings();
+  document.getElementById('header-office-name').textContent = s.officeName || 'CA Office Portal';
+
+  const logoContainer = document.getElementById('firm-logo-container');
+  if (s.customLogoData) {
+    logoContainer.innerHTML = '<img src="' + s.customLogoData + '" alt="Firm Logo">';
+  } else {
+    logoContainer.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal-500);"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>';
+  }
+
+  updateShareableLinkBox();
+}
+
+function updateShareableLinkBox() {
+  const s = getSettings();
+  const base = window.location.origin + window.location.pathname;
+  const link = base + '?firm=' + encodeURIComponent(s.officeName) + '&email=' + encodeURIComponent(s.officeEmail) + '&phone=' + encodeURIComponent(s.officePhone);
+  const input = document.getElementById('shareable-link-input');
+  if (input) input.value = link;
+}
+
+/* ==========================================================================
+   PART 6: CLIENT GUIDED QUESTIONNAIRE (Q0 to Q6)
+   ========================================================================== */
+function renderWizard() {
+  const client = AppState.client;
+  const curStep = AppState.activeStep || 0;
+  const lang = AppState.currentLang || 'en';
+  const t = I18N[lang] || I18N.en;
+
+  document.getElementById('tab-badge-wizard-step').textContent = (curStep === 0 ? 'Info' : ('Q' + curStep));
+
+  // Render Stepper
+  const stepper = document.getElementById('wizard-stepper-bar');
+  const steps = [
+    { num: 0, title: t.q0_step },
+    { num: 1, title: t.q1_step },
+    { num: 2, title: t.q2_step },
+    { num: 3, title: t.q3_step },
+    { num: 4, title: t.q4_step },
+    { num: 5, title: t.q5_step },
+    { num: 6, title: t.q6_step }
+  ];
+
+  let stepperHtml = '';
+  steps.forEach(s => {
+    let cls = '';
+    if (s.num === curStep) cls = 'active';
+    else if (s.num < curStep) cls = 'completed';
+
+    stepperHtml += '<div class="step-indicator ' + cls + '" onclick="goToWizardStep(' + s.num + ')">' +
+      '<div class="step-circle">' + (s.num < curStep ? '✓' : (s.num === 0 ? '👤' : s.num)) + '</div>' +
+      '<div class="step-title-text">' + s.title + '</div>' +
+      '</div>';
+  });
+  stepper.innerHTML = stepperHtml;
+
+  const qBox = document.getElementById('wizard-question-box');
+  const ans = client.answers || {};
+
+  // STEP 0: CLIENT IDENTITY & PROPOSED TRADE NAME
+  if (curStep === 0) {
+    qBox.innerHTML = '<span class="question-badge">' + t.q0_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q0_title + '</h2>' +
+      '<p class="question-explanation">' + t.q0_explanation + '</p>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">' +
+      '<div class="form-group">' +
+      '<label class="form-label">' + t.lbl_name + ' <span style="color:var(--rose-600)">*</span></label>' +
+      '<input type="text" id="wiz_client_name" class="form-control" value="' + (client.name || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Ramesh Patel" oninput="updateClientField(\'name\', this.value)">' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label class="form-label">' + t.lbl_trade + ' <span style="color:var(--rose-600)">*</span></label>' +
+      '<input type="text" id="wiz_client_trade" class="form-control" value="' + (client.tradeName || '').replace(/"/g, '&quot;') + '" placeholder="e.g. Patel Trading Company" oninput="updateClientField(\'tradeName\', this.value)">' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label class="form-label">' + t.lbl_mobile + ' <span style="color:var(--rose-600)">*</span></label>' +
+      '<input type="tel" id="wiz_client_mobile" class="form-control" maxlength="10" value="' + (client.mobile || '').replace(/"/g, '&quot;') + '" placeholder="10-digit mobile number" oninput="updateClientField(\'mobile\', this.value)">' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label class="form-label">' + t.lbl_email + '</label>' +
+      '<input type="email" id="wiz_client_email" class="form-control" value="' + (client.email || '').replace(/"/g, '&quot;') + '" placeholder="e.g. ramesh@example.com" oninput="updateClientField(\'email\', this.value)">' +
+      '</div>' +
+      '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<div></div>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(1)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 1: CONSTITUTION (Q1)
+  if (curStep === 1) {
+    let opts = '';
+    CONSTITUTIONS.forEach(c => {
+      const isSel = (ans.constitution || 'Proprietorship') === c.id;
+      const titleStr = c.title[lang] || c.title.en;
+      const subStr = c.sub[lang] || c.sub.en;
+
+      opts += '<div class="option-card ' + (isSel ? 'selected' : '') + '" onclick="selectConstitution(\'' + c.id + '\')">' +
+        '<input type="radio" name="wiz_constitution" ' + (isSel ? 'checked' : '') + '>' +
+        '<div class="option-icon">' + c.icon + '</div>' +
+        '<div class="option-title">' + titleStr + '</div>' +
+        '<div class="option-subtext">' + subStr + '</div>' +
+        '</div>';
+    });
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q1_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q1_title + '</h2>' +
+      '<p class="question-explanation">' + t.q1_explanation + '</p>' +
+      '<div class="options-grid">' + opts + '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(0)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(2)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 2: STATE (Q2)
+  if (curStep === 2) {
+    const selectedState = ans.stateCode || '24';
+    let stateOptions = '';
+    INDIAN_STATES.forEach(st => {
+      const isSel = st.code === selectedState;
+      stateOptions += '<option value="' + st.code + '" ' + (isSel ? 'selected' : '') + '>' +
+        st.code + ' - ' + st.name + (st.special ? ' [Special Category State]' : '') +
+        '</option>';
+    });
+
+    const activeStateObj = INDIAN_STATES.find(s => s.code === selectedState) || INDIAN_STATES[0];
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q2_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q2_title + '</h2>' +
+      '<p class="question-explanation">' + t.q2_explanation + '</p>' +
+      '<div class="form-group" style="max-width:480px;">' +
+      '<label class="form-label">' + t.lbl_state_select + '</label>' +
+      '<select class="form-control form-select" id="wiz_state_select" onchange="selectState(this.value)">' +
+      stateOptions +
+      '</select>' +
+      '</div>' +
+      '<div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius); padding:1rem; margin-top:1rem; font-size:0.82rem; color:var(--slate-700);">' +
+      '<strong>' + activeStateObj.name + ' (' + activeStateObj.code + ')</strong> &bull; ' +
+      (activeStateObj.special ? 'Special Category State (Threshold ₹10L/₹20L)' : 'Standard State (Threshold ₹20L/₹40L)') +
+      '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(1)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(3)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 3: REASON (Q3)
+  if (curStep === 3) {
+    let opts = '';
+    REGISTRATION_REASONS.forEach(r => {
+      const isSel = (ans.reason || 'Turnover') === r.id;
+      const titleStr = r.title[lang] || r.title.en;
+      const subStr = r.sub[lang] || r.sub.en;
+
+      opts += '<div class="option-card ' + (isSel ? 'selected' : '') + '" onclick="selectReason(\'' + r.id + '\')">' +
+        '<input type="radio" name="wiz_reason" ' + (isSel ? 'checked' : '') + '>' +
+        '<div class="option-icon">' + r.icon + '</div>' +
+        '<div class="option-title">' + titleStr + '</div>' +
+        '<div class="option-subtext">' + subStr + '</div>' +
+        '</div>';
+    });
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q3_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q3_title + '</h2>' +
+      '<p class="question-explanation">' + t.q3_explanation + '</p>' +
+      '<div class="options-grid">' + opts + '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(2)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(4)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 4: PREMISES (Q4)
+  if (curStep === 4) {
+    let opts = '';
+    PREMISES_TYPES.forEach(p => {
+      const isSel = (ans.premises || 'Owned') === p.id;
+      const titleStr = p.title[lang] || p.title.en;
+      const subStr = p.sub[lang] || p.sub.en;
+
+      opts += '<div class="option-card ' + (isSel ? 'selected' : '') + '" onclick="selectPremises(\'' + p.id + '\')">' +
+        '<input type="radio" name="wiz_premises" ' + (isSel ? 'checked' : '') + '>' +
+        '<div class="option-icon">' + p.icon + '</div>' +
+        '<div class="option-title">' + titleStr + '</div>' +
+        '<div class="option-subtext">' + subStr + '</div>' +
+        '</div>';
+    });
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q4_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q4_title + '</h2>' +
+      '<p class="question-explanation">' + t.q4_explanation + '</p>' +
+      '<div class="options-grid">' + opts + '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(3)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(5)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 5: PROMOTERS COUNT (Q5)
+  if (curStep === 5) {
+    const isProp = ans.constitution === 'Proprietorship';
+    const countVal = ans.promotersCount || (isProp ? 1 : 2);
+
+    let htmlBody = '';
+    if (isProp) {
+      htmlBody = '<div style="background:var(--teal-50); border:1px solid var(--teal-100); border-radius:var(--radius); padding:1.25rem; margin-bottom:1.5rem; color:var(--teal-800);">' +
+        '<strong>' + (lang === 'gu' ? 'વૈયક્તિક માલિકી:' : (lang === 'hi' ? 'एकल स्वामित्व:' : 'Sole Proprietorship:')) + '</strong> ' +
+        (lang === 'gu' ? 'તમે એકલા માલિક છો, તેથી અન્ય ભાગીદારોના દસ્તાવેજો લાગુ પડતા નથી.' : (lang === 'hi' ? 'आप अकेले मालिक हैं, इसलिए अन्य भागीदारों के दस्तावेज़ आवश्यक नहीं हैं।' : 'You are the single owner and primary signatory. No partner documents needed.')) +
+        '</div>';
+    } else {
+      htmlBody = '<div class="form-group" style="max-width:320px; margin-bottom:1.5rem;">' +
+        '<label class="form-label">' + t.lbl_promoters_count + '</label>' +
+        '<input type="number" class="form-control" id="wiz_promoters_input" min="1" max="50" value="' + countVal + '" onchange="selectPromotersCount(this.value)">' +
+        '</div>';
+    }
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q5_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q5_title + '</h2>' +
+      '<p class="question-explanation">' + t.q5_explanation + '</p>' +
+      htmlBody +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(4)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-teal" onclick="goToWizardStep(6)">' + t.btn_next + '</button>' +
+      '</div>';
+    return;
+  }
+
+  // STEP 6: ADDITIONAL PREMISES (Q6)
+  if (curStep === 6) {
+    const hasAPOB = ans.hasAdditionalPremises === 'Yes';
+
+    const noTitle = lang === 'gu' ? 'ના (માત્ર મુખ્ય ઓફિસ)' : (lang === 'hi' ? 'नहीं (केवल मुख्य कार्यालय)' : 'No (Principal Office Only)');
+    const noSub = lang === 'gu' ? 'એક જ સ્થળેથી વેપાર' : (lang === 'hi' ? 'एक ही स्थान पर व्यवसाय' : 'Single location business');
+    const yesTitle = lang === 'gu' ? 'હા (બીજું ગોડાઉન કે શાખા છે)' : (lang === 'hi' ? 'हां (अतिरिक्त गोदाम या शाखा है)' : 'Yes (Have Warehouse / Branch)');
+    const yesSub = lang === 'gu' ? 'વધારાના સ્થળનો પુરાવો જરૂરી' : (lang === 'hi' ? 'अतिरिक्त परिसर का प्रमाण आवश्यक' : 'Additional premises proof needed');
+
+    qBox.innerHTML = '<span class="question-badge">' + t.q6_badge + '</span>' +
+      '<h2 class="question-heading">' + t.q6_title + '</h2>' +
+      '<p class="question-explanation">' + t.q6_explanation + '</p>' +
+      '<div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">' +
+      '<div class="option-card ' + (!hasAPOB ? 'selected' : '') + '" onclick="selectHasAPOB(\'No\')">' +
+      '<input type="radio" name="wiz_apob" ' + (!hasAPOB ? 'checked' : '') + '>' +
+      '<div class="option-icon">🏢</div>' +
+      '<div class="option-title">' + noTitle + '</div>' +
+      '<div class="option-subtext">' + noSub + '</div>' +
+      '</div>' +
+      '<div class="option-card ' + (hasAPOB ? 'selected' : '') + '" onclick="selectHasAPOB(\'Yes\')">' +
+      '<input type="radio" name="wiz_apob" ' + (hasAPOB ? 'checked' : '') + '>' +
+      '<div class="option-icon">🏬</div>' +
+      '<div class="option-title">' + yesTitle + '</div>' +
+      '<div class="option-subtext">' + yesSub + '</div>' +
+      '</div>' +
+      '</div>' +
+      '<div class="wizard-nav-btns">' +
+      '<button type="button" class="btn btn-outline" onclick="goToWizardStep(5)">' + t.btn_back + '</button>' +
+      '<button type="button" class="btn btn-primary" onclick="finishWizard()">' + t.btn_view_checklist + '</button>' +
+      '</div>';
+    return;
+  }
+}
+
+function goToWizardStep(s) {
+  AppState.activeStep = s;
+  renderWizard();
+}
+
+function updateClientField(field, val) {
+  AppState.client[field] = (val || '').trim();
+  saveClientSession(AppState.client);
+}
+
+function selectConstitution(val) {
+  AppState.client.answers.constitution = val;
+  saveClientSession(AppState.client);
+  renderWizard();
+  loadClientFiles();
+}
+
+function selectState(val) {
+  AppState.client.answers.stateCode = val;
+  saveClientSession(AppState.client);
+  renderWizard();
+}
+
+function selectReason(val) {
+  AppState.client.answers.reason = val;
+  saveClientSession(AppState.client);
+  renderWizard();
+}
+
+function selectPremises(val) {
+  AppState.client.answers.premises = val;
+  saveClientSession(AppState.client);
+  renderWizard();
+  loadClientFiles();
+}
+
+function selectPromotersCount(val) {
+  AppState.client.answers.promotersCount = parseInt(val, 10) || 1;
+  saveClientSession(AppState.client);
+  loadClientFiles();
+}
+
+function selectHasAPOB(val) {
+  AppState.client.answers.hasAdditionalPremises = val;
+  saveClientSession(AppState.client);
+  renderWizard();
+  loadClientFiles();
+}
+
+function finishWizard() {
+  switchSection('checklist');
+}
+
+/* ==========================================================================
+   PART 7: CHECKLIST & UPLOADS RENDERER (UNLIMITED FILE SIZE)
+   ========================================================================== */
+function setDocFilter(flt) {
+  AppState.docFilter = flt;
+  document.querySelectorAll('#checklist-filter-pills .filter-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  renderChecklist();
+}
+
+function handleDocSearch(val) {
+  AppState.searchQuery = (val || '').toLowerCase().trim();
+  renderChecklist();
+}
+
+function renderChecklist() {
+  const client = AppState.client;
+  const reqs = evaluateDocumentRequirements(client);
+  const files = AppState.filesCache;
+  const container = document.getElementById('checklist-items-container');
+  const lang = AppState.currentLang || 'en';
+  const t = I18N[lang] || I18N.en;
+
+  // Filter counts
+  let cntAll = reqs.length;
+  let cntMandatory = 0;
+  let cntConditional = 0;
+  let cntOptional = 0;
+  let cntUploaded = 0;
+  let cntPending = 0;
+
+  reqs.forEach(r => {
+    if (r.classification === 'Mandatory') cntMandatory++;
+    else if (r.classification === 'Conditional') cntConditional++;
+    else cntOptional++;
+
+    const isUp = files.some(f => f.docCode === r.code);
+    if (isUp) cntUploaded++;
+    else cntPending++;
+  });
+
+  document.getElementById('filter-count-all').textContent = cntAll;
+  document.getElementById('filter-count-mandatory').textContent = cntMandatory;
+  document.getElementById('filter-count-conditional').textContent = cntConditional;
+  document.getElementById('filter-count-optional').textContent = cntOptional;
+  document.getElementById('filter-count-uploaded').textContent = cntUploaded;
+  document.getElementById('filter-count-pending').textContent = cntPending;
+
+  // Filter list
+  let filtered = reqs.filter(r => {
+    const isUp = files.some(f => f.docCode === r.code);
+    if (AppState.docFilter === 'mandatory') return r.classification === 'Mandatory';
+    if (AppState.docFilter === 'conditional') return r.classification === 'Conditional';
+    if (AppState.docFilter === 'optional') return r.classification === 'Optional';
+    if (AppState.docFilter === 'uploaded') return isUp;
+    if (AppState.docFilter === 'pending') return !isUp;
+    return true;
+  });
+
+  if (AppState.searchQuery) {
+    filtered = filtered.filter(r => {
+      return r.title.toLowerCase().includes(AppState.searchQuery) ||
+             r.rationale.toLowerCase().includes(AppState.searchQuery);
+    });
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="card" style="text-align:center; padding:2rem; color:var(--slate-500);">' +
+      (lang === 'gu' ? 'પસંદ કરેલા ફિલ્ટરમાં કોઈ દસ્તાવેજ મળ્યો નથી.' : (lang === 'hi' ? 'चयनित फिल्टर में कोई दस्तावेज़ नहीं मिला।' : 'No documents match the current filter.')) +
+      '</div>';
+    return;
+  }
+
+  let html = '';
+  filtered.forEach(doc => {
+    const attachedFiles = files.filter(f => f.docCode === doc.code);
+    const isUploaded = attachedFiles.length > 0;
+    const isMandatory = doc.classification === 'Mandatory';
+    const cardStatusClass = isUploaded ? 'is-uploaded' : (isMandatory ? 'is-mandatory-pending' : 'is-pending');
+    const badgeClass = isMandatory ? 'badge-mandatory' : (doc.classification === 'Conditional' ? 'badge-conditional' : 'badge-optional');
+
+    const badgeLabel = isMandatory ? t.badge_mandatory : (doc.classification === 'Conditional' ? t.badge_conditional : t.badge_optional);
+    const statusLabel = isUploaded ? (t.status_uploaded + ' (' + attachedFiles.length + ')') : t.status_pending;
+
+    const remarksVal = (client.remarks && client.remarks[doc.code]) || '';
+
+    // Attached files
+    let filesHtml = '';
+    if (attachedFiles.length > 0) {
+      filesHtml = '<div class="uploaded-files-list">';
+      attachedFiles.forEach(f => {
+        const sizeKB = (f.fileSize / 1024).toFixed(1) + ' KB';
+        filesHtml += '<div class="file-item-pill">' +
+          '<div class="file-meta-left">' +
+          '<span class="file-icon-badge">' + (f.fileType.includes('pdf') ? '📕' : '🖼️') + '</span>' +
+          '<div>' +
+          '<div class="file-name-text" title="' + f.fileName + '">' + f.fileName + '</div>' +
+          '<div class="file-size-text">' + sizeKB + ' &bull; ' + new Date(f.uploadDate).toLocaleDateString() + '</div>' +
+          '</div>' +
+          '</div>' +
+          '<div class="file-item-actions">' +
+          '<button type="button" class="file-btn-icon" onclick="previewFile(' + f.id + ')" title="Preview">👁️</button>' +
+          '<button type="button" class="file-btn-icon del" onclick="deleteFileRecord(' + f.id + ')" title="Delete">&times;</button>' +
+          '</div>' +
+          '</div>';
+      });
+      filesHtml += '</div>';
+    }
+
+    const rationaleTitle = lang === 'gu' ? 'શા માટે આ દસ્તાવેજ જરૂરી છે:' : (lang === 'hi' ? 'जीएसटी अधिकारी को यह क्यों चाहिए:' : 'Why GST Officer requires this:');
+    const tipTitle = lang === 'gu' ? '💡 સીએ અનુપાલન સલાહ:' : (lang === 'hi' ? '💡 सीए अनुपालन टिप:' : '💡 CA Compliance Tip:');
+
+    html += '<div class="doc-card ' + cardStatusClass + '">' +
+      '<div class="doc-header">' +
+      '<div class="doc-info-block">' +
+      '<div class="doc-badges">' +
+      '<span class="badge-tag ' + badgeClass + '">' + badgeLabel + '</span>' +
+      '<span class="status-badge ' + (isUploaded ? 'uploaded' : 'pending') + '">' + statusLabel + '</span>' +
+      '</div>' +
+      '<h3 class="doc-title">' + doc.title + '</h3>' +
+      '<div class="doc-rationale"><strong>' + rationaleTitle + '</strong> ' + doc.rationale + '</div>' +
+      '<div class="doc-compliance-tip"><strong>' + tipTitle + '</strong> ' + doc.complianceTip + '</div>' +
+      (doc.templateType ? ('<div style="margin-top:0.4rem;"><button type="button" class="btn btn-outline btn-sm" onclick="openTemplateModal(\'' + doc.templateType + '\')">📄 ' + (doc.templateType === 'consent' ? t.sample_noc : t.sample_br) + '</button></div>') : '') +
+      '</div>' +
+      '</div>' +
+
+      '<div class="doc-upload-section">' +
+      '<div class="upload-action-row">' +
+      '<div class="file-dropzone" onclick="triggerFileInput(\'' + doc.code + '\')">' +
+      '<input type="file" id="file_input_' + doc.code + '" multiple accept=".pdf,.jpg,.jpeg,.png" onchange="handleDocFilesSelected(this, \'' + doc.code + '\')">' +
+      '<div class="dropzone-label">' + t.dropzone_label + '</div>' +
+      '<div class="dropzone-sub">' + t.dropzone_hint + '</div>' +
+      '</div>' +
+      '</div>' +
+
+      filesHtml +
+
+      '<div class="doc-remarks-wrap">' +
+      '<input type="text" class="doc-remarks-input" placeholder="' + t.remarks_placeholder + '" value="' + remarksVal.replace(/"/g, '&quot;') + '" oninput="saveDocRemark(\'' + doc.code + '\', this.value)">' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function triggerFileInput(code) {
+  const el = document.getElementById('file_input_' + code);
+  if (el) el.click();
+}
+
+async function handleDocFilesSelected(input, docCode) {
+  if (!input.files || input.files.length === 0) return;
+  const client = AppState.client;
+
+  // NO FILE SIZE LIMIT in V4: Upload full resolution documents directly!
+  for (let i = 0; i < input.files.length; i++) {
+    const file = input.files[i];
+    const base64 = await readFileAsDataUrl(file);
+    const record = {
+      clientId: client.id,
+      docCode: docCode,
+      fileName: file.name,
+      fileSize: file.size,
+      fileType: file.type || 'application/octet-stream',
+      uploadDate: new Date().toISOString(),
+      base64Data: base64
+    };
+
+    await dbSaveFile(record);
+  }
+
+  input.value = '';
+  await loadClientFiles();
+  renderChecklist();
+}
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function saveDocRemark(docCode, value) {
+  if (!AppState.client.remarks) AppState.client.remarks = {};
+  AppState.client.remarks[docCode] = value;
+  saveClientSession(AppState.client);
+}
+
+async function deleteFileRecord(fileId) {
+  if (confirm('Delete this uploaded file?')) {
+    await dbDeleteFile(fileId);
+    await loadClientFiles();
+    renderChecklist();
+  }
+}
+
+/* ==========================================================================
+   PART 8: FINAL REVIEW & STREAMLINED 2-OPTION SUBMISSION WITH PERMISSION
+   ========================================================================== */
+function renderReview() {
+  const client = AppState.client;
+  const ans = client.answers || {};
+  const reqs = evaluateDocumentRequirements(client);
+  const files = AppState.filesCache;
+  const lang = AppState.currentLang || 'en';
+  const t = I18N[lang] || I18N.en;
+
+  document.getElementById('review-client-name').textContent = (client.tradeName || '-') + ' (' + (client.name || '-') + ')';
+  document.getElementById('review-constitution').textContent = ans.constitution || 'Proprietorship';
+
+  const stObj = INDIAN_STATES.find(s => s.code === ans.stateCode) || INDIAN_STATES[0];
+  document.getElementById('review-state').textContent = stObj.name + ' (' + stObj.code + ')';
+  document.getElementById('review-reason').textContent = ans.reason || 'Turnover';
+  document.getElementById('review-premises').textContent = ans.premises || 'Owned';
+  document.getElementById('review-promoters').textContent = (ans.promotersCount || 1) + ' Person(s)';
+
+  const tbody = document.getElementById('review-table-body');
+  let html = '';
+
+  reqs.forEach(r => {
+    const attached = files.filter(f => f.docCode === r.code);
+    const isUp = attached.length > 0;
+    const badgeClass = r.classification === 'Mandatory' ? 'badge-mandatory' : (r.classification === 'Conditional' ? 'badge-conditional' : 'badge-optional');
+
+    const fileNames = attached.map(f => f.fileName).join(', ');
+    const remark = (client.remarks && client.remarks[r.code]) || '-';
+
+    html += '<tr>' +
+      '<td><strong>' + r.title + '</strong></td>' +
+      '<td><span class="badge-tag ' + badgeClass + '">' + r.classification + '</span></td>' +
+      '<td>' + (isUp ? ('<span class="status-badge uploaded">' + t.status_uploaded + '</span>') : ('<span class="status-badge pending">' + t.status_pending + '</span>')) + '</td>' +
+      '<td>' + (isUp ? fileNames : '<span style="color:var(--rose-600); font-weight:600;">Not provided</span>') + '</td>' +
+      '<td>' + remark + '</td>' +
+      '</tr>';
+  });
+
+  tbody.innerHTML = html;
+}
+
+// Convert Base64 dataURL to Uint8Array
+function dataUrlToUint8Array(dataUrl) {
+  const parts = dataUrl.split(',');
+  const byteString = atob(parts[1]);
+  const uint8 = new Uint8Array(byteString.length);
+  for (let i = 0; i < byteString.length; i++) {
+    uint8[i] = byteString.charCodeAt(i);
+  }
+  return uint8;
+}
+
+// Pack and Build the ZIP
+function buildClientZipPackage() {
+  const client = AppState.client;
+  const reqs = evaluateDocumentRequirements(client);
+  const files = AppState.filesCache;
+  const settings = getSettings();
+
+  const zip = new BrowserSimpleZip();
+
+  // 1. Pack files
+  files.forEach(f => {
+    const req = reqs.find(r => r.code === f.docCode);
+    const folder = (req && req.category) ? req.category : '01_Constitution_Documents';
+    const cleanFileName = f.fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const fullPath = folder + '/' + cleanFileName;
+
+    const uint8 = dataUrlToUint8Array(f.base64Data);
+    zip.addFile(fullPath, uint8);
+  });
+
+  // 2. Pack Summary HTML Report
+  const htmlReport = generatePrintableSummaryReport(client, reqs, files, settings);
+  zip.addFile('00_DOCUMENT_CHECKLIST_SUMMARY.html', htmlReport);
+
+  // 3. Pack Machine JSON Metadata
+  const meta = {
+    submittedOn: new Date().toISOString(),
+    caOffice: settings.officeName,
+    client: {
+      name: client.name,
+      tradeName: client.tradeName,
+      mobile: client.mobile,
+      email: client.email,
+      constitution: client.answers.constitution,
+      stateCode: client.answers.stateCode,
+      premises: client.answers.premises,
+      reason: client.answers.reason
+    },
+    remarks: client.remarks,
+    uploadedFilesCount: files.length
+  };
+  zip.addFile('00_CLIENT_METADATA.json', JSON.stringify(meta, null, 2));
+
+  const zipBlob = zip.generateBlob();
+  const cleanName = (client.tradeName || client.name || 'Client').replace(/[^a-zA-Z0-9_-]/g, '_');
+  const zipFileName = 'GST_Docs_' + cleanName + '_' + new Date().toISOString().slice(0, 10) + '.zip';
+
+  return { blob: zipBlob, fileName: zipFileName };
+}
+
+// Step 1: Client clicks Gmail or WhatsApp -> Trigger Permission Confirmation Modal
+function initiateSubmissionFlow(type) {
+  AppState.pendingSubmissionType = type;
+  const settings = getSettings();
+  document.getElementById('perm-firm-name').textContent = settings.officeName;
+  openModal('modal-permission');
+}
+
+// Step 2: Client approves permission -> Execute Direct Upload and Launch Gmail / WhatsApp
+async function executeAuthorizedSubmission() {
+  closeModal('modal-permission');
+  const type = AppState.pendingSubmissionType;
+  const settings = getSettings();
+  const client = AppState.client;
+  const reqs = evaluateDocumentRequirements(client);
+  const files = AppState.filesCache;
+
+  // Show live progress
+  const progressBanner = document.getElementById('upload-progress-banner');
+  progressBanner.classList.add('active');
+  document.getElementById('prog-title').textContent = 'Directly Uploading Documents to ' + settings.officeName + '...';
+
+  // 1. If companion server or webhook is configured, post documents directly!
+  const endpoint = settings.webhookUrl || (window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? '/api/upload' : null);
+
+  if (endpoint) {
+    try {
+      const payload = {
+        client: client,
+        files: files.map(f => ({
+          docCode: f.docCode,
+          fileName: f.fileName,
+          fileType: f.fileType,
+          base64Data: f.base64Data
+        }))
+      };
+      await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById('prog-title').textContent = '✅ All ' + files.length + ' Documents Received & Saved by CA Office!';
+    } catch(e) {
+      console.warn("Direct endpoint upload notice:", e);
+    }
+  }
+
+  // 2. Package and trigger automatic download of organized documents package for safety
+  const { blob, fileName } = buildClientZipPackage();
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  // 3. Launch selected channel (Gmail or WhatsApp)
+  if (type === 'gmail') {
+    const subject = '[GST Registration Documents] - ' + (client.tradeName || client.name || 'Client') + ' - ' + (client.answers.constitution || 'Registration');
+    const body = generateEmailTextSummary(client, reqs, files, settings, fileName);
+
+    const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1' +
+      '&to=' + encodeURIComponent(settings.officeEmail) +
+      '&su=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    window.open(gmailUrl, '_blank');
+  } else if (type === 'whatsapp') {
+    const cleanPhone = (settings.officePhone || '').replace(/[^0-9]/g, '');
+    const msg = 'Hello ' + settings.officeName + ',\n\n' +
+      'I have submitted my GST Registration Documents for our business:\n' +
+      '- Client Name: ' + (client.name || '-') + '\n' +
+      '- Trade Name: ' + (client.tradeName || '-') + '\n' +
+      '- Constitution: ' + (client.answers.constitution || '-') + '\n' +
+      '- Total Documents Uploaded: ' + files.length + ' file(s)\n\n' +
+      'All documents have been packaged (' + fileName + ') and authorized for your preparation.';
+
+    const waUrl = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+    window.open(waUrl, '_blank');
+  }
+
+  setTimeout(() => {
+    document.getElementById('prog-title').textContent = '✅ Submission Completed Successfully!';
+    document.getElementById('prog-sub').textContent = 'Your CA office has been notified. Thank you!';
+  }, 1500);
+}
+
+function generateEmailTextSummary(client, reqs, files, settings, zipName) {
+  const ans = client.answers || {};
+  const stObj = INDIAN_STATES.find(s => s.code === ans.stateCode) || INDIAN_STATES[0];
+
+  let uploadedList = '';
+  let pendingList = '';
+
+  reqs.forEach(r => {
+    const attached = files.filter(f => f.docCode === r.code);
+    const remark = (client.remarks && client.remarks[r.code]) || '';
+    if (attached.length > 0) {
+      uploadedList += '- ' + r.title + ' [Attached: ' + attached.map(f => f.fileName).join(', ') + ']' + (remark ? (' (Note: ' + remark + ')') : '') + '\n';
+    } else {
+      pendingList += '- ' + r.title + ' [' + r.classification + ']\n';
+    }
+  });
+
+  return 'Respected ' + settings.officeName + ',\n\n' +
+    'Please find attached our GST Registration Document Submission for filing preparation:\n\n' +
+    '=== CLIENT & PROPOSED BUSINESS PROFILE ===\n' +
+    'Applicant Name: ' + (client.name || '-') + '\n' +
+    'Trade Name: ' + (client.tradeName || '-') + '\n' +
+    'Business Constitution: ' + (ans.constitution || '-') + '\n' +
+    'State & Jurisdiction: ' + stObj.name + ' (' + stObj.code + ')\n' +
+    'Premises Ownership: ' + (ans.premises || '-') + '\n' +
+    'Mobile: ' + (client.mobile || '-') + '\n' +
+    'Email: ' + (client.email || '-') + '\n\n' +
+    '=== UPLOADED DOCUMENTS INVENTORY ===\n' +
+    (uploadedList || 'None\n') + '\n' +
+    '=== PENDING DOCUMENTS (IF ANY) ===\n' +
+    (pendingList || 'None - All mandatory documents assembled!\n') + '\n' +
+    'CLIENT AUTHORIZATION: I have authorized the submission of all uploaded documents (' + zipName + ') for preparing FORM GST REG-01.\n\n' +
+    'Thank you,\n' +
+    (client.name || 'Client') + '\n' +
+    (client.mobile || '');
+}
+
+function generatePrintableSummaryReport(client, reqs, files, settings) {
+  const ans = client.answers || {};
+  const stObj = INDIAN_STATES.find(s => s.code === ans.stateCode) || INDIAN_STATES[0];
+
+  let rows = '';
+  reqs.forEach((r, idx) => {
+    const attached = files.filter(f => f.docCode === r.code);
+    const isUp = attached.length > 0;
+    const remark = (client.remarks && client.remarks[r.code]) || '-';
+    rows += '<tr>' +
+      '<td>' + (idx + 1) + '</td>' +
+      '<td><strong>' + r.title + '</strong><br><small style="color:#64748b;">' + r.category + '</small></td>' +
+      '<td>' + r.classification + '</td>' +
+      '<td style="color:' + (isUp ? '#059669' : '#e11d48') + '; font-weight:bold;">' + (isUp ? 'Uploaded' : 'PENDING') + '</td>' +
+      '<td>' + (isUp ? attached.map(f => f.fileName).join(', ') : 'Not Provided') + '</td>' +
+      '<td>' + remark + '</td>' +
+      '</tr>';
+  });
+
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>GST Document Checklist Summary</title>' +
+    '<style>' +
+    'body{font-family:Arial,sans-serif;margin:30px;color:#1e293b;line-height:1.4;font-size:12px;}' +
+    '.header{border-bottom:2px solid #0f2347;padding-bottom:15px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-start;}' +
+    '.title{font-size:18px;font-weight:bold;color:#0f2347;}' +
+    '.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;background:#f8fafc;padding:12px;border:1px solid #e2e8f0;border-radius:6px;}' +
+    'table{width:100%;border-collapse:collapse;margin-top:15px;font-size:11px;}' +
+    'th,td{border:1px solid #cbd5e1;padding:7px 10px;text-align:left;vertical-align:top;}' +
+    'th{background:#f1f5f9;font-weight:bold;}' +
+    '.sign-box{margin-top:40px;display:flex;justify-content:space-between;}' +
+    '</style></head><body>' +
+    '<div class="header">' +
+    '<div><div class="title">' + settings.officeName + '</div><div>' + settings.officeAddress + ' | ' + settings.officePhone + '</div></div>' +
+    '<div style="text-align:right;"><strong>GST DOCUMENT PACKAGE INVENTORY</strong><br>Date: ' + new Date().toLocaleDateString() + '</div>' +
+    '</div>' +
+    '<div class="grid">' +
+    '<div><strong>Client Name:</strong> ' + (client.name || '-') + '</div>' +
+    '<div><strong>Trade / Business Name:</strong> ' + (client.tradeName || '-') + '</div>' +
+    '<div><strong>Business Constitution:</strong> ' + (ans.constitution || '-') + '</div>' +
+    '<div><strong>State & Jurisdiction:</strong> ' + stObj.name + ' (' + stObj.code + ')</div>' +
+    '<div><strong>Premises Status:</strong> ' + (ans.premises || '-') + '</div>' +
+    '<div><strong>Reason for Registration:</strong> ' + (ans.reason || '-') + '</div>' +
+    '<div><strong>Contact:</strong> ' + (client.mobile || '-') + ' | ' + (client.email || '-') + '</div>' +
+    '<div><strong>Total Files Attached:</strong> ' + files.length + ' file(s)</div>' +
+    '</div>' +
+    '<h3>Required Document Checklist & Verification Status</h3>' +
+    '<table><thead><tr><th>#</th><th>Document Name</th><th>Classification</th><th>Status</th><th>File(s) Attached</th><th>Client Remarks</th></tr></thead><tbody>' +
+    rows +
+    '</tbody></table>' +
+    '<div class="sign-box">' +
+    '<div>____________________________<br>Client Signature</div>' +
+    '<div>____________________________<br>CA Office Verification Signature</div>' +
+    '</div>' +
+    '</body></html>';
+}
+
+/* ==========================================================================
+   PART 9: CA ADMIN MODAL & SHAREABLE LINK
+   ========================================================================== */
+function openAdminModal() {
+  const s = getSettings();
+  document.getElementById('set-office-name').value = s.officeName || '';
+  document.getElementById('set-office-email').value = s.officeEmail || '';
+  document.getElementById('set-office-phone').value = s.officePhone || '';
+  document.getElementById('set-office-address').value = s.officeAddress || '';
+  document.getElementById('set-webhook-url').value = s.webhookUrl || '';
+
+  updateShareableLinkBox();
+  openModal('modal-admin');
+}
+
+function saveAdminSettings() {
+  const s = getSettings();
+  s.officeName = document.getElementById('set-office-name').value.trim() || DEFAULT_SETTINGS.officeName;
+  s.officeEmail = document.getElementById('set-office-email').value.trim() || DEFAULT_SETTINGS.officeEmail;
+  s.officePhone = document.getElementById('set-office-phone').value.trim() || DEFAULT_SETTINGS.officePhone;
+  s.officeAddress = document.getElementById('set-office-address').value.trim();
+  s.webhookUrl = document.getElementById('set-webhook-url').value.trim();
+
+  saveSettings(s);
+  updateShareableLinkBox();
+  alert('CA Office settings saved successfully!');
+}
+
+function copyShareableLink() {
+  const input = document.getElementById('shareable-link-input');
+  input.select();
+  navigator.clipboard.writeText(input.value).then(() => {
+    alert('Sharable Link copied to clipboard! You can send this link to any client.');
+  }).catch(() => {
+    alert('Please copy the link text manually.');
+  });
+}
+
+function shareLinkViaWhatsApp() {
+  const s = getSettings();
+  const input = document.getElementById('shareable-link-input');
+  const link = input.value;
+
+  const text = 'Hello! Greetings from ' + s.officeName + '.\n\n' +
+    'To prepare your GST Registration, please open our secure Client Portal link below to see your personalized document checklist and upload your files:\n\n' +
+    link + '\n\n' +
+    'Once you submit, our office will review and file your GST application. Thank you!';
+
+  const waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text);
+  window.open(waUrl, '_blank');
+}
+
+/* ==========================================================================
+   PART 10: MODALS & TEMPLATES CONTROLLERS
+   ========================================================================== */
+function openModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.add('open');
+}
+
+function closeModal(id) {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('open');
+}
+
+function previewFile(fileId) {
+  const file = AppState.filesCache.find(f => f.id === fileId);
+  if (!file) return;
+
+  const titleEl = document.getElementById('modal-preview-title');
+  const contentEl = document.getElementById('modal-preview-content');
+
+  titleEl.textContent = 'Preview: ' + file.fileName;
+  if (file.fileType.includes('pdf')) {
+    contentEl.innerHTML = '<iframe src="' + file.base64Data + '"></iframe>';
+  } else {
+    contentEl.innerHTML = '<img src="' + file.base64Data + '" alt="Preview">';
+  }
+  openModal('modal-preview');
+}
+
+function openTemplateModal(type) {
+  const titleEl = document.getElementById('modal-template-title');
+  const textEl = document.getElementById('modal-template-text');
+
+  if (type === 'consent') {
+    titleEl.textContent = 'Standard Consent Letter / NOC for Premises';
+    textEl.textContent = SAMPLE_TEMPLATES.consent;
+  } else {
+    titleEl.textContent = 'Sample Board Resolution / Letter of Authorization';
+    textEl.textContent = SAMPLE_TEMPLATES.resolution;
+  }
+  openModal('modal-template');
+}
+
+function copyTemplateText() {
+  const text = document.getElementById('modal-template-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Template text copied to clipboard!');
+  }).catch(() => {
+    alert('Please select and copy the text manually.');
+  });
+}
+
+/* ==========================================================================
+   INITIALIZATION
+   ========================================================================== */
+window.addEventListener('DOMContentLoaded', async () => {
+  parseUrlParameters();
+  applyOfficeSettings();
+  AppState.client = getOrCreateClientSession();
+  await initIndexedDB();
+  await loadClientFiles();
+  setLanguage(AppState.currentLang || 'en');
+});
+</script>
+
+
+</body></html>
