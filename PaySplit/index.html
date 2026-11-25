@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PaySplit – UPI Payment Splitter. Generate multiple UPI QR codes for split payments instantly." />
+  <meta name="theme-color" content="#6C63FF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="PaySplit" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" href="icons/icon-192.png" />
+  <title>PaySplit by Smit Parekh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="light-mode">
+
+  <!-- ===== HEADER ===== -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="url(#brandGrad)"/>
+            <text x="14" y="20" text-anchor="middle" font-size="14" font-weight="700" fill="white" font-family="Inter,sans-serif">₹</text>
+            <defs>
+              <linearGradient id="brandGrad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#6C63FF"/>
+                <stop offset="100%" stop-color="#A78BFA"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">PaySplit</span>
+          <span class="brand-by">by Smit Parekh</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+          <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="icon-btn" id="clearAllBtn" title="Clear all data" aria-label="Clear all data">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== TOAST ===== -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main-container">
+
+    <!-- ===== INPUT SECTION ===== -->
+    <section class="card input-card" id="inputSection">
+      <div class="card-header">
+        <h2 class="card-title">
+          <span class="card-title-icon">💳</span>
+          Payment Details
+        </h2>
+        <p class="card-subtitle">Enter the payment details to generate split QR codes</p>
+      </div>
+
+      <form id="paymentForm" novalidate>
+        <div class="form-grid">
+
+          <!-- Total Amount -->
+          <div class="field-group field-full">
+            <label for="totalAmount" class="field-label">Total Amount <span class="req">*</span></label>
+            <div class="input-wrapper amount-wrapper">
+              <span class="input-prefix">₹</span>
+              <input type="number" id="totalAmount" name="totalAmount"
+                     placeholder="0.00" min="1" step="0.01"
+                     class="field-input" required autocomplete="off" />
+            </div>
+            <span class="field-hint" id="totalAmountHint"></span>
+          </div>
+
+          <!-- UPI ID -->
+          <div class="field-group field-half">
+            <label for="upiId" class="field-label">UPI ID / VPA <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="upiId" name="upiId"
+                     placeholder="yourname@upi" class="field-input"
+                     required autocomplete="off" />
+              <button type="button" class="input-action-btn" id="copyUpiBtn" title="Copy UPI ID">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <span class="field-hint" id="upiIdHint"></span>
+          </div>
+
+          <!-- Payee Name -->
+          <div class="field-group field-half">
+            <label for="payeeName" class="field-label">Payee Name <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="payeeName" name="payeeName"
+                     placeholder="e.g. Smit Parekh" class="field-input"
+                     required autocomplete="off" />
+            </div>
+            <span class="field-hint" id="payeeNameHint"></span>
+          </div>
+
+          <!-- Description -->
+          <div class="field-group field-full">
+            <label for="description" class="field-label">Transaction Description <span class="optional">(optional)</span></label>
+            <div class="input-wrapper">
+              <input type="text" id="description" name="description"
+                     placeholder="e.g. Office supplies payment" class="field-input"
+                     autocomplete="off" maxlength="80" />
+            </div>
+          </div>
+
+          <!-- Number of splits -->
+          <div class="field-group field-half">
+            <label for="numSplits" class="field-label">Number of Splits <span class="req">*</span></label>
+            <div class="input-wrapper">
+              <input type="number" id="numSplits" name="numSplits"
+                     placeholder="2" min="2" max="20"
+                     class="field-input" required value="2" />
+            </div>
+            <span class="field-hint" id="numSplitsHint"></span>
+          </div>
+
+          <!-- Split mode -->
+          <div class="field-group field-half">
+            <label class="field-label">Split Mode</label>
+            <div class="toggle-group">
+              <button type="button" class="toggle-btn active" id="autoSplitBtn" data-mode="auto">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                Equal Split
+              </button>
+              <button type="button" class="toggle-btn" id="manualSplitBtn" data-mode="manual">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+                Manual
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <!-- Manual allocation area -->
+        <div id="manualAllocArea" class="manual-alloc-area hidden">
+          <div class="manual-alloc-header">
+            <h3 class="manual-alloc-title">Manual Allocation</h3>
+            <span class="alloc-status" id="allocStatus"></span>
+          </div>
+          <div id="manualFields" class="manual-fields"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="resetBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.86"/></svg>
+            Reset
+          </button>
+          <button type="submit" class="btn btn-primary" id="generateBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Generate QR Codes
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- ===== DASHBOARD ===== -->
+    <section class="card dashboard-card hidden" id="dashboardSection">
+      <div class="card-header">
+        <h2 class="card-title">
+          <span class="card-title-icon">📊</span>
+          Payment Dashboard
+        </h2>
+        <p class="card-subtitle">Summary of your split payment allocation</p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Amount</span>
+          <span class="stat-value" id="dashTotal">₹0.00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">QR Codes</span>
+          <span class="stat-value" id="dashCount">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Allocated</span>
+          <span class="stat-value accent-green" id="dashAllocated">₹0.00</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Pending</span>
+          <span class="stat-value accent-orange" id="dashPending">₹0.00</span>
+        </div>
+      </div>
+
+      <div class="disclaimer-box">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Payment status is <strong>Unverified</strong>. Scanning a QR code does not confirm payment settlement. Verify via your authorized UPI application.</span>
+      </div>
+
+      <div class="dash-actions">
+        <button class="btn btn-outline" id="downloadAllBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download All (ZIP)
+        </button>
+        <button class="btn btn-outline" id="printBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print Summary
+        </button>
+        <button class="btn btn-outline" id="shareBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== QR CODE GRID ===== -->
+    <section class="qr-section hidden" id="qrSection">
+      <div class="qr-section-header">
+        <h2 class="section-title">
+          <span class="card-title-icon">🔲</span>
+          QR Codes
+        </h2>
+        <p class="section-subtitle">Scan each QR code with any UPI app to complete the payment</p>
+      </div>
+      <div class="qr-grid" id="qrGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">PaySplit &mdash; UPI Payment Splitter</p>
+      <p class="footer-credit">
+        Created by Smit Parekh &middot;
+        <a href="https://www.youtube.com/@TheParekhShow" target="_blank" rel="noopener noreferrer">www.youtube.com/@TheParekhShow</a>
+      </p>
+      <p class="footer-note">QR code generation does not verify or confirm payment settlement.</p>
+    </div>
+  </footer>
+
+  <!-- ===== INSTALL BANNER ===== -->
+  <div class="install-banner hidden" id="installBanner">
+    <div class="install-content">
+      <span>📲 Install PaySplit as an app for quick access!</span>
+      <div class="install-actions">
+        <button class="btn btn-sm btn-primary" id="installBtn">Install</button>
+        <button class="btn btn-sm btn-ghost" id="dismissInstall">Not now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/jszip.min.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
